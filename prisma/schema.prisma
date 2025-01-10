@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId     Int     @unique @map("product_id")
+  prio          Int
+  category      String
+  name          String
+  description1  String?
+  description2  String?
+  description3  String?
+  description4  String?
+  material      String?
+  imageUrlSmall String? @map("imageUrl_small")
+  imageUrlBig1  String? @map("imageUrl_big1")
+  imageUrlBig2  String? @map("imageUrl_big2")
+  imageUrlBig3  String? @map("imageUrl_big3")
+
+  articles        Article[]
+  colorConnection ProductColor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Article {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId    Int     @map("product_id")
+  number       String
+  prio         Int
+  name         String
+  description1 String?
+  description2 String?
+  description3 String?
+  description4 String?
+  vpe1         String?
+  vpe2         String?
+  vpe3         String?
+  vpe4         String?
+
+  product Product @relation(fields: [productId], references: [productId])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productId, number])
+  @@map("articles")
+}
+
+model Color {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  colorId String @map("color_id")
+  name    String
+  code    String
+
+  productConnection ProductColor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([colorId])
+  @@map("colors")
+}
+
+model ProductColor {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  productId   Int    @map("product_id")
+  colorId     String @map("color_id")
+  colorSuffix Int    @map("color_suffix")
+
+  product Product @relation(fields: [productId], references: [productId])
+  color   Color   @relation(fields: [colorId], references: [colorId])
+
+  @@map("product_colors_connection")
+}
