@@ -15,27 +15,27 @@ const sections: SectionsProps[] = [
   {
     category: "moebel",
     name: "Möbelbereich",
-    icon: `<Image src="/icons/water.svg" fill alt="test" />`,
+    icon: "furniture.svg",
   },
   {
     category: "halterung",
     name: "Halterungsbereich",
-    icon: `<Image src="/icons/water.svg" fill alt="test" />`,
+    icon: "bracket.svg",
   },
   {
     category: "wasser",
     name: "Wasserbereich",
-    icon: `<Image src="/icons/water.svg" fill alt="test" />`,
+    icon: "water.svg",
   },
   {
     category: "lueftung",
     name: "Lüftungsbereich",
-    icon: `<Image src="/icons/water.svg" fill alt="test" />`,
+    icon: "air.svg",
   },
   {
     category: "elektro",
     name: "Elektrobereich",
-    icon: `<Image src="/icons/water.svg" fill alt="test" />`,
+    icon: "electric.svg",
   },
 ];
 
