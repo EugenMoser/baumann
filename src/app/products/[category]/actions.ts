@@ -23,7 +23,6 @@ async function getProductsByCategory(category: string) {
       return null;
     }
 
-    throw new Error("TESCHT");
     return product;
   } catch (error: any) {
     console.error(`Error at getProductsByCategory function`, error);
