@@ -21,6 +21,7 @@ export default async function Home() {
             key={section.name}
             className="flex items-center justify-center bg-slate-50"
           >
+            <a href={`/products/${section.category}`}> hier klicken</a>
             <Image
               src={`/icons/${section.icon}`}
               alt={`Ein Icon für den ${section.name}`}

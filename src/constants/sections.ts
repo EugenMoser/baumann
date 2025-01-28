@@ -1,17 +1,10 @@
-export type SectionsProps = {
-  category:
-    | "moebel"
-    | "halterung"
-    | "wasser"
-    | "lueftung"
-    | "elektro"
-    | "wasser"
-    | null;
+export type SectionProps = {
+  category: string;
   name: string;
   icon: string;
 };
 
-const sections: SectionsProps[] = [
+const sections: SectionProps[] = [
   {
     category: "moebel",
     name: "Möbelbereich",
