@@ -1,9 +1,6 @@
-import { Suspense } from "react";
-
 import ProductByCategoryCard from "@components/ProductByCategoryCard";
 
 import { getCachedProductsByCategory } from "./actions";
-import LoadingProductsByCategory from "./loading";
 
 interface ProductByCategoryPageProps {
   params: Promise<{ category: string }>;
@@ -13,6 +10,7 @@ async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
   const { category } = await params;
 
   let products;
+
   try {
     products = await getCachedProductsByCategory(category);
   } catch (error: any) {
@@ -33,9 +31,7 @@ async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
       <h1>Produkte in der Kategorie: {category}</h1>
 
       <ul>
-        <Suspense fallback={<LoadingProductsByCategory />}>
-          <ProductByCategoryCard products={products} />
-        </Suspense>
+        <ProductByCategoryCard products={products} />
       </ul>
     </div>
   );
