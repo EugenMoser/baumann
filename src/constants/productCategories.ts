@@ -1,12 +1,12 @@
-export type SectionProps = {
+export type ProductCategoriesProps = {
   category: string;
   name: string;
   icon: string;
 };
 
-const sections: SectionProps[] = [
+const productCategories: ProductCategoriesProps[] = [
   {
-    category: "moebel",
+    category: "moebel", //
     name: "Möbelbereich",
     icon: "furniture.svg",
   },
@@ -32,4 +32,4 @@ const sections: SectionProps[] = [
   },
 ];
 
-export default sections;
+export default productCategories;

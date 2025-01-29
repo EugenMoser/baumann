@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import sections from "@constants/sections";
+import productCategories from "@constants/productCategories";
 
 export default async function Home() {
   return (
@@ -16,19 +16,19 @@ export default async function Home() {
       </p>
       <h2>Unsere Bereiche</h2>
       <ul className="flex flex-col gap-4">
-        {sections.map((section) => (
+        {productCategories.map((productCategory) => (
           <li
-            key={section.name}
+            key={productCategory.name}
             className="flex items-center justify-center bg-slate-50"
           >
-            <a href={`/products/${section.category}`}> hier klicken</a>
+            <a href={`/products/${productCategory.category}`}> hier klicken</a>
             <Image
-              src={`/icons/${section.icon}`}
-              alt={`Ein Icon für den ${section.name}`}
+              src={`/icons/${productCategory.icon}`}
+              alt={`Ein Icon für den ${productCategory.name}`}
               width={32}
               height={32}
             />
-            <h3>{section.name}</h3>
+            <h3>{productCategory.name}</h3>
           </li>
         ))}
       </ul>
