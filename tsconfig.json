@@ -14,6 +14,7 @@
     "jsx": "preserve",
     "incremental": true,
     "noImplicitAny": true,
+    "noErrorTruncation": true,
 
     "plugins": [
       {
