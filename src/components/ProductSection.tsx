@@ -11,11 +11,7 @@ function ProductSection({ product }: ProductSectionProps): React.JSX.Element {
   return (
     <section>
       <h1>Produkt Infos {product.productId}</h1>
-      <ul>
-        {product.articles.map((article, index) => (
-          <li key={index}>{article.number}</li>
-        ))}
-      </ul>
+
       <p>{product.name}</p>
       <p>{product.description1}</p>
       <p>{product.description2}</p>

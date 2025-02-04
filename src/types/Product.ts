@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Article, Color, Prisma } from "@prisma/client";
 
 export type ProductWithColorConnectionProps = Prisma.ProductGetPayload<{
   include: {
@@ -16,12 +16,9 @@ export type ProductWithColorAndArticlesProps = Omit<
   ProductWithColorConnectionProps,
   "colorConnection"
 > & {
-  colors: {
-    id: string;
-    colorId: string;
-    name: string;
-    code: string;
-    createdAt: Date;
-    updatedAt: Date;
-  }[];
+  colors: ColorProps[];
 };
+
+export type ArticleProps = Article;
+
+export type ColorProps = Color;

@@ -1,6 +1,8 @@
 import { ProductWithColorAndArticlesProps } from "src/types/Product";
 
+import ArticleSection from "@components/ArticleSection";
 import BackButton from "@components/BackButton";
+import ColorSection from "@components/ColorSection";
 import ProductSection from "@components/ProductSection";
 
 import { getCachedProduct } from "./actions";
@@ -38,6 +40,8 @@ async function ProductPage({
   return (
     <>
       <ProductSection product={product} />
+      <ArticleSection articles={product.articles} />
+      <ColorSection colors={product.colors} />
       <BackButton product={product} />
     </>
   );
