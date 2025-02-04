@@ -1,4 +1,4 @@
-import { ProductCategory } from "src/types/ProductCategory";
+import { ProductCategoryProps } from "src/types/ProductCategory";
 
 import ProductByCategoryCard from "@components/ProductByCategoryCard";
 
@@ -10,7 +10,7 @@ interface ProductByCategoryPageProps {
 
 async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
   const { category } = await params;
-  let products: ProductCategory[] | null = null;
+  let products: ProductCategoryProps[] | null = null;
 
   try {
     products = await getCachedProductsByCategory(category);
