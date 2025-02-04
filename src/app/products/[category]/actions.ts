@@ -1,14 +1,18 @@
 import { unstable_cache } from "next/cache";
-import { ProductCategory } from "src/types/ProductCategory";
+import { ProductCategoryProps } from "src/types/ProductCategory";
 
 import { prisma } from "@lib/db/prisma";
 
 // Get products by category
-async function getProductsByCategory(category: string) {
+export async function getProductsByCategory(
+  category: string,
+): Promise<ProductCategoryProps[] | null> {
   try {
-    const product: ProductCategory[] = await prisma.product.findMany({
+    const product: ProductCategoryProps[] = await prisma.product.findMany({
       where: { category },
       select: {
+        id: true,
+        category: true,
         name: true,
         description1: true,
         imageUrlSmall: true,
