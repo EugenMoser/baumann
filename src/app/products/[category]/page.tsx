@@ -1,3 +1,5 @@
+import { ProductCategory } from "src/types/ProductCategory";
+
 import ProductByCategoryCard from "@components/ProductByCategoryCard";
 
 import { getCachedProductsByCategory } from "./actions";
@@ -8,8 +10,7 @@ interface ProductByCategoryPageProps {
 
 async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
   const { category } = await params;
-
-  let products;
+  let products: ProductCategory[] | null = null;
 
   try {
     products = await getCachedProductsByCategory(category);
@@ -18,7 +19,7 @@ async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
     throw new Error(error);
   }
 
-  // if products is null or not an array
+  // if products is null
   if (!products) {
     return (
       <div>
@@ -31,7 +32,9 @@ async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
       <h1>Produkte in der Kategorie: {category}</h1>
 
       <ul>
-        <ProductByCategoryCard products={products} />
+        {products.map((product, index) => (
+          <ProductByCategoryCard product={product} index={index} />
+        ))}
       </ul>
     </div>
   );
