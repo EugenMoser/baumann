@@ -33,7 +33,6 @@ async function ProductPage({
     );
   }
 
-  console.log("SINGLE product", product);
   return (
     <>
       <ProductClientPage product={product} />
