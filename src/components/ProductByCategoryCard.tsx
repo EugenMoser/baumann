@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ProductCategoryProps } from "src/types/ProductCategory";
 
-import { cloudinaryImageUrl } from "@constants/config";
+import { cloudinaryImageUrl } from "@/constants/config";
+import { ProductCategoryProps } from "@/types/ProductCategory";
 
 interface ProductByCategoryCardProps {
   product: ProductCategoryProps;

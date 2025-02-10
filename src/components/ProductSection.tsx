@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { ProductWithColorAndArticlesProps } from "src/types/Product";
 
-import { cloudinaryImageUrl } from "@constants/config";
+import { cloudinaryImageUrl } from "@/constants/config";
+import { ProductWithColorAndArticlesProps } from "@/types/Product";
 
 interface ProductSectionProps {
   product: ProductWithColorAndArticlesProps;

@@ -1,10 +1,10 @@
 import { unstable_cache } from "next/cache";
+
+import { prisma } from "@/lib/db/prisma";
 import {
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
-} from "src/types/Product";
-
-import { prisma } from "@lib/db/prisma";
+} from "@/types/Product";
 
 async function getProduct(
   id: string,

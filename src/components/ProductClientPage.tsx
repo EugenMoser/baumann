@@ -1,16 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 
+import ArticleSection from "@/components/ArticleSection";
+import BackButton from "@/components/BackButton";
+import ColorSection from "@/components/ColorSection";
+import ProductInfoSection from "@/components/ProductInfoSection";
+import ProductSection from "@/components/ProductSection";
 import {
   ArticleProps,
   ProductWithColorAndArticlesProps,
-} from "src/types/Product";
-
-import ArticleSection from "@components/ArticleSection";
-import BackButton from "@components/BackButton";
-import ColorSection from "@components/ColorSection";
-import ProductInfoSection from "@components/ProductInfoSection";
-import ProductSection from "@components/ProductSection";
+} from "@/types/Product";
 
 interface ProductClientPageProps {
   product: ProductWithColorAndArticlesProps;

@@ -1,15 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import { ArticleProps } from "src/types/Product";
-
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/select";
+} from "@/components/ui/select";
+import { ArticleProps } from "@/types/Product";
 
 interface ArticleSectionProps {
   articles: ArticleProps[];

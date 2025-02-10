@@ -1,7 +1,6 @@
 "use client";
-import { log } from "console";
-import { useSearchParams } from "next/navigation";
-import { ArticleProps } from "src/types/Product";
+
+import { ArticleProps } from "@/types/Product";
 
 interface ProductInfoSectionProps {
   selectedArticle: ArticleProps | undefined;

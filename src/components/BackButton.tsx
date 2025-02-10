@@ -1,7 +1,8 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import { ProductWithColorAndArticlesProps } from "src/types/Product";
+
+import { ProductWithColorAndArticlesProps } from "@/types/Product";
 
 interface BackButtonProps {
   product: ProductWithColorAndArticlesProps;

@@ -1,6 +1,5 @@
-import { ProductWithColorAndArticlesProps } from "src/types/Product";
-
-import ProductClientPage from "@components/ProductClientPage";
+import ProductClientPage from "@/components/ProductClientPage";
+import { ProductWithColorAndArticlesProps } from "@/types/Product";
 
 import { getCachedProduct } from "./actions";
 

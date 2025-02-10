@@ -1,6 +1,5 @@
-import { ProductCategoryProps } from "src/types/ProductCategory";
-
-import ProductByCategoryCard from "@components/ProductByCategoryCard";
+import ProductByCategoryCard from "@/components/ProductByCategoryCard";
+import { ProductCategoryProps } from "@/types/ProductCategory";
 
 import { getCachedProductsByCategory } from "./actions";
 

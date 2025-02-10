@@ -1,7 +1,7 @@
 import { unstable_cache } from "next/cache";
-import { ProductCategoryProps } from "src/types/ProductCategory";
 
-import { prisma } from "@lib/db/prisma";
+import { prisma } from "@/lib/db/prisma";
+import { ProductCategoryProps } from "@/types/ProductCategory";
 
 // Get products by category
 export async function getProductsByCategory(
