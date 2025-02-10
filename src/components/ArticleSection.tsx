@@ -30,12 +30,11 @@ function ArticleSection({
 
   useEffect(() => {
     // check (in every article ) if description1 is available
-    if (articles.every((article) => !article.description1)) {
+    if (articles.every((article) => !article.description1))
       setIsArticleDescriptionAvailable(false);
-    }
 
     // set initial the default article value to selected article
-    onSelect(defaultArticleValue);
+    if (defaultArticleValue) onSelect(defaultArticleValue);
   }, []);
 
   return (
