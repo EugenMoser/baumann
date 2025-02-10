@@ -1,4 +1,3 @@
-import { clsx } from "clsx";
 import { ColorProps } from "src/types/Product";
 
 interface ColorSectionProps {
@@ -8,10 +7,6 @@ interface ColorSectionProps {
 function ColorSection({ colors }: ColorSectionProps): React.JSX.Element {
   function getBackgroundColor(colorCode?: string) {
     return colorCode || "transparent";
-  }
-
-  if (!colors) {
-    return <p>Keine Farben gefunden.</p>;
   }
 
   return (

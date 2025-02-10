@@ -9,7 +9,7 @@ interface ProductSectionProps {
 
 function ProductSection({ product }: ProductSectionProps): React.JSX.Element {
   return (
-    <section>
+    <>
       <h1>Produkt Infos {product.productId}</h1>
 
       <p>{product.name}</p>
@@ -25,7 +25,7 @@ function ProductSection({ product }: ProductSectionProps): React.JSX.Element {
         height={400}
         loading="lazy"
       />
-    </section>
+    </>
   );
 }
 

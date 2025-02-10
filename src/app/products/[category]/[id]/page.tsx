@@ -1,9 +1,6 @@
 import { ProductWithColorAndArticlesProps } from "src/types/Product";
 
-import ArticleSection from "@components/ArticleSection";
-import BackButton from "@components/BackButton";
-import ColorSection from "@components/ColorSection";
-import ProductSection from "@components/ProductSection";
+import ProductClientPage from "@components/ProductClientPage";
 
 import { getCachedProduct } from "./actions";
 
@@ -39,10 +36,7 @@ async function ProductPage({
   console.log("SINGLE product", product);
   return (
     <>
-      <ProductSection product={product} />
-      <ArticleSection articles={product.articles} />
-      <ColorSection colors={product.colors} />
-      <BackButton product={product} />
+      <ProductClientPage product={product} />
     </>
   );
 }
