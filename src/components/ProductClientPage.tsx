@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   ArticleProps,
@@ -19,17 +19,26 @@ interface ProductClientPageProps {
 function ProductClientPage({
   product,
 }: ProductClientPageProps): React.JSX.Element {
-  const [selectedArticleId, setSelectedArticleId] = useState<string>(
-    product.articles[0].id,
-  );
+  const [selectedArticleId, setSelectedArticleId] = useState<
+    string | undefined
+  >(undefined);
 
-  //todo sort articles by prio
-  const selectedArticle: ArticleProps | null =
+  // get selected article object
+  const selectedArticle: ArticleProps | undefined =
     product.articles.find((article) => article.id === selectedArticleId) ||
-    null;
+    undefined;
+
+  // sort articles by prio
+  const sortedArticles = product.articles.sort((a, b) => a.prio - b.prio);
 
   console.log("ARTICLE ID", selectedArticleId);
   console.log("SELECTED ARTICLE", selectedArticle);
+  console.log("Articles LENGTH", product.articles.length);
+  console.log(
+    "sortedArticles",
+    sortedArticles.map((article) => article.prio),
+  );
+
   return (
     <>
       <section>
@@ -38,7 +47,7 @@ function ProductClientPage({
 
       <section>
         <ArticleSection
-          articles={product.articles}
+          articles={sortedArticles}
           onSelect={setSelectedArticleId}
         />
       </section>
