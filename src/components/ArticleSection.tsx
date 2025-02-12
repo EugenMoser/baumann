@@ -12,11 +12,13 @@ import { ArticleProps } from "@/types/Product";
 
 interface ArticleSectionProps {
   articles: ArticleProps[];
-  onSelect: (id: string | undefined) => void;
+  selectedArticleId: string;
+  onSelect: (id: string) => void;
 }
 
 function ArticleSection({
   articles,
+  selectedArticleId,
   onSelect,
 }: ArticleSectionProps): React.JSX.Element {
   //if boolean is false, dont show article section
@@ -24,17 +26,17 @@ function ArticleSection({
     useState(true);
 
   //if more than one article is available, set default article value to undefined, else set it to the only article available
-  const defaultArticleValue: string | undefined =
-    articles.length > 1 ? undefined : articles[0].id;
 
   useEffect(() => {
     // check (in every article ) if description1 is available
     if (articles.every((article) => !article.description1))
       setIsArticleDescriptionAvailable(false);
 
-    // set initial the default article value to selected article
+    // set initial the default article value to selected article id
+    const defaultArticleValue: string =
+      articles.length > 1 ? "" : articles[0].id;
     if (defaultArticleValue) onSelect(defaultArticleValue);
-  }, []);
+  }, [articles]);
 
   return (
     <>
@@ -42,7 +44,7 @@ function ArticleSection({
         <>
           <h1>Article Infos</h1>
 
-          <Select defaultValue={defaultArticleValue} onValueChange={onSelect}>
+          <Select defaultValue={selectedArticleId} onValueChange={onSelect}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Bitte wählen" />
             </SelectTrigger>

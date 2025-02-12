@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import productCategories from "@constants/productCategories";
+import productCategories from "@/constants/productCategories";
 
 export default async function Home() {
   return (

@@ -13,24 +13,33 @@ async function getProduct(
   try {
     product = await prisma.product.findUnique({
       where: { id },
-
       include: {
         articles: true,
         colorConnection: {
           select: {
             color: true,
+            colorSuffix: true,
           },
         },
       },
     });
 
     if (!product) return null;
+
     const { colorConnection, ...productWithoutColorConnection } = product;
 
+    // merge productWithoutColorConnection with a new colors array
+    // each color object includes an additional colorSuffix property
     const productWithColorAndArticle: ProductWithColorAndArticlesProps = {
       ...productWithoutColorConnection,
-      colors: colorConnection.map((color: any) => color.color),
+      colors: colorConnection
+        .map(({ color, colorSuffix }) => ({
+          ...color,
+          colorSuffix,
+        }))
+        .sort((a, b) => a.colorSuffix - b.colorSuffix), //sort by colorSuffix
     };
+
     return productWithColorAndArticle;
   } catch (error) {
     console.error(`Failed to fetch product with ID ${id}:`, error);
@@ -38,6 +47,7 @@ async function getProduct(
   }
 }
 
+//
 export const getCachedProduct = unstable_cache(
   getProduct,
   [],
