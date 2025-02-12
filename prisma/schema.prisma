@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  password String
+
+  @@map("admin")
+}
+
 model Product {
   id            String  @id @default(auto()) @map("_id") @db.ObjectId
   productId     Int     @unique @map("product_id")

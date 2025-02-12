@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { Circle } from "lucide-react";
-import { cn } from "src/lib/utils/classnames";
+import { cn } from "src/lib/utils";
 
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 
