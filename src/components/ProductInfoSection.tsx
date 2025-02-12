@@ -2,10 +2,8 @@
 
 import { MouseEventHandler } from "react";
 
-import {
-  addThousendSeperator,
-  sendInquiry,
-} from "@/lib/utils";
+import addThousendSeperator from "@/lib/utils/addThousendSeperator";
+import sendInquiry from "@/lib/utils/sendInquire";
 import {
   ArticleProps,
   ColorProps,
