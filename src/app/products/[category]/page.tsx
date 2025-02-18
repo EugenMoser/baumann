@@ -9,10 +9,10 @@ interface ProductByCategoryPageProps {
 
 async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
   const { category } = await params;
+
   let products: ProductCategoryProps[] | null = null;
 
   try {
-    //todo sort products by prio
     products = await getCachedProductsByCategory(category);
   } catch (error: any) {
     // throw the error to error.tsx
@@ -34,7 +34,7 @@ async function ProductsByCategoryPage({ params }: ProductByCategoryPageProps) {
       <ul>
         {products.map((product, index) => (
           <li key={index} className="mb-6 flex items-center gap-6 bg-slate-200">
-            <ProductByCategoryCard product={product} index={index} />
+            <ProductByCategoryCard product={product} />
           </li>
         ))}
       </ul>

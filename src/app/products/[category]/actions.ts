@@ -13,6 +13,7 @@ export async function getProductsByCategory(
       select: {
         id: true,
         category: true,
+        prio: true,
         name: true,
         description1: true,
         imageUrlSmall: true,
@@ -27,7 +28,9 @@ export async function getProductsByCategory(
       return null;
     }
 
-    return product;
+    const sortedProduct = product.sort((a, b) => a.prio - b.prio);
+
+    return sortedProduct;
   } catch (error: any) {
     console.error(`Error at getProductsByCategory function`, error);
     // throw the error to page.tsx

@@ -6,22 +6,22 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setError("");
 
-    const res = await signIn("credentials", {
-      username,
+    const response = await signIn("credentials", {
+      email,
       password,
       redirect: false,
     });
 
-    if (res?.error) {
+    if (response?.error) {
       setError("Login fehlgeschlagen");
     } else {
       router.push("/dashboard");
@@ -34,10 +34,10 @@ export default function LoginPage() {
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="mb-2 w-full rounded border p-2"
         />
         <input
@@ -52,6 +52,13 @@ export default function LoginPage() {
           className="w-full rounded bg-blue-500 p-2 text-white"
         >
           Login
+        </button>
+        <button
+          onClick={() => {
+            router.push("/password-request");
+          }}
+        >
+          Passwort zurücksetzen
         </button>
       </form>
     </div>

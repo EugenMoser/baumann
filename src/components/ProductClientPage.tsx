@@ -1,8 +1,5 @@
 "use client";
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
 import ArticleSection from "@/components/ArticleSection";
 import BackButton from "@/components/BackButton";
@@ -39,8 +36,6 @@ function ProductClientPage({
 
   const selectedColor: ColorProps | undefined =
     product.colors.find((color) => color.id === selectedColorId) || undefined;
-
-  console.log("PRODUCT", product);
 
   return (
     <>

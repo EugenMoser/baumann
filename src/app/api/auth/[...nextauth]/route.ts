@@ -13,16 +13,16 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        email: { label: "E-Mail", type: "email" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
+        if (!credentials?.email || !credentials?.password) {
           throw new Error("Missing username or password");
         }
 
         const user = await prisma.admin.findUnique({
-          where: { username: credentials.username },
+          where: { email: credentials.email },
         });
 
         if (!user) {
@@ -37,11 +37,13 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid password");
         }
 
-        return { id: user.id, name: user.username };
+        return { id: user.id, email: user.email };
       },
     }),
   ],
   session: {
+    maxAge: 60 * 60, // 1 hour
+    updateAge: 60 * 5, //all sessions will be updated every 5 minutes
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
