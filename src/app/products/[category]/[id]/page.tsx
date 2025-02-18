@@ -1,7 +1,8 @@
-import ProductClientPage from "@/components/ProductClientPage";
-import { ProductWithColorAndArticlesProps } from "@/types/Product";
+import Link from "next/link";
 
-import { getCachedProduct } from "./actions";
+import ProductClientPage from "@/components/ProductClientPage";
+import { getCachedProduct } from "@/lib/productActions";
+import { ProductWithColorAndArticlesProps } from "@/types/Product";
 
 interface ProductPageProps {
   params: Promise<{
@@ -35,6 +36,14 @@ async function ProductPage({
   return (
     <>
       <ProductClientPage product={product} />
+      <Link
+        href={{
+          pathname: `/dashboard/updateProduct`,
+          query: { id: product.id },
+        }}
+      >
+        <button>Update Product</button>
+      </Link>
     </>
   );
 }
