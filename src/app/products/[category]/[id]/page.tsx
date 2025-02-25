@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import ProductClientPage from "@/components/ProductClientPage";
-import { getCachedProduct } from "@/lib/productActions";
+import { getCachedProduct } from "@/lib/server-actions/productActions";
 import { ProductWithColorAndArticlesProps } from "@/types/Product";
 
 interface ProductPageProps {

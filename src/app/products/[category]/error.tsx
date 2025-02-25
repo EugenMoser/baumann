@@ -19,8 +19,8 @@ export default function Error({
   return (
     <div>
       <h2>
-        Ups! Irgendetwas ist schief gelaufen und ich habe keine Ahnung was.
-        Grüße Ihr Webserver
+        Ups! Irgendetwas ist schief gelaufen und ich habe keine Ahnung was. Hier
+        ist die Fehlermeldung: {error.message}. Grüße Ihr Webserver
       </h2>
       <button onClick={() => reset()}>Seite neue laden</button>{" "}
       <button onClick={() => redirect("/")}>Zurück zur Startseite</button>
