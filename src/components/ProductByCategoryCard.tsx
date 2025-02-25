@@ -1,7 +1,5 @@
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { authOptions } from "src/app/api/auth/[...nextauth]/route";
 
 import { cloudinaryImageUrl } from "@/constants/config";
 import { ProductCategoryProps } from "@/types/ProductCategory";
@@ -10,9 +8,9 @@ interface ProductByCategoryCardProps {
   product: ProductCategoryProps;
 }
 
-async function ProductByCategoryCard({
+function ProductByCategoryCard({
   product,
-}: ProductByCategoryCardProps): Promise<React.JSX.Element> {
+}: ProductByCategoryCardProps): React.JSX.Element {
   return (
     <>
       <Link href={`/products/${product.category}/${product.id}`}>
