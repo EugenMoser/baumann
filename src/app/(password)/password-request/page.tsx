@@ -3,13 +3,16 @@ import { Suspense, useActionState, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
-import { passwordReset } from "@/actions/passwordActions";
+import { passwordRequest } from "@/actions/passwordActions";
 
 import Loading from "./loading";
 
 function PasswordRequestPage() {
-  const [message, action, isPending] = useActionState(passwordReset, null);
+  const [message, action] = useActionState(passwordRequest, null);
   const router = useRouter();
+
+  // set input and button disabled
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   // redirect to dashboard after 3 seconds
   useEffect(() => {
@@ -17,7 +20,7 @@ function PasswordRequestPage() {
       const timer = setTimeout(() => {
         router.push("/dashboard");
       }, 3000);
-
+      setIsDisabled(true);
       return () => clearTimeout(timer);
     }
   }, [message, router]);
@@ -30,12 +33,13 @@ function PasswordRequestPage() {
           type="email"
           name="email"
           placeholder="E-Mail-Adresse"
+          disabled={isDisabled}
           required
         />
 
-        <button disabled={isPending}>Link anfordern</button>
+        <button disabled={isDisabled}>Link anfordern</button>
       </form>
-      {isPending && "Mail wird gesendet..."}
+
       {message && <p>{message}</p>}
     </Suspense>
   );

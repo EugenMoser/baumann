@@ -1,14 +1,15 @@
 "use server";
+import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import nodemailer from "nodemailer";
 
 import { prisma } from "@/lib/db/prisma";
 
-export async function passwordReset(
+export async function passwordRequest(
   previousState: string | null | undefined,
   formData: FormData,
 ) {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
   const email = formData.get("email") as string;
   try {
     if (email) {
@@ -61,5 +62,49 @@ export async function passwordReset(
 
     console.error("Fehler:", error);
     throw new Error("Fehler beim Senden der E-Mail", error);
+  }
+}
+
+export async function passwordReset(
+  previousState: string | null | undefined,
+  formData: FormData,
+) {
+  try {
+    const token = formData.get("token") as string;
+    const password = formData.get("password") as string;
+
+    console.log("token", token, "password", password);
+    // if token or password is missing
+    if (!password) {
+      return "Passwort erforderlich.";
+    }
+    if (!token) {
+      return "Die Gültigkeit des Links ist bereits abgelaufen.";
+    }
+
+    // check if token is valid
+    const resetEntry = await prisma.passwordReset.findUnique({
+      where: { token },
+    });
+
+    //if token is not valid
+    if (!resetEntry || resetEntry.expiresAt < new Date()) {
+      return "Token ist ungültig oder abgelaufen.";
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // update password at database collection admin
+    await prisma.admin.update({
+      where: { email: resetEntry.email },
+      data: { password: hashedPassword },
+    });
+
+    await prisma.passwordReset.delete({ where: { token } });
+
+    return "Passwort erfolgreich zurückgesetzt!";
+  } catch (error) {
+    console.error("Fehler:", error);
+    return "Interner Serverfehler";
   }
 }
