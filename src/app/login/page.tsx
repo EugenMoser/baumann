@@ -53,14 +53,14 @@ export default function LoginPage() {
         >
           Login
         </button>
-        <button
-          onClick={() => {
-            router.push("/password-request");
-          }}
-        >
-          Passwort zurücksetzen
-        </button>
       </form>
+      <button
+        onClick={() => {
+          router.push("/password-request");
+        }}
+      >
+        Passwort zurücksetzen
+      </button>
     </div>
   );
 }
