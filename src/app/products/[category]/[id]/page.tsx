@@ -1,20 +1,15 @@
 "use client";
-import {
-  Suspense,
-  use,
-  useEffect,
-  useState,
-} from "react";
+import { Suspense, use, useEffect, useState } from "react";
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
+import { getCachedProduct } from "@/actions/productActions";
 import ArticleSection from "@/components/ArticleSection";
 import BackButton from "@/components/BackButton";
 import ColorSection from "@/components/ColorSection";
 import ProductInfoSection from "@/components/ProductInfoSection";
 import ProductSection from "@/components/ProductSection";
-import { getCachedProduct } from "@/lib/server-actions/productActions";
 import {
   ArticleProps,
   ColorProps,

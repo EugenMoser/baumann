@@ -1,16 +1,10 @@
 "use client";
-import {
-  Suspense,
-  useEffect,
-  useState,
-} from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import { useParams } from "next/navigation";
 
+import { getCachedProductsByCategory } from "@/actions/productActions";
 import ProductByCategoryCard from "@/components/ProductByCategoryCard";
-import {
-  getCachedProductsByCategory,
-} from "@/lib/server-actions/productActions";
 import { ProductCategoryProps } from "@/types/ProductCategory";
 
 import Loading from "./loading";
