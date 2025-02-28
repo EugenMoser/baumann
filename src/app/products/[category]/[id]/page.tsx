@@ -4,7 +4,7 @@ import { Suspense, use, useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-import { getCachedProduct } from "@/actions/productActions";
+import { getCachedProduct } from "@/actions/actions";
 import ArticleSection from "@/components/ArticleSection";
 import BackButton from "@/components/BackButton";
 import ColorSection from "@/components/ColorSection";

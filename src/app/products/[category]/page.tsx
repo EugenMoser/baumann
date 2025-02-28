@@ -3,7 +3,7 @@ import { Suspense, useEffect, useState } from "react";
 
 import { useParams } from "next/navigation";
 
-import { getCachedProductsByCategory } from "@/actions/productActions";
+import { getCachedProductsByCategory } from "@/actions/actions";
 import ProductByCategoryCard from "@/components/ProductByCategoryCard";
 import { ProductCategoryProps } from "@/types/ProductCategory";
 
