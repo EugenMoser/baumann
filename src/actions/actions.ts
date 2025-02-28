@@ -11,7 +11,7 @@ import { ProductCategoryProps } from "@/types/ProductCategory";
 // *************  get product by id
 async function getProduct(
   id: string,
-): Promise<ProductWithColorAndArticlesProps | null> {
+): Promise<ProductWithColorAndArticlesProps> {
   let product: ProductWithColorConnectionProps | null = null;
 
   try {
@@ -29,7 +29,6 @@ async function getProduct(
     });
 
     if (!product) throw new Error("Item not found");
-
     const { colorConnection, ...productWithoutColorConnection } = product;
 
     // merge productWithoutColorConnection with a new colors array
@@ -47,26 +46,26 @@ async function getProduct(
     return productWithColorAndArticle;
   } catch (error: any) {
     console.error(`Error at getProduct function ID ${id}:`, error);
-    // throw the error to page.tsx
+    // throw the error to error.tsx
     throw new Error(
       `Failed to fetch products. Error message: ${error.message}`,
     );
   }
 }
 
-// cache the function
+// cache the product
 export const getCachedProduct: (
   id: string,
-) => Promise<ProductWithColorAndArticlesProps | null> = unstable_cache(
+) => Promise<ProductWithColorAndArticlesProps> = unstable_cache(
   getProduct,
-  [],
+  ["product"],
   { revalidate: 60 * 60 * 24 }, // 24 hours
 );
 
 // ************* get products by category
 export async function getProductsByCategory(
   category: string,
-): Promise<ProductCategoryProps[] | null> {
+): Promise<ProductCategoryProps[]> {
   try {
     const product: ProductCategoryProps[] = await prisma.product.findMany({
       where: { category },
@@ -79,26 +78,25 @@ export async function getProductsByCategory(
         imageUrlSmall: true,
       },
     });
-
     if (!product || product.length === 0)
       throw new Error("No product found in this category");
 
-    const sortedProduct = product.sort((a, b) => a.prio - b.prio);
-    return sortedProduct;
+    const sortedProducts = product.sort((a, b) => a.prio - b.prio);
+    return sortedProducts;
   } catch (error: any) {
     console.error(`Error at getProductsByCategory function`, error);
-    // throw the error to page.tsx
+    // throw the error to error.tsx
     throw new Error(
       `Failed to fetch products. Error message: ${error.message}`,
     );
   }
 }
 
-// cache the function
+// cache the products
 export const getCachedProductsByCategory: (
   category: string,
-) => Promise<ProductCategoryProps[] | null> = unstable_cache(
+) => Promise<ProductCategoryProps[]> = unstable_cache(
   getProductsByCategory,
-  [],
+  ["products-by-category"],
   { revalidate: 60 * 60 * 24 }, // 24 hours
 );
