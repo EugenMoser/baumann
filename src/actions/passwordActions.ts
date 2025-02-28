@@ -1,16 +1,25 @@
+"use server";
 import { randomBytes } from "crypto";
 import nodemailer from "nodemailer";
 
 import { prisma } from "@/lib/db/prisma";
 
-export async function passwordResetAction(email: string) {
+export async function passwordReset(
+  previousState: string | null | undefined,
+  formData: FormData,
+) {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  const email = formData.get("email") as string;
   try {
     if (email) {
-      // reset link send
+      // find authorised user
       const user = await prisma.admin.findUnique({ where: { email } });
 
+      // if authorised user not found
       if (!user) {
-        return "Falls deine Email berechtigt ist, wurde eine Nachricht gesendet.";
+        //todo passende Nachricht zurueckgeben
+
+        return "Falls deine Email berechtigt ist, wurde eine Nachricht gesendet. (!!!!!!!kein User gefunden)";
       }
 
       // generate token
@@ -33,20 +42,24 @@ export async function passwordResetAction(email: string) {
         },
       });
 
+      //create reset link with token
       const resetLink = `http://localhost:3000/password-reset?token=${resetToken}`;
 
-      // send email
+      // send email with reset link to authorised user
       await transporter.sendMail({
         from: process.env.GMAIL_EMAIL_SCHEN,
         to: email,
         subject: "Passwort zurücksetzen",
         html: `<p>Klicke auf diesen <a href="${resetLink}">Link</a>, um dein Passwort zurückzusetzen.</p>`,
       });
+      //todo passende Nachricht zurueckgeben
 
-      return "passt";
+      return "Falls deine Email berechtigt ist, wurde eine Nachricht gesendet. (!!!!!!! User gefunden und reset mail gesendet)";
     }
-  } catch (error) {
+  } catch (error: any) {
+    //todo passende Nachricht zurueckgeben
+
     console.error("Fehler:", error);
-    return "passt nicht";
+    throw new Error("Fehler beim Senden der E-Mail", error);
   }
 }

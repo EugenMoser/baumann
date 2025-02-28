@@ -1,56 +1,43 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useActionState, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
+import { passwordReset } from "@/actions/passwordActions";
+
+import Loading from "./loading";
+
 function PasswordRequestPage() {
+  const [message, action, isPending] = useActionState(passwordReset, null);
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setIsLoading(true);
+  // redirect to dashboard after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        router.push("/dashboard");
+      }, 3000);
 
-    try {
-      const response = await fetch("/api/password/password-request", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-      const { message } = await response.json();
-
-      console.log("HIER", response.status);
-      setMessage(message || "Fehler bei der Anfrage.");
-      setTimeout(() => router.push("/login"), 3000);
-    } catch (error) {
-      setMessage("Es gab ein Problem bei der Anfrage.");
+      return () => clearTimeout(timer);
     }
-
-    setIsLoading(false);
-  };
+  }, [message, router]);
 
   return (
-    <>
+    <Suspense fallback={<Loading />}>
       <h1>Passwort zurücksetzen</h1>
-      <form onSubmit={handleSubmit}>
+      <form action={action}>
         <input
           type="email"
+          name="email"
           placeholder="E-Mail-Adresse"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Lädt..." : "Link anfordern"}
-        </button>
+        <button disabled={isPending}>Link anfordern</button>
       </form>
+      {isPending && "Mail wird gesendet..."}
       {message && <p>{message}</p>}
-    </>
+    </Suspense>
   );
 }
 
