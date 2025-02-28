@@ -100,11 +100,26 @@ export async function passwordReset(
       data: { password: hashedPassword },
     });
 
+    // delete database entry (and token)
     await prisma.passwordReset.delete({ where: { token } });
 
     return "Passwort erfolgreich zurückgesetzt!";
   } catch (error) {
     console.error("Fehler:", error);
     return "Interner Serverfehler";
+  }
+}
+
+export async function isPasswordAlreadyReset(token: string) {
+  try {
+    const tokenExists: boolean =
+      (await prisma.passwordReset.findUnique({
+        where: { token },
+      })) !== null;
+
+    return tokenExists;
+  } catch (error) {
+    console.error("Fehler:", error);
+    return false;
   }
 }

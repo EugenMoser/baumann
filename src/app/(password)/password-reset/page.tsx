@@ -1,95 +1,71 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 
+import {
+  isPasswordAlreadyReset,
+  passwordReset,
+} from "@/actions/passwordActions";
+
 function PasswordResetPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token: string | null = searchParams.get("token");
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
-  const router = useRouter();
-  const [password, setPassword] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [message, action, isPending] = useActionState(passwordReset, null);
 
+  const [isValidToken, setIsValidToken] = useState<boolean>(true);
+
+  // check if token is valid or is already used
   useEffect(() => {
-    if (!token) return;
-    setIsLoading(true);
-    try {
-      const checkPasswordReset = async () => {
-        const response = await fetch("/api/password/isPasswordReset", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token }),
-        });
+    const checkTokenValidity = async () => {
+      const isValid = token ? await isPasswordAlreadyReset(token) : false;
+      setIsValidToken(!isValid);
+    };
 
-        const { isPasswordReset } = await response.json();
-        console.log("result", isPasswordReset);
-        // reversal of the logic: If token exists, password is valid
-        setIsPasswordValid(!isPasswordReset);
-      };
-      checkPasswordReset();
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      setMessage("Es gab ein Problem bei der Anfrage.");
-      setIsLoading(false);
-    }
+    checkTokenValidity();
   }, [token]);
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setIsLoading(true);
+  // redirect to dashboard after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        router.push("/login");
+      }, 3000);
 
-    try {
-      const response = await fetch("/api/password/password-reset", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token, password }),
-      });
-
-      const { message } = await response.json();
-      setMessage(message || "Fehler bei der Anfrage.");
-      response.ok && setTimeout(() => router.push("/dashboard"), 3000);
-    } catch (error) {
-      console.error(error);
-      setMessage("Es gab ein Problem bei der Anfrage.");
+      return () => clearTimeout(timer);
     }
-
-    setIsLoading(false);
-  };
+  }, [message, router]);
 
   if (!token) {
     return <p>Token fehlt</p>;
   }
 
-  if (!isPasswordValid) {
-    return <p>Passwort wurde bereits erfolgreich zurückgesetzt</p>;
+  if (isValidToken) {
+    return <div>Der Link ist bereits verwendet worden und ist ungültig.</div>;
   }
 
   return (
-    isPasswordValid && (
+    !isValidToken && (
       <>
         <h1>Neues Passwort setzen</h1>
-        <form onSubmit={handleSubmit}>
+        <form action={action}>
           <>
             <input
               type="password"
+              name="password"
               placeholder="Neues Passwort"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
             />
+            {/*set token to formData*/}
+            <input type="hidden" name="token" value={token} />
           </>
 
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Lädt..." : "Passwort speichern"}
+          <button type="submit" disabled={isPending}>
+            Passwort speichern
           </button>
+          {isPending && "Lädt..."}
         </form>
         {message && <p>{message}</p>}
       </>
