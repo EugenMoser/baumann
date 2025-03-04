@@ -28,9 +28,6 @@ function ProductDetails({ product }: ProductDetailsProps): React.JSX.Element {
     product.articles.find((article) => article.id === selectedArticleId) ||
     undefined;
 
-  // copy the array and sort articles by prio
-  const sortedArticles = [...product.articles].sort((a, b) => a.prio - b.prio);
-
   // get selected color object
   const selectedColor: ColorProps | undefined =
     product.colors.find((color) => color.id === selectedColorId) || undefined;
@@ -43,7 +40,7 @@ function ProductDetails({ product }: ProductDetailsProps): React.JSX.Element {
 
       <section>
         <ArticleSection
-          articles={sortedArticles}
+          articles={product.articles}
           selectedArticleId={selectedArticleId}
           onSelect={setSelectedArticleId}
         />

@@ -4,8 +4,6 @@ import { getCachedProduct } from "@/actions/actions";
 import ProductDetails from "@/components/ProductDetails/ProductDetails";
 import { ProductWithColorAndArticlesProps } from "@/types/Product";
 
-import Loading from "../loading";
-
 interface ProductPageProps {
   params: Promise<{ id: string }>;
 }
@@ -15,13 +13,7 @@ async function ProductPage({
   const { id } = await params;
   const product: ProductWithColorAndArticlesProps = await getCachedProduct(id);
 
-  return (
-    <div>
-      <Suspense fallback={<Loading />}>
-        <ProductDetails product={product} />
-      </Suspense>
-    </div>
-  );
+  return <ProductDetails product={product} />;
 }
 
 export default ProductPage;
