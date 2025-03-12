@@ -1,7 +1,5 @@
 "use client";
 
-import { MouseEventHandler } from "react";
-
 import addThousendSeperator from "@/lib/utils/addThousendSeperator";
 import sendInquiry from "@/lib/utils/sendInquire";
 import {
@@ -66,10 +64,12 @@ function ProductInfoSection({
   selectedArticle,
   selectedColor,
 }: ProductInfoSectionProps): React.JSX.Element {
+  // const selectedArticle: ArticleProps | null = params.get("article");
+
   if (!selectedArticle)
     return <p>bitte wählen Sie einen Artikel und eine Farbe aus</p>;
 
-  // if suffix is 0, dont show suffix
+  //  if suffix is 0, don't show suffix
   const articleWithColorNumber: string =
     selectedColor?.colorSuffix !== 0
       ? `${selectedArticle.number}-${selectedColor?.colorSuffix}`

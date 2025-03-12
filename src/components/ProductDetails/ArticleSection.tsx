@@ -1,5 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import {
   Select,
@@ -12,31 +21,48 @@ import { ArticleProps } from "@/types/Product";
 
 interface ArticleSectionProps {
   articles: ArticleProps[];
-  selectedArticleId: string;
-  onSelect: (id: string) => void;
 }
 
-function ArticleSection({
-  articles,
-  selectedArticleId,
-  onSelect,
-}: ArticleSectionProps): React.JSX.Element {
+function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+
+  // get current value from the SearchParams
+  const defaultSelectedValue = searchParams.get("article") || "";
+
   //if boolean is false, dont show article section
   const [isArticleDescriptionAvailable, setIsArticleDescriptionAvailable] =
     useState(true);
 
-  //if more than one article is available, set default article value to undefined, else set it to the only article available
-
   useEffect(() => {
     // check (in every article ) if description1 is available
-    if (articles.every((article) => !article.description1))
-      setIsArticleDescriptionAvailable(false);
-
-    // set initial the default article value to selected article id
-    const defaultArticleValue: string =
-      articles.length > 1 ? "" : articles[0].id;
-    if (defaultArticleValue) onSelect(defaultArticleValue);
+    // if description is not available, hide article section
+    setIsArticleDescriptionAvailable(
+      articles.some((article) => article.description1),
+    );
   }, [articles]);
+
+  useEffect(() => {
+    // set initial the default article value to selected article id
+    const defaultArticleValue = articles.length === 1 ? articles[0].id : "";
+
+    // prevent the URL from being replaced unnecessarily
+    if (!defaultSelectedValue && defaultArticleValue) {
+      params.set("article", defaultArticleValue);
+      replace(`${pathname}?${params.toString()}`);
+    }
+  }, [articles, searchParams, pathname, replace]);
+
+  function handleSelect(articleId: string) {
+    console.log("articleId", articleId);
+
+    // Avoids unnecessary updates
+    if (defaultSelectedValue === articleId) return;
+    params.set("article", articleId);
+    replace(`${pathname}?${params.toString()}`);
+  }
 
   return (
     <>
@@ -44,7 +70,10 @@ function ArticleSection({
         <>
           <h1>Article Infos</h1>
 
-          <Select defaultValue={selectedArticleId} onValueChange={onSelect}>
+          <Select
+            defaultValue={defaultSelectedValue}
+            onValueChange={(event) => handleSelect(event)}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Bitte wählen" />
             </SelectTrigger>

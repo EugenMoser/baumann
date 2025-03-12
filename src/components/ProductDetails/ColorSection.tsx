@@ -1,9 +1,15 @@
+"use client";
 import {
   useEffect,
   useRef,
 } from "react";
 
 import clsx from "clsx";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import {
   RadioGroup,
@@ -14,32 +20,60 @@ import { ColorProps } from "@/types/Product";
 interface ColorSectionProps {
   colors: ColorProps[];
   selectedColor: ColorProps | undefined;
-  onSelect: (id: string) => void;
+  // onSelect: (id: string) => void;
 }
 
 function ColorSection({
   colors,
   selectedColor,
-  onSelect,
+  // onSelect,
 }: ColorSectionProps): React.JSX.Element {
+  // This useRef stores an array of references to each RadioGroupItem element.
+  // The array helps access individual radio buttons directly (e.g., for focus management).
+  // It starts as an empty array and gets updated dynamically as the elements mount.
   const radioRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  function getCheckedColor(id: string): boolean {
-    return selectedColor?.id === id;
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+
+  // get current value from the SearchParams
+  const defaultSelectedValue = searchParams.get("color") || "";
+  console.log("color length | id", colors.length, colors[0].id);
+  useEffect(() => {
+    // set initial color value to to the first color
+    const defaultColorValue: string = colors.length > 0 ? colors[0].id : "";
+
+    // prevent the URL from being replaced unnecessarily
+    if (!defaultSelectedValue && defaultColorValue) {
+      params.set("color", defaultColorValue);
+      replace(`${pathname}?${params.toString()}`);
+    }
+  }, [colors, searchParams, pathname, replace]);
+
+  function handleSelect(colorId: string): void {
+    console.log("colorId", colorId);
+
+    // Avoids unnecessary updates
+    if (defaultSelectedValue === colorId) return;
+    params.set("color", colorId);
+    replace(`${pathname}?${params.toString()}`);
   }
 
-  useEffect(() => {
-    // set initial the default color value to selected color id
-    const defaultColorValue: string = colors.length > 1 ? "" : colors[0].id;
-    if (defaultColorValue) onSelect(defaultColorValue);
-  }, [colors]);
+  function getCheckedColor(id: string): boolean {
+    return defaultSelectedValue === id;
+  }
 
   return (
     <>
       <h1>Color Infos</h1>
       <p>{selectedColor?.name}</p>
 
-      <RadioGroup defaultValue={selectedColor?.name} onValueChange={onSelect}>
+      <RadioGroup
+        defaultValue={selectedColor?.name}
+        onValueChange={(event) => handleSelect(event)}
+      >
         {colors.map((color, index) => {
           const isChecked = getCheckedColor(color.id);
 

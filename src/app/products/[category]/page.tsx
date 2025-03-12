@@ -4,8 +4,6 @@ import { getCachedProductsByCategory } from "@/actions/actions";
 import ProductByCategoryCard from "@/components/ProductByCategoryCard";
 import { ProductCategoryProps } from "@/types/ProductCategory";
 
-import Loading from "./loading";
-
 interface ProductsByCategoryPageProps {
   params: Promise<{ category: string }>;
 }
@@ -17,7 +15,7 @@ async function ProductsByCategoryPage({
     await getCachedProductsByCategory(category);
 
   return (
-    <Suspense fallback={<Loading />}>
+    <>
       <h1>Produkte nach Kategorie: {category}</h1>
       <ul>
         {products.map((product, index) => (
@@ -26,7 +24,7 @@ async function ProductsByCategoryPage({
           </li>
         ))}
       </ul>
-    </Suspense>
+    </>
   );
 }
 

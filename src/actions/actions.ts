@@ -36,22 +36,19 @@ async function getProduct(
 
     // remove colorConnection from prisma object if it exists and contains color and sort by colorSuffix
     const sortedColorConnection = colorConnection
-    .map(({ color, colorSuffix }) => ({
-      ...color,
-      colorSuffix,
-    }))
-    .sort((a, b) => a.colorSuffix - b.colorSuffix), // Sortierung nach colorSuffix
-      
-    )
-   // merge productWithoutColorConnection with a new colors array
+      .map(({ color, colorSuffix }) => ({
+        ...color,
+        colorSuffix,
+      }))
+      .sort((a, b) => a.colorSuffix - b.colorSuffix); // Sortierung nach colorSuffix
+
+    // merge productWithoutColorConnection with a new colors array
     // each color object includes an additional colorSuffix property
     const productWithColorAndArticle: ProductWithColorAndArticlesProps = {
       ...rest,
       articles: sortedArticles,
-      colors: sortedColorConnection
+      colors: sortedColorConnection,
     };
- 
-    
 
     return productWithColorAndArticle;
   } catch (error: any) {
