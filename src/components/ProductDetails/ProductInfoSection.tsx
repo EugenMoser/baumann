@@ -1,7 +1,7 @@
 "use client";
 
-import addThousendSeperator from "@/lib/utils/addThousendSeperator";
-import sendInquiry from "@/lib/utils/sendInquire";
+import addThousendSeperator from "@/lib/helpers/addThousendSeperator";
+import sendInquiry from "@/lib/helpers/sendInquire";
 import {
   ArticleProps,
   ColorProps,

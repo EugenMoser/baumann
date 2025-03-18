@@ -1,16 +1,37 @@
 "use server";
 import bcrypt from "bcryptjs";
+import exp from "constants";
 import { randomBytes } from "crypto";
 import nodemailer from "nodemailer";
+import { z } from "zod";
 
 import { prisma } from "@/lib/db/prisma";
+
+//todo: zod schema implementiert, noch testen....
+const passwordRequestFormSchema = z.object({
+  email: z.string().email(),
+  // password: z.string(),
+});
+
+const passwordResetFormSchema = z.object({
+  token: z.string(),
+  password: z.string(),
+  expiresAt: z.date(),
+});
+const passwordResetSchema = passwordResetFormSchema.omit({ expiresAt: true });
+
+// ********************* password actions *********************
 
 export async function passwordRequest(
   previousState: string | null | undefined,
   formData: FormData,
 ) {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
-  const email = formData.get("email") as string;
+  const { email } = passwordRequestFormSchema.parse({
+    email: formData.get("email") as string,
+  });
+
+  //const email = formData.get("email") as string;
   try {
     if (email) {
       // find authorised user
@@ -70,8 +91,10 @@ export async function passwordReset(
   formData: FormData,
 ) {
   try {
-    const token = formData.get("token") as string;
-    const password = formData.get("password") as string;
+    const { token, password } = passwordResetSchema.parse({
+      token: formData.get("token"),
+      password: formData.get("password"),
+    });
 
     console.log("token", token, "password", password);
     // if token or password is missing

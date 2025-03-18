@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
-import { getCachedProductsByCategory } from "@/actions/actions";
 import ProductByCategoryCard from "@/components/ProductByCategoryCard";
+import { getCachedProductsByCategory } from "@/lib/database";
 import { ProductCategoryProps } from "@/types/ProductCategory";
 
 interface ProductsByCategoryPageProps {

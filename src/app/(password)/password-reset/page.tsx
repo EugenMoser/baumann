@@ -1,28 +1,42 @@
 "use client";
-import { useActionState, useEffect, useState } from "react";
+import {
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import {
   isPasswordAlreadyReset,
   passwordReset,
-} from "@/actions/passwordActions";
+} from "@/lib/actions";
 
 function PasswordResetPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token: string | null = searchParams.get("token");
 
+  //todo: nochmal prüfen ob passwordReset und isPasswordAlreadyReset in server component abgerufen werden muss
+  // hier die url https://nextjs.org/learn/dashboard-app/adding-search-and-pagination#best-practice-debouncing bei Adding pagination
   const [message, action, isPending] = useActionState(passwordReset, null);
 
   const [isValidToken, setIsValidToken] = useState<boolean>(true);
 
+  //todo: statt input hidden folgendes ausprobieren:
+  //todo: const passwordResetWithToken = passwordReset.bind(null, token);
+
   // check if token is valid or is already used
   useEffect(() => {
-    const checkTokenValidity = async () => {
-      const isValid = token ? await isPasswordAlreadyReset(token) : false;
+    async function checkTokenValidity(): Promise<void> {
+      const isValid: boolean = token
+        ? await isPasswordAlreadyReset(token)
+        : false;
       setIsValidToken(!isValid);
-    };
+    }
 
     checkTokenValidity();
   }, [token]);

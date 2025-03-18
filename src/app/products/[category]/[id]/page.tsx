@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-import { getCachedProduct } from "@/actions/actions";
 import BackButton from "@/components/BackButton";
 import ArticleSection from "@/components/ProductDetails/ArticleSection";
 import ColorSection from "@/components/ProductDetails/ColorSection";
 import ProductInfoSection from "@/components/ProductDetails/ProductInfoSection";
 import ProductSection from "@/components/ProductDetails/ProductSection";
+import { getCachedProduct } from "@/lib/database";
 import {
   ArticleProps,
   ColorProps,

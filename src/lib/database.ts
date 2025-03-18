@@ -8,7 +8,10 @@ import {
 } from "@/types/Product";
 import { ProductCategoryProps } from "@/types/ProductCategory";
 
-// *************  get product by id
+//todo: fetch products from database in a separate file like lib/database.ts
+//todo actions only for CRUD operations
+
+// ********************* get product by id *********************
 async function getProduct(
   id: string,
 ): Promise<ProductWithColorAndArticlesProps> {
@@ -52,7 +55,8 @@ async function getProduct(
 
     return productWithColorAndArticle;
   } catch (error: any) {
-    console.error(`Error at getProduct function ID ${id}:`, error);
+    console.error("Database Error:", error);
+
     // throw the error to error.tsx
     throw new Error(
       `Failed to fetch products. Error message: ${error.message}`,
@@ -69,7 +73,7 @@ export const getCachedProduct: (
   { revalidate: 60 * 60 * 24 }, // 24 hours
 );
 
-// ************* get products by category
+// ********************* get products by category *********************
 export async function getProductsByCategory(
   category: string,
 ): Promise<ProductCategoryProps[]> {
@@ -91,7 +95,8 @@ export async function getProductsByCategory(
     const sortedProducts = product.sort((a, b) => a.prio - b.prio);
     return sortedProducts;
   } catch (error: any) {
-    console.error(`Error at getProductsByCategory function`, error);
+    console.error("Database Error:", error);
+
     // throw the error to error.tsx
     throw new Error(
       `Failed to fetch products. Error message: ${error.message}`,

@@ -1,13 +1,19 @@
 "use client";
-import { Suspense, useActionState, useEffect, useState } from "react";
+import {
+  Suspense,
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
 
 import { useRouter } from "next/navigation";
 
-import { passwordRequest } from "@/actions/passwordActions";
+import { passwordRequest } from "@/lib/actions";
 
 import Loading from "./loading";
 
 function PasswordRequestPage() {
+  //todo: nochmal prüfen ob passwordRequest in server component abgerufen werden muss
   const [message, action] = useActionState(passwordRequest, null);
   const router = useRouter();
 
