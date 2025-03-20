@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { passwordRequest, State } from "@/lib/actions";
 
 // todo: implement shadcn ui form
-function LoginForm(): React.JSX.Element | null {
+export default function PasswordRequestForm(): React.JSX.Element | null {
   const initialState: State = { message: "", errors: {}, redirect: false };
   const [state, formAction] = useActionState(passwordRequest, initialState);
   const router = useRouter();
@@ -65,5 +65,3 @@ function LoginForm(): React.JSX.Element | null {
     </form>
   );
 }
-
-export default LoginForm;
