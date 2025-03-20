@@ -10,7 +10,7 @@ interface NavbarProps {}
 function Navbar({}: NavbarProps): React.JSX.Element {
   const pathname = usePathname();
   return (
-    <div className="m- flex flex-row justify-between gap-3">
+    <nav className="m- flex flex-row justify-between gap-3">
       {productCategories.map((category) => (
         <Link
           key={category.category}
@@ -25,7 +25,7 @@ function Navbar({}: NavbarProps): React.JSX.Element {
           {category.name}
         </Link>
       ))}
-    </div>
+    </nav>
   );
 }
 

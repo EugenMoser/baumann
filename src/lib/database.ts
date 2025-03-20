@@ -7,6 +7,7 @@ import {
   ProductWithColorConnectionProps,
 } from "@/types/Product";
 import { ProductCategoryProps } from "@/types/ProductCategory";
+import { Admin } from "@prisma/client";
 
 //todo: fetch products from database in a separate file like lib/database.ts
 //todo actions only for CRUD operations
