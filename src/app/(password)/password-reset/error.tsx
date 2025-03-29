@@ -4,6 +4,8 @@ import { useEffect } from "react";
 
 import { redirect } from "next/navigation";
 
+import CustomButton from "@/components/CustomButton";
+
 export default function Error({
   error,
   reset,
@@ -13,7 +15,7 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
+    console.error("Error page password reset " + error);
   }, [error]);
 
   return (
@@ -22,8 +24,8 @@ export default function Error({
         Ups! Irgendetwas ist beim Reset der E-Mail schief gelaufen. Hier ist die
         Fehlermeldung: {error.message}. Grüße Ihr Webserver
       </h2>
-      <button onClick={() => reset()}>Seite neue laden</button>{" "}
-      <button onClick={() => redirect("/")}>Zurück zur Startseite</button>
+      <CustomButton type="button" buttonType="reset" reset={reset} />
+      <CustomButton type="button" buttonType="goHome" />
     </div>
   );
 }

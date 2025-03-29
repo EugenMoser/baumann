@@ -56,8 +56,6 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
   }, [articles, searchParams, pathname, replace]);
 
   function handleSelect(articleId: string) {
-    console.log("articleId", articleId);
-
     // Avoids unnecessary updates
     if (defaultSelectedValue === articleId) return;
     params.set("article", articleId);

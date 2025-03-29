@@ -40,7 +40,6 @@ function ColorSection({
 
   // get current value from the SearchParams
   const defaultSelectedValue = searchParams.get("color") || "";
-  console.log("color length | id", colors.length, colors[0].id);
   useEffect(() => {
     // set initial color value to to the first color
     const defaultColorValue: string = colors.length > 0 ? colors[0].id : "";
@@ -53,8 +52,6 @@ function ColorSection({
   }, [colors, searchParams, pathname, replace]);
 
   function handleSelect(colorId: string): void {
-    console.log("colorId", colorId);
-
     // Avoids unnecessary updates
     if (defaultSelectedValue === colorId) return;
     params.set("color", colorId);

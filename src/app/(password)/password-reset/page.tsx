@@ -1,90 +1,47 @@
-"use client";
-import {
-  useActionState,
-  useEffect,
-  useState,
-} from "react";
+import { redirect } from "next/navigation";
 
-import {
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import CustomButton from "@/components/CustomButton";
+import PasswordResetForm from "@/components/PasswordResetForm";
+import { Button } from "@/components/ui/button";
+import { isPasswordAlreadyReset } from "@/lib/database";
 
-import {
-  isPasswordAlreadyReset,
-  passwordReset,
-} from "@/lib/actions";
+type PasswordResetPageProps = {
+  searchParams: Promise<{ token?: string }>;
+};
 
-function PasswordResetPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const token: string | null = searchParams.get("token");
-
+export default async function PasswordResetPage({
+  searchParams,
+}: PasswordResetPageProps): Promise<React.JSX.Element> {
   //todo: nochmal prüfen ob passwordReset und isPasswordAlreadyReset in server component abgerufen werden muss
   // hier die url https://nextjs.org/learn/dashboard-app/adding-search-and-pagination#best-practice-debouncing bei Adding pagination
-  const [message, action, isPending] = useActionState(passwordReset, null);
-
-  const [isValidToken, setIsValidToken] = useState<boolean>(true);
 
   //todo: statt input hidden folgendes ausprobieren:
   //todo: const passwordResetWithToken = passwordReset.bind(null, token);
 
-  // check if token is valid or is already used
-  useEffect(() => {
-    async function checkTokenValidity(): Promise<void> {
-      const isValid: boolean = token
-        ? await isPasswordAlreadyReset(token)
-        : false;
-      setIsValidToken(!isValid);
-    }
+  // // check if token is valid or is already used
+  // useEffect(() => {
+  //   async function checkTokenValidity(): Promise<void> {
+  //     const isValid: boolean = token
+  //       ? await isPasswordAlreadyReset(token)
+  //       : false;
+  //     setIsValidToken(!isValid);
+  //   }
 
-    checkTokenValidity();
-  }, [token]);
-
-  // redirect to dashboard after 3 seconds
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        router.push("/login");
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [message, router]);
-
-  if (!token) {
-    return <p>Token fehlt</p>;
-  }
-
-  if (isValidToken) {
-    return <div>Der Link ist bereits verwendet worden und ist ungültig.</div>;
-  }
+  //   checkTokenValidity();
+  // }, [token]);
+  const { token } = await searchParams;
+  const isTokenReset: boolean = await isPasswordAlreadyReset(token);
 
   return (
-    !isValidToken && (
-      <>
-        <h1>Neues Passwort setzen</h1>
-        <form action={action}>
-          <>
-            <input
-              type="password"
-              name="password"
-              placeholder="Neues Passwort"
-              required
-            />
-            {/*set token to formData*/}
-            <input type="hidden" name="token" value={token} />
-          </>
-
-          <button type="submit" disabled={isPending}>
-            Passwort speichern
-          </button>
-          {isPending && "Lädt..."}
-        </form>
-        {message && <p>{message}</p>}
-      </>
-    )
+    <>
+      <h1>Neues Passwort setzen</h1>
+      {!isTokenReset && (
+        <>
+          <p>Dieser Link ist nicht mehr gültig.</p>
+          <CustomButton type="button" buttonType="goLogin" />
+        </>
+      )}
+      {isTokenReset && <PasswordResetForm />}
+    </>
   );
 }
-
-export default PasswordResetPage;

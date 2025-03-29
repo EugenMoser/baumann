@@ -4,35 +4,40 @@ import { randomBytes } from "crypto";
 import nodemailer from "nodemailer";
 import { z } from "zod";
 
-import { prisma } from "@/lib/db/prisma";
-import { Admin } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
+import {
+  Admin,
+  PasswordReset,
+} from "@prisma/client";
+
+import isTokenValid from "./helpers/isTokenValid";
 
 //todo: zod schema implementiert, noch testen....
 
 const PasswordFormSchema = z.object({
   token: z.string(),
   email: z.coerce.string().email("Bitte gib eine gültige E-Mail-Adresse ein."),
-  password: z.string(),
-  expiresAt: z.date(),
+  password: z.string().min(6, "Passwort muss mindestens 6 Zeichen lang sein."),
+  confirmPassword: z
+    .string()
+    .min(6, "Passwort muss mindestens 6 Zeichen lang sein."),
 });
 
-const PasswordRequest = PasswordFormSchema.omit({
-  token: true,
-  password: true,
-  expiresAt: true,
-});
-const PasswordReset = PasswordFormSchema.omit({
+const PasswordRequestForm = PasswordFormSchema.pick({
   email: true,
-  expiresAt: true,
+});
+const PasswordResetForm = PasswordFormSchema.omit({
+  email: true,
 });
 
 export type State = {
   errors?: {
     email?: string[];
     password?: string[];
+    confirmPassword?: string[];
   };
+  requestResetSuccess?: boolean;
   message: string;
-  redirect: boolean;
 };
 
 // ********************* password actions *********************
@@ -40,18 +45,16 @@ export type State = {
 export async function passwordRequest(
   previousState: State,
   formData: FormData,
-) {
+): Promise<State> {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
-  const validatedFields = PasswordRequest.safeParse({
+  const validatedFields = PasswordRequestForm.safeParse({
     email: formData.get("email"),
   });
-
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Link konnte nicht angefordert werden.",
-      redirect: false,
     };
   }
   const { email } = validatedFields.data;
@@ -66,7 +69,7 @@ export async function passwordRequest(
       return {
         message:
           "Falls deine Email berechtigt ist, wurde eine Nachricht gesendet. muss später entfernt werden -->>(!!!!!!!kein User gefunden)",
-        redirect: true,
+        requestResetSuccess: true,
       };
     }
   } catch (error) {
@@ -82,7 +85,7 @@ export async function passwordRequest(
       data: {
         email,
         token: resetToken,
-        expiresAt: new Date(Date.now() + 600000), // 10 min valid
+        expiresAt: new Date(Date.now() + 2 * 60 * 1000), // 2 min valid
       },
     });
   } catch (error) {
@@ -119,67 +122,75 @@ export async function passwordRequest(
   return {
     message:
       "Falls deine Email berechtigt ist, wurde eine Nachricht gesendet. muss später entfernt werden -->>(!!!!!!! User gefunden und reset mail gesendet)",
-    redirect: true,
+    requestResetSuccess: true,
   };
 }
 
 export async function passwordReset(
-  previousState: string | null | undefined,
+  previousState: State,
   formData: FormData,
-) {
+): Promise<State> {
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+  const validatedFields = PasswordResetForm.safeParse({
+    token: formData.get("token"),
+    password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword"),
+  });
+
+  // if form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Passwort konnte nicht zurückgesetzt werden.",
+    };
+  }
+  const { token, password, confirmPassword } = validatedFields.data;
+
+  if (password !== confirmPassword) {
+    return {
+      message: "Passwörter stimmen nicht überein.",
+    };
+  }
+
+  let resetEntry: PasswordReset | null = null;
+
   try {
-    const { token, password } = PasswordReset.parse({
-      token: formData.get("token"),
-      password: formData.get("password"),
-    });
-
-    console.log("token", token, "password", password);
-    // if token or password is missing
-    if (!password) {
-      return "Passwort erforderlich.";
-    }
-    if (!token) {
-      return "Die Gültigkeit des Links ist bereits abgelaufen.";
-    }
-
     // check if token is valid
-    const resetEntry = await prisma.passwordReset.findUnique({
+    resetEntry = await prisma.passwordReset.findUnique({
       where: { token },
     });
 
-    //if token is not valid
-    if (!resetEntry || resetEntry.expiresAt < new Date()) {
-      return "Token ist ungültig oder abgelaufen.";
+    // if token is not valid
+    if (!resetEntry || !isTokenValid(resetEntry.expiresAt)) {
+      return { message: "Token ist ungültig oder abgelaufen." };
     }
+  } catch (error) {
+    console.error("Faild to find token :", error);
+    throw new Error("Interner Serverfehler");
+  }
 
+  try {
+    // update password at database collection admin
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // update password at database collection admin
     await prisma.admin.update({
       where: { email: resetEntry.email },
       data: { password: hashedPassword },
     });
+  } catch (error) {
+    console.error("Faild to update password:", error);
+    throw new Error("Interner Serverfehler");
+  }
 
+  try {
     // delete database entry (and token)
     await prisma.passwordReset.delete({ where: { token } });
-
-    return "Passwort erfolgreich zurückgesetzt!";
   } catch (error) {
-    console.error("Fehler:", error);
-    return "Interner Serverfehler";
+    console.error("Faild to delete token:", error);
+    throw new Error("Interner Serverfehler");
   }
-}
-
-export async function isPasswordAlreadyReset(token: string) {
-  try {
-    const tokenExists: boolean =
-      (await prisma.passwordReset.findUnique({
-        where: { token },
-      })) !== null;
-
-    return tokenExists;
-  } catch (error) {
-    console.error("Fehler:", error);
-    return false;
-  }
+  return {
+    message: "Passwort erfolgreich zurückgesetzt!",
+    requestResetSuccess: true,
+  };
 }

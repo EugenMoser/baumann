@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
     <div>
-      <p>Sendet email...</p>
+      <p>Loading (request)...</p>
       {/*//todo: evtl. Spinner hinzufügen */}
     </div>
   );

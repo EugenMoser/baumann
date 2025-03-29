@@ -1,13 +1,15 @@
 "use server";
 import { unstable_cache } from "next/cache";
 
-import { prisma } from "@/lib/db/prisma";
+import { prisma } from "@/lib/prisma";
 import {
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
 } from "@/types/Product";
 import { ProductCategoryProps } from "@/types/ProductCategory";
-import { Admin } from "@prisma/client";
+import { PasswordReset } from "@prisma/client";
+
+import isTokenValid from "./helpers/isTokenValid";
 
 //todo: fetch products from database in a separate file like lib/database.ts
 //todo actions only for CRUD operations
@@ -113,3 +115,21 @@ export const getCachedProductsByCategory: (
   ["products-by-category"],
   { revalidate: 60 * 60 * 24 }, // 24 hours
 );
+
+export async function isPasswordAlreadyReset(token: string | undefined) {
+  if (!token) return false;
+  let data: PasswordReset | null = null;
+  try {
+    data = await prisma.passwordReset.findUnique({
+      where: { token },
+    });
+  } catch (error) {
+    console.error("Fehler:", error);
+    return false;
+  }
+  //if token is not found return false
+  if (!data) return false;
+
+  //if expiresAt is older than now return false
+  return isTokenValid(data.expiresAt);
+}

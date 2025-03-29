@@ -4,6 +4,8 @@ import { useEffect } from "react";
 
 import { redirect } from "next/navigation";
 
+import CustomButton from "@/components/CustomButton";
+
 export default function Error({
   error,
   reset,
@@ -20,10 +22,12 @@ export default function Error({
     <div>
       <h2>
         Ups! Irgendetwas ist beim Senden der E-Mail schief gelaufen. Hier ist
-        die Fehlermeldung: {error.message}. Grüße Ihr Webserver
+        die Fehlermeldung: <br />
+        <span className="text-red-500">{error.message}</span>
+        <br /> Grüße Ihr Webserver
       </h2>
-      <button onClick={() => reset()}>Seite neue laden</button>{" "}
-      <button onClick={() => redirect("/")}>Zurück zur Startseite</button>
+      <CustomButton type="button" buttonType="reset" reset={reset} />
+      <CustomButton type="button" buttonType="goHome" />
     </div>
   );
 }

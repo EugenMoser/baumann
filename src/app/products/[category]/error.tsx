@@ -4,6 +4,8 @@ import { useEffect } from "react";
 
 import { redirect } from "next/navigation";
 
+import CustomButton from "@/components/CustomButton";
+
 export default function Error({
   error,
   reset,
@@ -22,8 +24,8 @@ export default function Error({
         Ups! Irgendetwas ist schief gelaufen und ich habe keine Ahnung was. Hier
         ist die Fehlermeldung: {error.message}. Grüße Ihr Webserver
       </h2>
-      <button onClick={() => reset()}>Seite neue laden</button>{" "}
-      <button onClick={() => redirect("/")}>Zurück zur Startseite</button>
+      <CustomButton type="button" buttonType="reset" reset={reset} />
+      <CustomButton type="button" buttonType="goHome" />
     </div>
   );
 }

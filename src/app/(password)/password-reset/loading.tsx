@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
     <div>
-      <p>Email wird zurückgesetzt...</p>
+      <p>Loading (reset)...</p>
       {/*//todo: evtl. Spinner hinzufügen */}
     </div>
   );

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import BackButton from "@/components/BackButton";
+import CustomButton from "@/components/CustomButton";
 import ArticleSection from "@/components/ProductDetails/ArticleSection";
 import ColorSection from "@/components/ProductDetails/ColorSection";
 import ProductInfoSection from "@/components/ProductDetails/ProductInfoSection";
@@ -61,7 +61,11 @@ async function ProductPage({
       </section>
 
       <section>
-        <BackButton product={product} />
+        <CustomButton
+          type="button"
+          buttonType="home"
+          category={product.category}
+        />
       </section>
       <Link
         href={{

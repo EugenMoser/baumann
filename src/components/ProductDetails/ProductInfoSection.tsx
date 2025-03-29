@@ -1,6 +1,6 @@
 "use client";
 
-import addThousendSeperator from "@/lib/helpers/addThousendSeperator";
+import addThousendSeperator from "@/lib/helpers/addThousendSeparator";
 import sendInquiry from "@/lib/helpers/sendInquire";
 import {
   ArticleProps,
