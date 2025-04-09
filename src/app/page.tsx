@@ -4,7 +4,7 @@ import productCategories from "@/constants/productCategories";
 
 export default async function Home() {
   return (
-    <>
+    <main>
       <h1>Willkommen auf unserer Webseite</h1>
       <p>
         Wir entwickeln und produzieren im Allgäu seit 41 Jahren Spritzgussteile
@@ -32,6 +32,6 @@ export default async function Home() {
           </li>
         ))}
       </ul>
-    </>
+    </main>
   );
 }

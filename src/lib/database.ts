@@ -15,7 +15,7 @@ import isTokenValid from "./helpers/isTokenValid";
 //todo actions only for CRUD operations
 
 // ********************* get product by id *********************
-async function getProduct(
+async function getProductById(
   id: string,
 ): Promise<ProductWithColorAndArticlesProps> {
   let product: ProductWithColorConnectionProps | null = null;
@@ -68,10 +68,10 @@ async function getProduct(
 }
 
 // cache the product
-export const getCachedProduct: (
+export const getCachedProductById: (
   id: string,
 ) => Promise<ProductWithColorAndArticlesProps> = unstable_cache(
-  getProduct,
+  getProductById,
   ["product"],
   { revalidate: 60 * 60 * 24 }, // 24 hours
 );
@@ -108,7 +108,7 @@ export async function getProductsByCategory(
 }
 
 // cache the products
-export const getCachedProductsByCategory: (
+export const getCachedProductByIdsByCategory: (
   category: string,
 ) => Promise<ProductCategoryProps[]> = unstable_cache(
   getProductsByCategory,

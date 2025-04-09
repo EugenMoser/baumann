@@ -5,7 +5,7 @@ import ArticleSection from "@/components/ProductDetails/ArticleSection";
 import ColorSection from "@/components/ProductDetails/ColorSection";
 import ProductInfoSection from "@/components/ProductDetails/ProductInfoSection";
 import ProductSection from "@/components/ProductDetails/ProductSection";
-import { getCachedProduct } from "@/lib/database";
+import { getCachedProductById } from "@/lib/database";
 import {
   ArticleProps,
   ColorProps,
@@ -27,7 +27,8 @@ async function ProductPage({
   const selectedArticleId = (await searchParams)?.article || "";
   const selectedColorId = (await searchParams)?.color || "";
 
-  const product: ProductWithColorAndArticlesProps = await getCachedProduct(id);
+  const product: ProductWithColorAndArticlesProps =
+    await getCachedProductById(id);
 
   // <ProductDetails product={product} articleId={articleId} colorId={colorId} />
 
@@ -40,7 +41,7 @@ async function ProductPage({
     product.colors.find((color) => color.id === selectedColorId) || undefined;
 
   return (
-    <>
+    <main>
       <section>
         <ProductSection product={product} />
       </section>
@@ -63,7 +64,7 @@ async function ProductPage({
       <section>
         <CustomButton
           type="button"
-          buttonType="home"
+          buttonType="goBack"
           category={product.category}
         />
       </section>
@@ -75,7 +76,7 @@ async function ProductPage({
       >
         <button>Update Product</button>
       </Link>
-    </>
+    </main>
   );
 }
 

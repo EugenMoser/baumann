@@ -5,6 +5,7 @@ import nodemailer from "nodemailer";
 import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
+import { FormState } from "@/types/FormState";
 import {
   Admin,
   PasswordReset,
@@ -44,8 +45,11 @@ export type State = {
 
 export async function passwordRequest(
   previousState: State,
+export async function passwordRequestAction(
+  previousState: FormState,
   formData: FormData,
 ): Promise<State> {
+): Promise<FormState> {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
   const validatedFields = PasswordRequestForm.safeParse({
     email: formData.get("email"),
@@ -69,7 +73,7 @@ export async function passwordRequest(
       return {
         message:
           "Falls deine Email berechtigt ist, wurde eine Nachricht gesendet. muss später entfernt werden -->>(!!!!!!!kein User gefunden)",
-        requestResetSuccess: true,
+        actionSuccess: true,
       };
     }
   } catch (error) {
@@ -122,14 +126,14 @@ export async function passwordRequest(
   return {
     message:
       "Falls deine Email berechtigt ist, wurde eine Nachricht gesendet. muss später entfernt werden -->>(!!!!!!! User gefunden und reset mail gesendet)",
-    requestResetSuccess: true,
+    actionSuccess: true,
   };
 }
 
-export async function passwordReset(
-  previousState: State,
+export async function passwordResetAction(
+  previousState: FormState,
   formData: FormData,
-): Promise<State> {
+): Promise<FormState> {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
   const validatedFields = PasswordResetForm.safeParse({
     token: formData.get("token"),
@@ -191,6 +195,6 @@ export async function passwordReset(
   }
   return {
     message: "Passwort erfolgreich zurückgesetzt!",
-    requestResetSuccess: true,
+    actionSuccess: true,
   };
 }

@@ -1,7 +1,5 @@
-import { Suspense } from "react";
-
 import ProductByCategoryCard from "@/components/ProductByCategoryCard";
-import { getCachedProductsByCategory } from "@/lib/database";
+import { getCachedProductByIdsByCategory } from "@/lib/database";
 import { ProductCategoryProps } from "@/types/ProductCategory";
 
 interface ProductsByCategoryPageProps {
@@ -12,10 +10,10 @@ async function ProductsByCategoryPage({
 }: ProductsByCategoryPageProps): Promise<React.JSX.Element> {
   const { category } = await params;
   const products: ProductCategoryProps[] =
-    await getCachedProductsByCategory(category);
+    await getCachedProductByIdsByCategory(category);
 
   return (
-    <>
+    <main>
       <h1>Produkte nach Kategorie: {category}</h1>
       <ul>
         {products.map((product, index) => (
@@ -24,7 +22,7 @@ async function ProductsByCategoryPage({
           </li>
         ))}
       </ul>
-    </>
+    </main>
   );
 }
 

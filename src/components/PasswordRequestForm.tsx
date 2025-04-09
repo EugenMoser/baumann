@@ -1,16 +1,9 @@
 "use client";
 
-import {
-  useActionState,
-  useEffect,
-  useState,
-} from "react";
+import { useActionState, useEffect, useState } from "react";
 
 import { Input } from "@/components/ui/input";
-import {
-  passwordRequest,
-  State,
-} from "@/lib/actions";
+import { passwordRequestAction, State } from "@/lib/actions";
 
 import CustomButton from "./CustomButton";
 import { Button } from "./ui/button";
@@ -20,11 +13,11 @@ export default function PasswordRequestForm(): React.JSX.Element | null {
   const initialState: State = {
     message: "",
     errors: {},
-    requestResetSuccess: false,
+    actionSuccess: false,
   };
 
   const [state, formAction, isPending] = useActionState(
-    passwordRequest,
+    passwordRequestAction,
     initialState,
   );
 
@@ -75,7 +68,7 @@ export default function PasswordRequestForm(): React.JSX.Element | null {
           <p className="mt-2 text-sm text-red-500">{state.message}</p>
         </div>
       )}
-      {!isPending && state.requestResetSuccess && (
+      {!isPending && state.actionSuccess && (
         <CustomButton type="button" buttonType="goLogin" />
       )}
     </form>

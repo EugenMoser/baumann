@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 
-import { redirect } from "next/navigation";
-
 import CustomButton from "@/components/CustomButton";
 
 export default function Error({

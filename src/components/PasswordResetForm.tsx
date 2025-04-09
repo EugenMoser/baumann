@@ -1,23 +1,12 @@
 "use client";
 
-import {
-  useActionState,
-  useEffect,
-  useState,
-} from "react";
+import { useActionState, useEffect, useState } from "react";
 
-import {
-  redirect,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  passwordReset,
-  State,
-} from "@/lib/actions";
+import { passwordResetAction, State } from "@/lib/actions";
 
 import CustomButton from "./CustomButton";
 
@@ -26,13 +15,13 @@ export default function PasswordResetForm(): React.JSX.Element | null {
   const initialState: State = {
     message: "",
     errors: {},
-    requestResetSuccess: false,
+    actionSuccess: false,
   };
   const searchParams = useSearchParams();
   const token: string | null = searchParams.get("token");
 
   const [state, formAction, isPending] = useActionState(
-    passwordReset,
+    passwordResetAction,
     initialState,
   );
 
@@ -55,10 +44,10 @@ export default function PasswordResetForm(): React.JSX.Element | null {
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   useEffect(() => {
-    if (state.requestResetSuccess) {
+    if (state.actionSuccess) {
       setIsDisabled(!isDisabled);
     }
-  }, [state.requestResetSuccess]);
+  }, [state.actionSuccess]);
   // solution for hydration error -> https://nextjs.org/docs/messages/react-hydration-error
   // useEffect(() => {
   //   setHasHydrated(true);
@@ -134,7 +123,7 @@ export default function PasswordResetForm(): React.JSX.Element | null {
           <p className="mt-2 text-sm text-red-500">{state.message}</p>
         </div>
       )}
-      {!isPending && !state.errors && state.requestResetSuccess && (
+      {!isPending && !state.errors && state.actionSuccess && (
         <CustomButton type="button" buttonType="goLogin" />
       )}
     </form>

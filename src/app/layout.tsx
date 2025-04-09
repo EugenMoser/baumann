@@ -17,13 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SessionProvider>
-      <html lang="de">
+    <html lang="de">
+      <SessionProvider>
         <body>
           <Navbar />
           {children}
         </body>
-      </html>
-    </SessionProvider>
+      </SessionProvider>
+    </html>
   );
 }
