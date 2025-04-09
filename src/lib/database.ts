@@ -7,7 +7,10 @@ import {
   ProductWithColorConnectionProps,
 } from "@/types/Product";
 import { ProductCategoryProps } from "@/types/ProductCategory";
-import { PasswordReset } from "@prisma/client";
+import {
+  Admin,
+  PasswordReset,
+} from "@prisma/client";
 
 import isTokenValid from "./helpers/isTokenValid";
 
@@ -132,4 +135,23 @@ export async function isPasswordAlreadyReset(token: string | undefined) {
 
   //if expiresAt is older than now return false
   return isTokenValid(data.expiresAt);
+}
+
+// ********************* get admin *********************
+
+export async function getAdminByEmail(email: string) {
+  let admin: Admin | null = null;
+  try {
+    admin = await prisma.admin.findUnique({
+      where: {
+        email: email as string,
+      },
+    });
+  } catch (error) {
+    console.error("Fehler:", error);
+    return null;
+  }
+  if (!admin) return null;
+
+  return admin;
 }

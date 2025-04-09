@@ -1,4 +1,4 @@
-import LogoutButton from "@/components/LogoutButton";
+import CustomButton from "@/components/CustomButton";
 
 export default async function DashboardPage() {
   return (
@@ -6,7 +6,7 @@ export default async function DashboardPage() {
       <h1>Willkommen</h1>
       <a href="/dashboard/addProduct">Produkt hinzufügen</a>
 
-      <LogoutButton />
+      <CustomButton type="button" buttonType="logout" />
     </>
   );
 }

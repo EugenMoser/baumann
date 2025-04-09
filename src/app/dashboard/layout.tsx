@@ -1,15 +1,12 @@
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { auth } from "src/auth";
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   if (!session) {
     redirect("/login");
   }
-
   return <div className="p-4">{children}</div>;
 }
 

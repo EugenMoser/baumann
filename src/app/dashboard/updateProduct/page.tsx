@@ -1,4 +1,4 @@
-import { getCachedProduct } from "@/lib/server-actions/productActions";
+import { getCachedProductById } from "@/lib/database";
 import { ProductWithColorAndArticlesProps } from "@/types/Product";
 
 interface UpdateProductPageProps {
@@ -13,7 +13,7 @@ async function UpdateProductPage({
   let product: ProductWithColorAndArticlesProps | null = null;
 
   try {
-    product = await getCachedProduct(id);
+    product = await getCachedProductById(id);
   } catch (error: any) {
     throw new Error(error);
   }

@@ -1,5 +1,4 @@
 "use client";
-
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 
@@ -8,7 +7,11 @@ import { Button } from "./ui/button";
 interface CustomButtonProps {
   buttonType:
     | "goHome"
+    | "goBack"
     | "goLogin"
+    | "goDashboard"
+    | "goResetPassword"
+    | "login"
     | "logout"
     | "request-link"
     | "change-password"
@@ -27,7 +30,7 @@ export default function CustomButton({
   reset,
 }: CustomButtonProps): React.JSX.Element {
   switch (buttonType) {
-    case "goHome":
+    case "goBack":
       if (category === undefined) {
         console.error("Back button requires a category");
         // if category is undefined, display the default button
@@ -57,14 +60,32 @@ export default function CustomButton({
         </Button>
       );
 
+    case "goDashboard":
+      return (
+        <Button type={type} onClick={() => redirect("/dashboard")}>
+          Weiter zum Dashboard
+        </Button>
+      );
+
     case "logout":
       return (
         <Button
           type={type}
-          onClick={() => signOut()}
+          onClick={() => signOut({ callbackUrl: "/login" })}
           className="rounded bg-red-500 p-2 text-white"
         >
           Logout
+        </Button>
+      );
+    case "login":
+      return (
+        <Button
+          type={type}
+          className="rounded bg-blue-500 p-2 text-white"
+          disabled={isDisabled}
+          onClick={() => redirect("/dashboard")}
+        >
+          Login
         </Button>
       );
 
@@ -82,6 +103,19 @@ export default function CustomButton({
         </Button>
       );
 
+    case "goHome":
+      return (
+        <Button type={type} onClick={() => redirect("/")}>
+          Zur Startseite
+        </Button>
+      );
+
+    case "goResetPassword":
+      return (
+        <Button type={type} onClick={() => redirect("/password-request")}>
+          Password zurücksetzen
+        </Button>
+      );
     default:
       return (
         <Button type={type} onClick={() => redirect("/")}>

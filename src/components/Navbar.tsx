@@ -1,14 +1,19 @@
 "use client";
+
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import productCategories from "@/constants/productCategories";
 
-interface NavbarProps {}
+import CustomButton from "./CustomButton";
 
+interface NavbarProps {}
 function Navbar({}: NavbarProps): React.JSX.Element {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
   return (
     <nav className="m- flex flex-row justify-between gap-3">
       {productCategories.map((category) => (
@@ -25,6 +30,7 @@ function Navbar({}: NavbarProps): React.JSX.Element {
           {category.name}
         </Link>
       ))}
+      {session && <CustomButton type="button" buttonType="logout" />}
     </nav>
   );
 }

@@ -1,8 +1,10 @@
 "use server";
+
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
+import { AuthError } from "next-auth";
 import nodemailer from "nodemailer";
-import { z } from "zod";
+import { signIn } from "src/auth";
 
 import { prisma } from "@/lib/prisma";
 import { FormState } from "@/types/FormState";
@@ -12,43 +14,67 @@ import {
 } from "@prisma/client";
 
 import isTokenValid from "./helpers/isTokenValid";
+import {
+  LoginFormSchema,
+  PasswordRequestForm,
+  PasswordResetForm,
+} from "./schemas";
 
-//todo: zod schema implementiert, noch testen....
+// ********************* login actions *********************
 
-const PasswordFormSchema = z.object({
-  token: z.string(),
-  email: z.coerce.string().email("Bitte gib eine gültige E-Mail-Adresse ein."),
-  password: z.string().min(6, "Passwort muss mindestens 6 Zeichen lang sein."),
-  confirmPassword: z
-    .string()
-    .min(6, "Passwort muss mindestens 6 Zeichen lang sein."),
-});
+//todo: add in database.ts
+export async function loginAction(
+  previousState: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  const validatedFields = LoginFormSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
 
-const PasswordRequestForm = PasswordFormSchema.pick({
-  email: true,
-});
-const PasswordResetForm = PasswordFormSchema.omit({
-  email: true,
-});
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Login fehlgeschlagen.",
+    };
+  }
+  const { email, password } = validatedFields.data;
 
-export type State = {
-  errors?: {
-    email?: string[];
-    password?: string[];
-    confirmPassword?: string[];
-  };
-  requestResetSuccess?: boolean;
-  message: string;
-};
+  try {
+    const result: any = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    });
+    if (result?.error) {
+      return {
+        message: "Login fehlgeschlagen. Bitte überprüfe deine Zugangsdaten.",
+      };
+    }
+  } catch (error: any) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return {
+            message:
+              "Login fehlgeschlagen. Bitte überprüfe deine Zugangsdaten.",
+          };
+        default:
+          return { message: "Etwas ist schief gelaufen!" };
+      }
+    }
+
+    throw error;
+  }
+  return { message: "Login erfolgreich", actionSuccess: true };
+}
 
 // ********************* password actions *********************
 
-export async function passwordRequest(
-  previousState: State,
 export async function passwordRequestAction(
   previousState: FormState,
   formData: FormData,
-): Promise<State> {
 ): Promise<FormState> {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
   const validatedFields = PasswordRequestForm.safeParse({
