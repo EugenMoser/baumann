@@ -5,7 +5,7 @@ import sendInquiry from "@/lib/helpers/sendInquire";
 import {
   ArticleProps,
   ColorProps,
-} from "@/types/Product";
+} from "@/types/ProductProps";
 
 interface ProductInfoSectionProps {
   selectedArticle: ArticleProps | undefined;

@@ -7,7 +7,7 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (!session) {
     redirect("/login");
   }
-  return <div className="p-4">{children}</div>;
+  return <main className="p-4">{children}</main>;
 }
 
 export default DashboardLayout;

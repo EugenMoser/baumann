@@ -11,9 +11,10 @@ import {
   useRouter,
 } from "next/navigation";
 
-import { loginAction } from "@/lib/actions";
+import { loginAction } from "@/actions/(login)/actions";
 
-import CustomButton from "./CustomButton";
+import CustomButton from "../CustomButton";
+import { Input } from "../ui/input";
 
 interface LoginFormProps {}
 
@@ -46,11 +47,10 @@ export default function LoginForm({}: LoginFormProps): React.JSX.Element {
   return (
     <>
       <form action={formAction}>
-        <input
+        <Input
           type="email"
           name="email"
           placeholder="E-Mail"
-          className="mb-2 w-full rounded border p-2"
           aria-describedby="email-error"
         />
         {state.errors?.email && (
@@ -63,11 +63,10 @@ export default function LoginForm({}: LoginFormProps): React.JSX.Element {
           </div>
         )}
 
-        <input
+        <Input
           type="password"
           name="password"
           placeholder="Password"
-          className="mb-2 w-full rounded border p-2"
           aria-describedby="password-error"
         />
         {state.errors?.password && (

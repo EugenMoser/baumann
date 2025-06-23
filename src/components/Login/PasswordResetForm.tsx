@@ -1,18 +1,22 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import {
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
 
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { passwordResetAction, State } from "@/lib/actions";
+import { passwordResetAction } from "@/lib/actions/addProduct";
+import { FormPasswordStates } from "@/types/FormStates";
 
-import CustomButton from "./CustomButton";
+import CustomButton from "../CustomButton";
 
 // todo: implement shadcn ui form
 export default function PasswordResetForm(): React.JSX.Element | null {
-  const initialState: State = {
+  const initialState: FormPasswordStates = {
     message: "",
     errors: {},
     actionSuccess: false,

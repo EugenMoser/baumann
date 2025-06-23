@@ -1,16 +1,20 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import {
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
 
+import { passwordRequestAction } from "@/actions/(login)/actions";
 import { Input } from "@/components/ui/input";
-import { passwordRequestAction, State } from "@/lib/actions";
+import { FormPasswordStates } from "@/types/FormStates";
 
-import CustomButton from "./CustomButton";
-import { Button } from "./ui/button";
+import CustomButton from "../CustomButton";
 
 // todo: implement shadcn ui form
 export default function PasswordRequestForm(): React.JSX.Element | null {
-  const initialState: State = {
+  const initialState: FormPasswordStates = {
     message: "",
     errors: {},
     actionSuccess: false,

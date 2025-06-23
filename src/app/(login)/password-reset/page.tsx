@@ -1,5 +1,5 @@
 import CustomButton from "@/components/CustomButton";
-import PasswordResetForm from "@/components/PasswordResetForm";
+import PasswordResetForm from "@/components/Login/PasswordResetForm";
 import { isPasswordAlreadyReset } from "@/lib/database";
 
 type PasswordResetPageProps = {

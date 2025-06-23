@@ -1,5 +1,5 @@
 import { getCachedProductById } from "@/lib/database";
-import { ProductWithColorAndArticlesProps } from "@/types/Product";
+import { ProductWithColorAndArticlesProps } from "@/types/ProductProps";
 
 interface UpdateProductPageProps {
   searchParams: Promise<{ id: string }>;

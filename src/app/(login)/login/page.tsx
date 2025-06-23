@@ -2,15 +2,19 @@ import { redirect } from "next/navigation";
 import { auth } from "src/auth";
 
 import CustomButton from "@/components/CustomButton";
-import LoginForm from "@/components/LoginForm";
+import LoginForm from "@/components/Login/LoginForm";
+import { checkAndRedirect } from "@/lib/helpers/authRedirect";
 
 export default async function LoginPage() {
-  // const session = await auth();
+  const { redirect: redirectUrl } = await checkAndRedirect({
+    url: "/dashboard",
+  });
 
-  // if (session) {
-  //   return redirect("/dashboard");
-  // }
+  if (redirectUrl) {
+    redirect(redirectUrl); // Weiterleitung zu /dashboard
+  }
 
+  // style https://blocks.so/login
   return (
     <div className="mx-auto mt-10 max-w-md rounded-lg border p-5">
       <h2 className="mb-4 text-xl font-bold">Login</h2>

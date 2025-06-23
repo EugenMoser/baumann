@@ -7,26 +7,23 @@ import nodemailer from "nodemailer";
 import { signIn } from "src/auth";
 
 import { prisma } from "@/lib/prisma";
-import { FormState } from "@/types/FormState";
+import { FormPasswordStates } from "@/types/FormStates";
 import {
   Admin,
   PasswordReset,
 } from "@prisma/client";
 
-import isTokenValid from "./helpers/isTokenValid";
+import isTokenValid from "../../helpers/isTokenValid";
 import {
   LoginFormSchema,
   PasswordRequestForm,
   PasswordResetForm,
-} from "./schemas";
+} from "../../schemas";
 
-// ********************* login actions *********************
-
-//todo: add in database.ts
 export async function loginAction(
-  previousState: FormState,
+  previousState: FormPasswordStates,
   formData: FormData,
-): Promise<FormState> {
+): Promise<FormPasswordStates> {
   const validatedFields = LoginFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -41,6 +38,7 @@ export async function loginAction(
   }
   const { email, password } = validatedFields.data;
 
+  // Check if user exists in database
   try {
     const result: any = await signIn("credentials", {
       email: email,
@@ -70,12 +68,10 @@ export async function loginAction(
   return { message: "Login erfolgreich", actionSuccess: true };
 }
 
-// ********************* password actions *********************
-
 export async function passwordRequestAction(
-  previousState: FormState,
+  previousState: FormPasswordStates,
   formData: FormData,
-): Promise<FormState> {
+): Promise<FormPasswordStates> {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
   const validatedFields = PasswordRequestForm.safeParse({
     email: formData.get("email"),
@@ -157,9 +153,9 @@ export async function passwordRequestAction(
 }
 
 export async function passwordResetAction(
-  previousState: FormState,
+  previousState: FormPasswordStates,
   formData: FormData,
-): Promise<FormState> {
+): Promise<FormPasswordStates> {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
   const validatedFields = PasswordResetForm.safeParse({
     token: formData.get("token"),

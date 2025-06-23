@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { cloudinaryImageUrl } from "@/constants/config";
-import { ProductWithColorAndArticlesProps } from "@/types/Product";
+import { ProductWithColorAndArticlesProps } from "@/types/ProductProps";
 
 interface ProductSectionProps {
   product: ProductWithColorAndArticlesProps;
@@ -18,13 +18,16 @@ function ProductSection({ product }: ProductSectionProps): React.JSX.Element {
       <p>{product.description3}</p>
       <p>{product.description4}</p>
       <p>{product.material}</p>
-      <Image
-        src={`${cloudinaryImageUrl}${product.imageUrlBig1!.replace(/ /g, "_")}`}
-        alt={product.name}
-        width={400}
-        height={400}
-        loading="lazy"
-      />
+      <div className="flex aspect-[4/3] w-[400px] justify-center">
+        <Image
+          src={`${cloudinaryImageUrl}${product.imageUrlBig1!.replace(/ /g, "_")}`}
+          alt={product.name}
+          width={400}
+          height={400}
+          loading="lazy"
+          className="object-contain"
+        />
+      </div>
     </>
   );
 }
