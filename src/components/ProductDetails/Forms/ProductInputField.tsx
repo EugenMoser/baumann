@@ -9,6 +9,7 @@ interface ProductInputFieldProps {
   "aria-describedby": string;
   placeholder?: string;
   accept?: string;
+  min?: number;
   step?: number;
   max?: number;
   value: string | number;
@@ -28,6 +29,7 @@ export default function ProductInputField(
         name={props.name}
         placeholder={props.placeholder}
         accept={props.accept}
+        min={props.min}
         step={props.step}
         max={props.max}
         value={props.value}

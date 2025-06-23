@@ -80,6 +80,7 @@ export default function ProductDetailsForm({
         title="Produkt - Priorität"
         type="number"
         placeholder="Product - Priorität bestimmen."
+        min={0}
         step={100}
         max={1000000}
         value={formData.productPrio}

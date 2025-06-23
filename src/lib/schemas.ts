@@ -32,7 +32,6 @@ export const ProductDetailsFormSchema = z.object({
   }),
   productPrio: z
     .number({ required_error: "Produktprio ist erforderlich." })
-    .positive("Produktprio muss mindestens 100 sein.")
     .int("Produktprio muss eine ganze Zahl sein.")
     .gte(100, "Produktprio muss mindestens 100 sein.")
     .lte(9999999, "Produktprio darf maximal 9999999 sein."),
