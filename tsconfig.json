@@ -26,7 +26,7 @@
       "@": ["src"],
       "@/components/*": ["src/components/*"],
       "@/lib/*": ["src/lib/*"],
-      "@/actions/*": ["src/actions/*"],
+      "@/actions/*": ["src/lib/actions/*"],
       "@/styles/*": ["src/styles/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/constants/*": ["src/constants/*"],

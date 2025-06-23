@@ -10,7 +10,7 @@ import {
   ArticleProps,
   ColorProps,
   ProductWithColorAndArticlesProps,
-} from "@/types/Product";
+} from "@/types/ProductProps";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;
@@ -29,8 +29,6 @@ async function ProductPage({
 
   const product: ProductWithColorAndArticlesProps =
     await getCachedProductById(id);
-
-  // <ProductDetails product={product} articleId={articleId} colorId={colorId} />
 
   const selectedArticle: ArticleProps | undefined =
     product.articles.find((article) => article.id === selectedArticleId) ||

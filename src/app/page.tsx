@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import productCategories from "@/constants/productCategories";
 
@@ -17,18 +18,19 @@ export default async function Home() {
       <h2>Unsere Bereiche</h2>
       <ul className="flex flex-col gap-4">
         {productCategories.map((productCategory) => (
-          <li
-            key={productCategory.name}
-            className="flex items-center justify-center bg-slate-50"
-          >
-            <a href={`/products/${productCategory.category}`}> hier klicken</a>
-            <Image
-              src={`/icons/${productCategory.icon}`}
-              alt={`Ein Icon für den ${productCategory.name}`}
-              width={32}
-              height={32}
-            />
-            <h3>{productCategory.name}</h3>
+          <li key={productCategory.name} className="h-auto bg-slate-50">
+            <Link
+              href={`/products/${productCategory.category}`}
+              className="flex w-[100%] items-center justify-center gap-4"
+            >
+              <Image
+                src={`/icons/${productCategory.icon}`}
+                alt={`Ein Icon für den ${productCategory.name}`}
+                width={32}
+                height={32}
+              />
+              <p>{productCategory.name}</p>
+            </Link>
           </li>
         ))}
       </ul>

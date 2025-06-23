@@ -1,6 +1,6 @@
 import ProductByCategoryCard from "@/components/ProductByCategoryCard";
 import { getCachedProductByIdsByCategory } from "@/lib/database";
-import { ProductCategoryProps } from "@/types/ProductCategory";
+import { ProductCategoryProps } from "@/types/ProductCategoryProps";
 
 interface ProductsByCategoryPageProps {
   params: Promise<{ category: string }>;
@@ -17,7 +17,10 @@ async function ProductsByCategoryPage({
       <h1>Produkte nach Kategorie: {category}</h1>
       <ul>
         {products.map((product, index) => (
-          <li key={index} className="mb-6 flex items-center gap-6 bg-slate-200">
+          <li
+            key={product.id}
+            className="mb-6 flex items-center gap-6 bg-slate-200"
+          >
             <ProductByCategoryCard product={product} />
           </li>
         ))}

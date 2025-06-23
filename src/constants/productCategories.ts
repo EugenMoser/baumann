@@ -1,5 +1,5 @@
 export type ProductCategoriesProps = {
-  category: string;
+  category: "moebel" | "halterung" | "wasser" | "lueftung" | "elektro";
   name: string;
   icon: string;
   href: string;

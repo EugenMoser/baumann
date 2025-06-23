@@ -15,7 +15,8 @@ interface CustomButtonProps {
     | "logout"
     | "request-link"
     | "change-password"
-    | "reset";
+    | "reset"
+    | "addProduct";
   type: "button" | "submit";
   category?: string;
   isDisabled?: boolean;
@@ -116,6 +117,9 @@ export default function CustomButton({
           Password zurücksetzen
         </Button>
       );
+
+    case "addProduct":
+      return <Button type={type}>Neues Produkt hinzufügen</Button>;
     default:
       return (
         <Button type={type} onClick={() => redirect("/")}>

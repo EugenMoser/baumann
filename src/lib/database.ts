@@ -2,13 +2,14 @@
 import { unstable_cache } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
+import { ProductCategoryProps } from "@/types/ProductCategoryProps";
 import {
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
-} from "@/types/Product";
-import { ProductCategoryProps } from "@/types/ProductCategory";
+} from "@/types/ProductProps";
 import {
   Admin,
+  Color,
   PasswordReset,
 } from "@prisma/client";
 
@@ -148,10 +149,23 @@ export async function getAdminByEmail(email: string) {
       },
     });
   } catch (error) {
-    console.error("Fehler:", error);
+    console.error("Keinen Admin gefunden:", error);
     return null;
   }
   if (!admin) return null;
 
   return admin;
+}
+
+// ********************* get color *********************
+
+export async function getAllColors() {
+  let color: Color[] | null = null;
+  try {
+    color = await prisma.color.findMany();
+    return color;
+  } catch (error) {
+    console.error("Keine Farben gefunden:", error);
+    return null;
+  }
 }
