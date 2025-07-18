@@ -7,10 +7,7 @@ import {
 import { ProductFormDataProps } from "@/types/ProductProps";
 
 import { prisma } from "../prisma";
-import {
-  ImageSmallFormSchema,
-  ProductDetailsFormSchema,
-} from "../schemas";
+import { ImageSmallFormSchema, ProductDetailsFormSchema } from "../schemas";
 import uploadSingleImageAction from "./imageUpload";
 
 interface AddProductDetailsActionProps {
@@ -37,13 +34,6 @@ export default async function addProductDetailsAction(
   const validatedImageFile = ImageSmallFormSchema.safeParse({
     imageSmall: uploadedImageSmall,
   });
-
-  console.log(
-    "----->>>>> validatedImageFile",
-
-    !validatedProductFields.success &&
-      validatedProductFields.error!.flatten().fieldErrors,
-  );
 
   // validation
   const productErrors = !validatedProductFields.success && {

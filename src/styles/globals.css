@@ -10,27 +10,36 @@
 } */
 
 @font-face {
-  font-family: "Rubik";
-  src: url("/fonts/Rubik-VariableFont_wght.ttf") format("truetype");
+  font-family: "Inter";
+  src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 body {
-  font-family: "Rubik", sans-serif;
+  font-family: "Inter", sans-serif;
+  box-sizing: box-border;
 }
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    --background: 180, 18%, 96%;
+    --foreground: 208, 52%, 10%;
+
+    /** Navbar */
+    --navbar: 180, 18%, 96%;
+    --navbar-item-background: 180, 16%, 79%;
+    --navbar-item-foreground: 208, 52%, 10%;
+    --navbar-hover: 196, 30%, 24%;
+    --navbar-active: 196, 30%, 24%;
+
+    --card: 216, 77%, 58%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --primary: 198.6 88.7% 48.4%; /* sky-500 */
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
+    --secondary: 200.6 94.4% 86.1%; /* sky-200 */
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
@@ -38,7 +47,7 @@ body {
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
+    --border: 199.4 95.5% 73.9%; /* sky-300 */
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
     --chart-1: 12 76% 61%;
@@ -46,16 +55,23 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --radius: 0.3rem;
   }
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 208, 52%, 10%;
+    --foreground: 180, 18%, 96%;
+    /** Navbar */
+    --navbar: 208, 52%, 10%;
+    --navbar-item-background: 196, 30%, 24%;
+    --navbar-item-foreground: 180, 18%, 96%;
+    --navbar-hover: 180, 16%, 79%;
+
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary: 198.6 88.7% 48.4%; /* sky-500 */
+
     --primary-foreground: 240 5.9% 10%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -83,4 +99,9 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.nav-div,
+div:first-child {
+  @apply mr-4 flex w-[-webkit-fill-available];
 }

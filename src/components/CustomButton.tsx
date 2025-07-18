@@ -1,4 +1,5 @@
 "use client";
+import { Moon, Sun } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 
@@ -16,10 +17,12 @@ interface CustomButtonProps {
     | "request-link"
     | "change-password"
     | "reset"
-    | "addProduct";
+    | "addProduct"
+    | "themeToggle";
   type: "button" | "submit";
   category?: string;
   isDisabled?: boolean;
+  handleOnClick?: () => void;
   reset?: () => void;
 }
 
@@ -28,6 +31,7 @@ export default function CustomButton({
   type,
   category,
   isDisabled,
+  handleOnClick,
   reset,
 }: CustomButtonProps): React.JSX.Element {
   switch (buttonType) {
@@ -120,6 +124,19 @@ export default function CustomButton({
 
     case "addProduct":
       return <Button type={type}>Neues Produkt hinzufügen</Button>;
+
+    case "themeToggle":
+      return (
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={handleOnClick}
+          className="bg-navbar-itemBackground rounded-md px-3 py-3 hover:bg-navbar-active hover:text-navbar dark:hover:bg-navbar-hover"
+        >
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        </Button>
+      );
     default:
       return (
         <Button type={type} onClick={() => redirect("/")}>

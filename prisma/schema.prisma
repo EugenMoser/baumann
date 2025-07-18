@@ -36,8 +36,8 @@ model Product {
   material      String?
   imageUrlSmall String  @map("imageUrl_small")
   imageUrlBig1  String  @map("imageUrl_big1")
-  imageUrlBig2  String  @map("imageUrl_big2")
-  imageUrlBig3  String  @map("imageUrl_big3")
+  imageUrlBig2  String? @map("imageUrl_big2")
+  imageUrlBig3  String? @map("imageUrl_big3")
 
   articles        Article[]
   colorConnection ProductColor[]

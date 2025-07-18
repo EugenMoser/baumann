@@ -16,7 +16,7 @@ async function ProductsByCategoryPage({
     <main>
       <h1>Produkte nach Kategorie: {category}</h1>
       <ul>
-        {products.map((product, index) => (
+        {products.map((product) => (
           <li
             key={product.id}
             className="mb-6 flex items-center gap-6 bg-slate-200"

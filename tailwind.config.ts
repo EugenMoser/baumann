@@ -10,12 +10,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "(var(--background))",
+        foreground: "(var(--foreground))",
+
+        navbar: {
+          DEFAULT: "hsl(var(--navbar))",
+          itemBackground: "hsl(var(--navbar-item-background))",
+          itemForeground: "hsl(var(--navbar-item-foreground))",
+          hover: "hsl(var(--navbar-hover))",
+          active: "hsl(var(--navbar-active))",
+        },
+
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
