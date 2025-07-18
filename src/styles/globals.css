@@ -65,6 +65,7 @@ body {
     --navbar-item-background: 196, 30%, 24%;
     --navbar-item-foreground: 180, 18%, 96%;
     --navbar-hover: 180, 16%, 79%;
+    --navbar-active: 180, 16%, 79%;
 
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
