@@ -60,10 +60,16 @@ async function ProductPage({
       </section>
 
       <section>
-        <CustomButton
+        {/* <CustomButton
           type="button"
           buttonType="goBack"
           category={product.category}
+        /> */}
+        <CustomButton
+          type="button"
+          buttonType="redirect"
+          title="Zurück zur Kategorie"
+          redirectUrl={product.category ? `/products/${product.category}` : "/"}
         />
       </section>
       <Link

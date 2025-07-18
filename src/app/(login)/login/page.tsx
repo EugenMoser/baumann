@@ -19,7 +19,14 @@ export default async function LoginPage() {
     <div className="mx-auto mt-10 max-w-md rounded-lg border p-5">
       <h2 className="mb-4 text-xl font-bold">Login</h2>
       <LoginForm />
-      <CustomButton type="button" buttonType="goResetPassword" />
+      {/* <CustomButton type="button" buttonType="goResetPassword" /> */}
+
+      <CustomButton
+        type="button"
+        buttonType="redirect"
+        redirectUrl="//password-request"
+        title="Passwort zurücksetzen"
+      />
     </div>
   );
 }

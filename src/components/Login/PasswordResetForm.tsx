@@ -8,11 +8,10 @@ import {
 
 import { useSearchParams } from "next/navigation";
 
+import CustomButton from "@/components/CustomButton";
 import { Input } from "@/components/ui/input";
-import { passwordResetAction } from "@/lib/actions/addProduct";
+import { passwordResetAction } from "@/lib/actions/(login)/actions";
 import { FormPasswordStates } from "@/types/FormStates";
-
-import CustomButton from "../CustomButton";
 
 // todo: implement shadcn ui form
 export default function PasswordResetForm(): React.JSX.Element | null {
@@ -115,9 +114,15 @@ export default function PasswordResetForm(): React.JSX.Element | null {
         </div>
       )}
 
-      <CustomButton
+      {/* <CustomButton
         type="submit"
         buttonType="change-password"
+        isDisabled={isDisabled}
+      /> */}
+      <CustomButton
+        type="submit"
+        buttonType="defaultButton"
+        title="Passwort ändern"
         isDisabled={isDisabled}
       />
 
@@ -128,7 +133,13 @@ export default function PasswordResetForm(): React.JSX.Element | null {
         </div>
       )}
       {!isPending && !state.errors && state.actionSuccess && (
-        <CustomButton type="button" buttonType="goLogin" />
+        // <CustomButton type="button" buttonType="goLogin" />
+        <CustomButton
+          type="button"
+          buttonType="redirect"
+          title="Zum Login"
+          redirectUrl="/login"
+        />
       )}
     </form>
   );

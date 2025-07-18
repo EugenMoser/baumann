@@ -7,10 +7,9 @@ import {
 } from "react";
 
 import { passwordRequestAction } from "@/actions/(login)/actions";
+import CustomButton from "@/components/CustomButton";
 import { Input } from "@/components/ui/input";
 import { FormPasswordStates } from "@/types/FormStates";
-
-import CustomButton from "../CustomButton";
 
 // todo: implement shadcn ui form
 export default function PasswordRequestForm(): React.JSX.Element | null {
@@ -60,9 +59,16 @@ export default function PasswordRequestForm(): React.JSX.Element | null {
         </div>
       )}
 
-      <CustomButton
+      {/* <CustomButton
         type="submit"
         buttonType="request-link"
+        isDisabled={isDisabled}
+      /> */}
+
+      <CustomButton
+        type="submit"
+        buttonType="defaultButton"
+        title="Link anfordern"
         isDisabled={isDisabled}
       />
 
@@ -73,7 +79,13 @@ export default function PasswordRequestForm(): React.JSX.Element | null {
         </div>
       )}
       {!isPending && state.actionSuccess && (
-        <CustomButton type="button" buttonType="goLogin" />
+        // <CustomButton type="button" buttonType="goLogin" />
+        <CustomButton
+          type="button"
+          buttonType="redirect"
+          title="Zum Login"
+          redirectUrl="/login"
+        />
       )}
     </form>
   );

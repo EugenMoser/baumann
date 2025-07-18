@@ -18,7 +18,14 @@ export default async function PasswordResetPage({
       {!isTokenReset && (
         <>
           <p>Dieser Link ist nicht mehr gültig.</p>
-          <CustomButton type="button" buttonType="goLogin" />
+          {/* <CustomButton type="button" buttonType="goLogin" />  */}
+
+          <CustomButton
+            type="button"
+            buttonType="redirect"
+            redirectUrl="/login"
+            title="Zum Login "
+          />
         </>
       )}
       {isTokenReset && <PasswordResetForm />}

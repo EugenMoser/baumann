@@ -12,8 +12,8 @@ import {
 } from "next/navigation";
 
 import { loginAction } from "@/actions/(login)/actions";
+import CustomButton from "@/components/CustomButton";
 
-import CustomButton from "../CustomButton";
 import { Input } from "../ui/input";
 
 interface LoginFormProps {}
@@ -79,7 +79,16 @@ export default function LoginForm({}: LoginFormProps): React.JSX.Element {
           </div>
         )}
 
-        <CustomButton type="submit" buttonType="login" />
+        {/* <CustomButton type="submit" buttonType="login" />
+         */}
+        <CustomButton
+          type="submit"
+          buttonType="redirect"
+          redirectUrl="/dashboard"
+          title="Login"
+          isDisabled={true}
+          className="rounded bg-blue-500 p-2 text-white"
+        />
 
         {isPending && "Wird verabeitet..."}
         {state.message && (
