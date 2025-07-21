@@ -26,7 +26,7 @@ export default function NavbarDesktop({
             {
               "bg-navbar-active text-navbar underline":
                 pathname === category.href, // Active state
-              "bg-navbar-itemBackground hover:bg-navbar-hover hover:text-navbar dark:hover:bg-navbar-hover":
+              "bg-navbar-itemBackground hover:bg-navbar-hover hover:text-navbar":
                 pathname !== category.href, // Hover only when not active
             },
           )}

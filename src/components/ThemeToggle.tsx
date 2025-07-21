@@ -36,7 +36,7 @@ export default function ThemeToggle() {
       type="button"
       buttonType="themeToggle"
       onClickFunction={handleOnClick}
-      className="rounded-md bg-navbar-itemBackground px-3 py-3 hover:bg-navbar-active hover:text-navbar dark:hover:bg-navbar-hover"
+      className="rounded-md bg-navbar-itemBackground p-3 hover:bg-navbar-active hover:text-navbar dark:hover:bg-navbar-hover"
       ariaLabel="Theme wechseln"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

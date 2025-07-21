@@ -20,8 +20,7 @@ function Navbar({}: NavbarProps): React.JSX.Element {
   const pathname = usePathname();
   const { data: session } = useSession();
   return (
-    <NavigationMenu className="nav-div m-4 flex max-w-full justify-end lg:justify-around">
-      {/* Desktop Navigation */}
+    <NavigationMenu className="nav-div m-4 flex max-w-full justify-between lg:justify-around">
       <NavbarDesktop pathname={pathname} />
       <NavbarMobile pathname={pathname} />
       <ThemeToggle />

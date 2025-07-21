@@ -2,8 +2,12 @@
 import { useState } from "react";
 
 import clsx from "clsx";
-import { CircleX } from "lucide-react";
+import {
+  Menu,
+  X,
+} from "lucide-react";
 import Link from "next/link";
+import { log } from "util";
 
 import CustomButton from "@/components/CustomButton";
 import {
@@ -23,48 +27,63 @@ export default function ComponentName({
   pathname,
 }: ComponentNameProps): React.JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
-
+  console.log("----->>>>> openo", open);
   return (
     <>
+      {/* Hamburger + Close Button */}
       <Button
         variant="outline"
-        className="mr-4 px-3 py-3 lg:hidden"
+        className={clsx(
+          "z-50 h-[34px] w-[34px] p-0 hover:bg-navbar-hover hover:text-navbar lg:hidden",
+          // Entferne die rotation/scale Animation vom Button selbst
+        )}
         onClick={() => setOpen(!open)}
-        aria-label="Menü öffnen"
+        aria-label={open ? "Menü schließen" : "Menü öffnen"}
       >
-        <svg className="h-6 w-6 fill-current" viewBox="0 0 20 20">
-          <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-        </svg>
+        {/* Icons mit eigener Animation */}
+        <X
+          className={clsx(
+            "absolute h-[1.2rem] w-[1.2rem] transition-all duration-300",
+            {
+              "rotate-0 scale-100": open,
+              "rotate-90 scale-0": !open,
+            },
+          )}
+        />
+        <Menu
+          className={clsx(
+            "absolute h-[1.2rem] w-[1.2rem] transition-all duration-300",
+            {
+              "rotate-90 scale-0": open,
+              "rotate-0 scale-100": !open,
+            },
+          )}
+        />
       </Button>
 
       {open && (
         <>
           {/* Overlay */}
           <div
-            className="fixed inset-0 z-40 bg-black/70 lg:hidden"
+            className="fixed inset-0 z-10 bg-black/70 lg:hidden"
             onClick={() => setOpen(false)}
           />
           {/* Menu */}
-          <div className="fixed inset-0 left-auto z-50 flex flex-col justify-start bg-white dark:bg-black lg:hidden">
-            <CustomButton
-              type="button"
-              buttonType="onClickFunction"
-              onClickFunction={() => setOpen(false)}
-              children={<CircleX />}
-              className="absolute right-4 top-4 text-3xl"
-              ariaLabel="Menü schließen"
-            />
-            ;
-            <NavigationMenuList className="mt-[30%] flex flex-col gap-5 text-xl">
+          <div className="fixed inset-0 z-20 flex w-max flex-col justify-start bg-white dark:bg-black lg:hidden">
+            <NavigationMenuList className="ml-2 mr-2 mt-[40%] flex flex-col gap-5 text-xl">
               {productCategories.map((category) => (
                 <NavigationMenuItem
                   key={category.category}
-                  className={clsx("block w-full rounded px-4 py-2", {
-                    "bg-sky-100 text-blue-600": pathname === category.href,
-                    "bg-navbar-itemBackground hover:bg-navbar-hover hover:text-navbar dark:hover:bg-navbar-hover":
-                      pathname !== category.href,
-                  })}
+                  className={clsx(
+                    "flex h-[36px] w-full grow cursor-pointer items-center justify-center rounded-md p-2",
+
+                    {
+                      "bg-navbar-active text-navbar underline":
+                        pathname === category.href, // Active state
+                      "bg-navbar-itemBackground hover:bg-navbar-hover hover:text-navbar":
+                        pathname !== category.href, // Hover only when not active
+                    },
+                  )}
                 >
                   <NavigationMenuLink asChild>
                     <Link href={category.href} onClick={() => setOpen(false)}>
