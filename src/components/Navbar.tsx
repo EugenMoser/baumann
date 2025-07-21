@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
+import CustomButton from "@/components/CustomButton";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -10,7 +11,6 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 
-import CustomButton from "./CustomButton";
 import NavbarDesktop from "./NavbarDesktop";
 import NavbarMobile from "./NavbarMobile";
 import ThemeToggle from "./ThemeToggle";
@@ -26,7 +26,14 @@ function Navbar({}: NavbarProps): React.JSX.Element {
       <NavbarMobile pathname={pathname} />
       <ThemeToggle />
 
-      {session && <CustomButton type="button" buttonType="logout" />}
+      {session && (
+        <CustomButton
+          type="button"
+          buttonType="logout"
+          title="Logout"
+          ariaLabel="Logout"
+        />
+      )}
     </NavigationMenu>
   );
 }

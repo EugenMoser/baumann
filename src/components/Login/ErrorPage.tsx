@@ -7,12 +7,14 @@ import CustomButton from "@/components/CustomButton";
 interface ErrorPageProps {
   error: Error & { digest?: string };
   reset: () => void;
-  type: "password-reset" | "password-request";
+  type: "password-reset" | "password-request" | "login" | "product";
 }
 
 const errorMessages = {
   "password-reset": "beim Reset der E-Mail",
   "password-request": "beim Senden der E-Mail",
+  login: "beim Login",
+  product: "beim Laden der Produktseite",
 };
 
 export default function ErrorPage({ error, reset, type }: ErrorPageProps) {

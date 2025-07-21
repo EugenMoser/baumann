@@ -30,11 +30,11 @@ export default function ProductFormWrapper({
         <ColorDetailsForm colors={colors} />
         <ImageUploadForm /> */}
 
-        {/* <CustomButton type="submit" buttonType="addProduct" /> */}
         <CustomButton
           type="submit"
           buttonType="defaultButton"
           title="Produkt hinzufügen"
+          ariaLabel="Produkt hinzufügen"
         />
       </form>
     </>

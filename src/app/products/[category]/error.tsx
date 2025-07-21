@@ -1,10 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-
-import { redirect } from "next/navigation";
-
-import CustomButton from "@/components/CustomButton";
+import ErrorPage from "@/components/Login/ErrorPage";
 
 export default function Error({
   error,
@@ -13,19 +9,5 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
-
-  return (
-    <div>
-      <h2>
-        Ups! Irgendetwas ist schief gelaufen und ich habe keine Ahnung was. Hier
-        ist die Fehlermeldung: {error.message}. Grüße Ihr Webserver
-      </h2>
-      <CustomButton type="button" buttonType="reset" reset={reset} />
-      <CustomButton type="button" buttonType="goHome" />
-    </div>
-  );
+  return <ErrorPage error={error} reset={reset} type="product" />;
 }

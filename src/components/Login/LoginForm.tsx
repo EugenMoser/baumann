@@ -88,6 +88,7 @@ export default function LoginForm({}: LoginFormProps): React.JSX.Element {
           title="Login"
           isDisabled={true}
           className="rounded bg-blue-500 p-2 text-white"
+          ariaLabel="Login"
         />
 
         {isPending && "Wird verabeitet..."}

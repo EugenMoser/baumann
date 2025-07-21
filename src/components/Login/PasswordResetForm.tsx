@@ -114,16 +114,12 @@ export default function PasswordResetForm(): React.JSX.Element | null {
         </div>
       )}
 
-      {/* <CustomButton
-        type="submit"
-        buttonType="change-password"
-        isDisabled={isDisabled}
-      /> */}
       <CustomButton
         type="submit"
         buttonType="defaultButton"
         title="Passwort ändern"
         isDisabled={isDisabled}
+        ariaLabel="Passwort ändern"
       />
 
       {isPending && "Loading..."}
@@ -139,6 +135,7 @@ export default function PasswordResetForm(): React.JSX.Element | null {
           buttonType="redirect"
           title="Zum Login"
           redirectUrl="/login"
+          ariaLabel="Zum Login"
         />
       )}
     </form>

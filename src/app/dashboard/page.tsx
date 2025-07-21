@@ -15,6 +15,7 @@ export default async function DashboardPage() {
         buttonType="logout"
         title="Logout"
         className="rounded bg-red-500 p-2 text-white"
+        ariaLabel="Logout"
       />
     </>
   );

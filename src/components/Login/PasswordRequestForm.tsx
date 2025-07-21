@@ -59,17 +59,12 @@ export default function PasswordRequestForm(): React.JSX.Element | null {
         </div>
       )}
 
-      {/* <CustomButton
-        type="submit"
-        buttonType="request-link"
-        isDisabled={isDisabled}
-      /> */}
-
       <CustomButton
         type="submit"
         buttonType="defaultButton"
         title="Link anfordern"
         isDisabled={isDisabled}
+        ariaLabel="Link anfordern"
       />
 
       {isPending && "Loading..."}
@@ -79,12 +74,12 @@ export default function PasswordRequestForm(): React.JSX.Element | null {
         </div>
       )}
       {!isPending && state.actionSuccess && (
-        // <CustomButton type="button" buttonType="goLogin" />
         <CustomButton
           type="button"
           buttonType="redirect"
           title="Zum Login"
           redirectUrl="/login"
+          ariaLabel="Zum Login"
         />
       )}
     </form>

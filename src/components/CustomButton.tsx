@@ -6,7 +6,7 @@ import { title } from "process";
 
 import { Button } from "./ui/button";
 
-interface CustomButtonProps {
+interface _CustomButtonProps {
   type: "button" | "submit";
   buttonType:
     | "redirect"
@@ -14,14 +14,22 @@ interface CustomButtonProps {
     | "defaultButton"
     | "logout"
     | "themeToggle";
-
-  title: string;
-  children?: React.ReactNode;
   redirectUrl?: string;
   isDisabled?: boolean;
   onClickFunction?: () => void;
   className?: string;
+  ariaLabel: string;
+  // Require at least one of 'title' or 'children'
+  title?: string;
+  children?: React.ReactNode;
 }
+
+// Enforce at least one of 'title' or 'children'
+type RequireTitleOrChildren<T> =
+  | (T & { title: string; children?: never })
+  | (T & { title?: never; children: React.ReactNode });
+
+type CustomButtonProps = RequireTitleOrChildren<_CustomButtonProps>;
 
 export default function CustomButton({
   type,
@@ -32,6 +40,7 @@ export default function CustomButton({
   isDisabled = false,
   onClickFunction,
   className,
+  ariaLabel,
 }: CustomButtonProps): React.JSX.Element {
   switch (buttonType) {
     case "redirect":
@@ -50,7 +59,9 @@ export default function CustomButton({
         <Button
           type={type}
           onClick={onClickFunction && (() => onClickFunction())}
+          className={className}
           disabled={isDisabled}
+          aria-label={ariaLabel}
         >
           {children || title}
         </Button>

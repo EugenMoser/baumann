@@ -2,8 +2,10 @@
 import { useState } from "react";
 
 import clsx from "clsx";
+import { CircleX } from "lucide-react";
 import Link from "next/link";
 
+import CustomButton from "@/components/CustomButton";
 import {
   NavigationMenuItem,
   NavigationMenuLink,
@@ -44,29 +46,28 @@ export default function ComponentName({
             onClick={() => setOpen(false)}
           />
           {/* Menu */}
-          <div className="fixed inset-0 left-[30vw] z-50 flex flex-col items-center justify-center bg-white p-4 dark:bg-black lg:hidden">
-            <button
+          <div className="fixed inset-0 left-auto z-50 flex flex-col justify-start bg-white dark:bg-black lg:hidden">
+            <CustomButton
+              type="button"
+              buttonType="onClickFunction"
+              onClickFunction={() => setOpen(false)}
+              children={<CircleX />}
               className="absolute right-4 top-4 text-3xl"
-              onClick={() => setOpen(false)}
-              aria-label="Menü schließen"
-            >
-              &times;
-            </button>
-            <NavigationMenuList className="flex flex-col gap-8 text-2xl">
+              ariaLabel="Menü schließen"
+            />
+            ;
+            <NavigationMenuList className="mt-[30%] flex flex-col gap-5 text-xl">
               {productCategories.map((category) => (
-                <NavigationMenuItem key={category.category}>
+                <NavigationMenuItem
+                  key={category.category}
+                  className={clsx("block w-full rounded px-4 py-2", {
+                    "bg-sky-100 text-blue-600": pathname === category.href,
+                    "bg-navbar-itemBackground hover:bg-navbar-hover hover:text-navbar dark:hover:bg-navbar-hover":
+                      pathname !== category.href,
+                  })}
+                >
                   <NavigationMenuLink asChild>
-                    <Link
-                      href={category.href}
-                      onClick={() => setOpen(false)}
-                      className={clsx(
-                        "block rounded bg-navbar-itemBackground px-4 py-2 hover:bg-navbar-hover",
-                        {
-                          "bg-sky-100 text-blue-600":
-                            pathname === category.href,
-                        },
-                      )}
-                    >
+                    <Link href={category.href} onClick={() => setOpen(false)}>
                       {category.name}
                     </Link>
                   </NavigationMenuLink>
