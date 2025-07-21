@@ -34,7 +34,7 @@ export default function ComponentName({
       <Button
         variant="outline"
         className={clsx(
-          "z-50 h-[34px] w-[34px] p-0 hover:bg-navbar-hover hover:text-navbar lg:hidden",
+          "z-50 h-[36px] w-[36px] p-0 hover:bg-navbar-hover hover:text-navbar lg:hidden",
           // Entferne die rotation/scale Animation vom Button selbst
         )}
         onClick={() => setOpen(!open)}
