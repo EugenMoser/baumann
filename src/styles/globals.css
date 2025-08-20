@@ -120,11 +120,6 @@ body {
 
 @layer utilities {
   .navFirstDiv > div:first-child {
-    @apply mr-4 w-[-webkit-fill-available] lg:flex;
+    @apply mr-8 w-[-webkit-fill-available] lg:flex;
   }
 }
-
-/*todo braucht man das noch?*/
-/* .nav-div > div:first-child {
-  @apply mr-4 w-[-webkit-fill-available] lg:flex;
-} */

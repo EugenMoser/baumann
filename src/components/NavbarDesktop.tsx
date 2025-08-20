@@ -17,13 +17,13 @@ export default function NavbarDesktop({
 }: NavbarDesktopProps): React.JSX.Element {
   return (
     <>
-      <NavigationMenuList className="hidden w-full max-w-full list-none justify-around gap-4 lg:flex">
+      <NavigationMenuList className="hidden w-full max-w-full list-none justify-between lg:flex">
         {productCategories.map((category) => (
           <NavigationMenuItem
             key={category.category}
             tabIndex={0}
             className={clsx(
-              "flex h-[36px] min-w-40 items-center justify-center rounded-md shadow-sm transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary",
+              "flex h-[36px] min-w-32 items-center justify-center rounded-md shadow-sm transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary",
               {
                 "bg-navbar-active text-navbar underline":
                   pathname === category.href, // Active state

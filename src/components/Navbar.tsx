@@ -26,7 +26,7 @@ export default function Navbar({}: NavbarProps): React.JSX.Element {
       )}
     >
       {pathname !== "/" && <NavbarDesktop pathname={pathname} />}
-      <NavbarMobile pathname={pathname} />
+      {pathname !== "/" && <NavbarMobile pathname={pathname} />}
       <ThemeToggle />
 
       {session && (

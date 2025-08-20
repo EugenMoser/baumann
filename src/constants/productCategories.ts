@@ -28,27 +28,27 @@ export const categoryIcons: Record<
 const productCategories: ProductCategoriesProps[] = [
   {
     category: "moebel",
-    name: "Möbelbereich",
+    name: "Möbel",
     href: "/products/moebel",
   },
   {
     category: "halterung",
-    name: "Halterungsbereich",
+    name: "Halterungen",
     href: "/products/halterung",
   },
   {
     category: "wasser",
-    name: "Wasserbereich",
+    name: "Wasser",
     href: "/products/wasser",
   },
   {
     category: "lueftung",
-    name: "Lüftungsbereich",
+    name: "Lüftungen",
     href: "/products/lueftung",
   },
   {
     category: "elektro",
-    name: "Elektrobereich",
+    name: "Elektro",
     href: "/products/elektro",
   },
 ];
