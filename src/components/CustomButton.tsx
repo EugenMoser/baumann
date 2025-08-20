@@ -76,14 +76,19 @@ export default function CustomButton({
 
     case "defaultButton":
       return (
-        <Button type={type} disabled={isDisabled}>
+        <Button type={type} disabled={isDisabled} className={className}>
           {title}
         </Button>
       );
 
     case "themeToggle":
       return (
-        <Button variant="outline" size="icon" onClick={onClickFunction}>
+        <Button
+          variant="outline"
+          size="icon"
+          className={className}
+          onClick={onClickFunction}
+        >
           {children}
         </Button>
       );
