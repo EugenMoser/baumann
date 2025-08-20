@@ -1,38 +1,64 @@
+import { BedDouble } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import productCategories from "@/constants/productCategories";
+import productCategories, {
+  categoryIcons,
+} from "@/constants/productCategories";
 
+<BedDouble />;
 export default async function Home() {
+  //hi claude
   return (
     <main>
-      <h1>Willkommen auf unserer Webseite</h1>
-      <p>
-        Wir entwickeln und produzieren im Allgäu seit 41 Jahren Spritzgussteile
-        für die Caravan Industrie. Für diesen Markt ist ein großes Sortiment an
-        Möbelteilen, Halterungen, Lüftungsteilen und Dichtungen entstanden. Mit
-        dem 1984 gegründeten Unternehmen Wilfried Baumann Spritzgussteile wurde
-        das Fundament für das in zweiter Generation inhabergeführte
-        Familienunternehmen Tilo Baumann Spritzgussteile e.K. gelegt.
-      </p>
-      <h2>Unsere Bereiche</h2>
-      <ul className="flex flex-col gap-4">
-        {productCategories.map((productCategory) => (
-          <li key={productCategory.name} className="h-auto bg-slate-50">
-            <Link
-              href={`/products/${productCategory.category}`}
-              className="flex w-[100%] items-center justify-center gap-4"
+      <h1 className="mb-4">
+        Spritzgussteile aus dem Allgäu – seit über 40 Jahren
+      </h1>
+      <section className="mb-16 flex flex-col lg:flex-row">
+        <Image
+          src="/images/Maschine.jpeg"
+          alt="Spritzguss Maschine"
+          width={400}
+          height={200}
+          className="mr-8 w-[400px] justify-start object-contain"
+        />
+        <p className="mb-4 mt-8 w-[50%] lg:mt-0">
+          Als familiengeführtes Unternehmen entwickeln und fertigen wir
+          hochwertige Spritzgussteile für die Caravan-Industrie. Unser Sortiment
+          umfasst Möbelteile, Halterungen, Lüftungselemente und Dichtungen –
+          individuell auf die Bedürfnisse unserer Kunden abgestimmt.
+          <br />
+          <br />
+          1984 gegründet von Wilfried Baumann, wird das Unternehmen heute in
+          zweiter Generation von Tilo Baumann mit derselben Leidenschaft und
+          Präzision geführt.
+        </p>
+      </section>
+      <h2 className="mb-4 justify-self-center">Unsere Bereiche</h2>
+      <ul className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-6">
+        {productCategories.map((productCategory) => {
+          // Hole die passende Icon-Komponente für die aktuelle Kategorie
+          const IconComponent = categoryIcons[productCategory.category];
+
+          return (
+            <li
+              key={productCategory.name}
+              className="rounded-md shadow-sm transition-all duration-300 hover:shadow-md"
             >
-              <Image
-                src={`/icons/${productCategory.icon}`}
-                alt={`Ein Icon für den ${productCategory.name}`}
-                width={32}
-                height={32}
-              />
-              <p>{productCategory.name}</p>
-            </Link>
-          </li>
-        ))}
+              <Link
+                href={`/products/${productCategory.category}`}
+                className="group flex items-center justify-center gap-4 rounded-md border border-transparent bg-card-background p-4 transition-all duration-300 hover:bg-card-hover focus:outline-none focus:ring-2 focus:ring-primary"
+              >
+                <div className="group-hover:bg-accent-hover flex h-12 w-12 items-center justify-center rounded-full bg-card transition-colors">
+                  <IconComponent className="transition-transform duration-300 group-hover:scale-125" />
+                </div>
+                <p className="text-base font-medium text-foreground group-hover:text-card">
+                  {productCategory.name}
+                </p>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </main>
   );

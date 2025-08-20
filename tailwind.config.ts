@@ -23,7 +23,9 @@ export default {
 
         card: {
           DEFAULT: "hsl(var(--card))",
+          background: "hsl(var(--card-background))",
           foreground: "hsl(var(--card-foreground))",
+          hover: "hsl(var(--card-hover))",
         },
 
         popover: {

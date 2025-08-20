@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     //suppressHydrationWarning is used to avoid hydration errors when using the ThemeProvider https://github.com/pacocoursey/next-themes
     <html lang="de" suppressHydrationWarning={true}>
-      <body>
+      <body className="ml-32 mr-32 mt-8">
         <SessionProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Navbar />
