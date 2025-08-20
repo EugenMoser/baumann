@@ -1,27 +1,31 @@
 "use client";
 
+import clsx from "clsx";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 import CustomButton from "@/components/CustomButton";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+import { NavigationMenu } from "@/components/ui/navigation-menu";
 
 import NavbarDesktop from "./NavbarDesktop";
 import NavbarMobile from "./NavbarMobile";
 import ThemeToggle from "./ThemeToggle";
 
 interface NavbarProps {}
-function Navbar({}: NavbarProps): React.JSX.Element {
+export default function Navbar({}: NavbarProps): React.JSX.Element {
   const pathname = usePathname();
   const { data: session } = useSession();
+
   return (
-    <NavigationMenu className="nav-div m-4 flex max-w-full justify-between lg:justify-around">
-      <NavbarDesktop pathname={pathname} />
+    <NavigationMenu
+      className={clsx(
+        "lg:navFirstDiv m-4 mb-8 flex max-w-full justify-between lg:justify-around",
+        {
+          "justify-end lg:justify-end": pathname === "/",
+        },
+      )}
+    >
+      {pathname !== "/" && <NavbarDesktop pathname={pathname} />}
       <NavbarMobile pathname={pathname} />
       <ThemeToggle />
 
@@ -36,5 +40,3 @@ function Navbar({}: NavbarProps): React.JSX.Element {
     </NavigationMenu>
   );
 }
-
-export default Navbar;

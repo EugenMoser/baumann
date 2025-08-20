@@ -1,15 +1,16 @@
 "use client";
 import * as React from "react";
 
-import {
-  Moon,
-  Sun,
-} from "lucide-react";
+import clsx from "clsx";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import CustomButton from "@/components/CustomButton";
 
-export default function ThemeToggle() {
+interface ThemeToggleProps {
+  mobile?: boolean;
+}
+export default function ThemeToggle({ mobile }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
@@ -36,11 +37,18 @@ export default function ThemeToggle() {
       type="button"
       buttonType="themeToggle"
       onClickFunction={handleOnClick}
-      className="rounded-md bg-navbar-itemBackground p-3 hover:bg-navbar-active hover:text-navbar dark:hover:bg-navbar-hover"
+      className={clsx(
+        "hidden rounded-md bg-navbar-itemBackground p-3 hover:bg-navbar-itemForeground hover:text-navbar lg:flex",
+
+        {
+          "flex lg:hidden": mobile,
+        },
+      )}
+      //className="hidden rounded-md bg-navbar-itemBackground p-3 hover:bg-navbar-itemForeground hover:text-navbar lg:flex"
       ariaLabel="Theme wechseln"
     >
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <Sun className="duration-400 h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="duration-400 absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
     </CustomButton>
   );
 }
