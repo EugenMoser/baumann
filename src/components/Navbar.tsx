@@ -19,7 +19,7 @@ export default function Navbar({}: NavbarProps): React.JSX.Element {
   return (
     <NavigationMenu
       className={clsx(
-        "lg:navFirstDiv mb-8 flex max-w-full justify-between lg:justify-around",
+        "lg:navFirstDiv mb-8 flex max-w-full justify-between lg:justify-between",
         {
           "justify-end lg:justify-end": pathname === "/",
         },

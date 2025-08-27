@@ -1,6 +1,6 @@
 "use server";
 
-import { ProductCategoriesProps } from "@/constants/productCategories";
+import { CategoryProps } from "@/constants/productCategories";
 import { prisma } from "@/lib/prisma";
 import { ProductNotificationFormStates } from "@/types/FormStates";
 import { ProductFormDataProps } from "@/types/ProductProps";
@@ -25,7 +25,7 @@ export async function addProductAction(
 
   //* get form data
   const productFormData: ProductFormDataProps = {
-    category: formData.get("category") as ProductCategoriesProps["category"],
+    category: formData.get("category") as CategoryProps["category"],
     productPrio: Number(formData.get("productPrio")), //convert to number
     productName: formData.get("productName") as string,
     descriptionProduct1:

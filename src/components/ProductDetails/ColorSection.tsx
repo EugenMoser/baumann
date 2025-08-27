@@ -1,20 +1,10 @@
 "use client";
-import {
-  useEffect,
-  useRef,
-} from "react";
+import { useEffect, useRef } from "react";
 
 import clsx from "clsx";
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ColorProps } from "@/types/ProductProps";
 
 interface ColorSectionProps {
@@ -91,12 +81,12 @@ function ColorSection({
                   `border-none bg-[var(--bg-color)] p-4`,
                   isChecked && "p-4 ring-2 ring-red-900 ring-offset-2",
                 )}
+                aria-label={color.name}
               />
             </div>
           );
         })}
       </RadioGroup>
-      <ul></ul>
     </>
   );
 }

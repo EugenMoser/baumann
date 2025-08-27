@@ -2,23 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
 @font-face {
   font-family: "Inter";
   src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  box-sizing: box-border;
 }
 
 @layer base {
@@ -99,14 +87,14 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    box-sizing: box-border;
   }
   h1 {
     font-size: 2rem;
@@ -116,10 +104,18 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
   }
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
 }
 
 @layer utilities {
   .navFirstDiv > div:first-child {
     @apply mr-8 w-[-webkit-fill-available] lg:flex;
+  }
+
+  .dynamicGrid {
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   }
 }

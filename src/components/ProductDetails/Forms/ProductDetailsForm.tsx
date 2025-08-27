@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { ProductCategoriesProps } from "@/constants/productCategories";
+import { CategoryProps } from "@/constants/productCategories";
 import { ProductNotificationFormStates } from "@/types/FormStates";
 import { ProductFormDataProps } from "@/types/ProductProps";
 
@@ -54,7 +54,7 @@ export default function ProductDetailsForm({
     }));
   };
 
-  const handleOnChangeSelect = (value: ProductCategoriesProps["category"]) => {
+  const handleOnChangeSelect = (value: CategoryProps["category"]) => {
     const selectedCategory = value;
     setFormData((prev) => ({
       ...prev,

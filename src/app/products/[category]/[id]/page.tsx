@@ -70,6 +70,7 @@ async function ProductPage({
           buttonType="redirect"
           title="Zurück zur Kategorie"
           redirectUrl={product.category ? `/products/${product.category}` : "/"}
+          ariaLabel="Zurück zur Kategorie"
         />
       </section>
       <Link

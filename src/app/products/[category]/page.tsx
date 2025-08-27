@@ -1,6 +1,13 @@
+import { Suspense } from "react";
+
+import { log } from "console";
+
 import ProductCardByCategory from "@/components/ProductCardByCategory";
-import { getCachedProductByIdsByCategory } from "@/lib/database";
-import { ProductCategoryProps } from "@/types/ProductCategoryProps";
+import productCategories from "@/constants/productCategories";
+import { getCachedProductByCategory } from "@/lib/database";
+import { ProductByCategoryProps } from "@/types/ProductByCategoryProps";
+
+import Loading from "./loading";
 
 interface ProductsByCategoryPageProps {
   params: Promise<{ category: string }>;
@@ -9,22 +16,25 @@ async function ProductsByCategoryPage({
   params,
 }: ProductsByCategoryPageProps): Promise<React.JSX.Element> {
   const { category } = await params;
-  const products: ProductCategoryProps[] =
-    await getCachedProductByIdsByCategory(category);
+  const products: ProductByCategoryProps[] =
+    await getCachedProductByCategory(category);
+
+  const categoryName = productCategories.find((productcategory) => {
+    return productcategory.category === category;
+  })?.name;
 
   return (
     <main>
-      <h1>Produkte nach Kategorie: {category}</h1>
-      <ul>
-        {products.map((product) => (
-          <li
-            key={product.id}
-            className="mb-6 flex items-center gap-6 bg-slate-200"
-          >
-            <ProductCardByCategory product={product} />
-          </li>
-        ))}
-      </ul>
+      <h1> {categoryName}</h1>
+      <Suspense fallback={<Loading />}>
+        <ul className="dynamicGrid grid gap-6 rounded-sm">
+          {products.map((product: ProductByCategoryProps) => (
+            <li key={product.id}>
+              <ProductCardByCategory product={{ ...product }} />
+            </li>
+          ))}
+        </ul>
+      </Suspense>
     </main>
   );
 }

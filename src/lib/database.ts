@@ -2,7 +2,10 @@
 import { unstable_cache } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
-import { ProductCategoryProps } from "@/types/ProductCategoryProps";
+import {
+  ProductByCategoryFromDBProps,
+  ProductByCategoryProps,
+} from "@/types/ProductByCategoryProps";
 import {
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
@@ -77,9 +80,11 @@ export const getCachedProductById: (
 // ********************* get products by category *********************
 export async function getProductsByCategory(
   category: string,
-): Promise<ProductCategoryProps[]> {
+): Promise<ProductByCategoryProps[]> {
+  let products: ProductByCategoryFromDBProps[] | null = null;
+
   try {
-    const product: ProductCategoryProps[] = await prisma.product.findMany({
+    products = await prisma.product.findMany({
       where: { category },
       select: {
         id: true,
@@ -88,13 +93,13 @@ export async function getProductsByCategory(
         name: true,
         description1: true,
         imageUrlSmall: true,
+        colorConnection: {
+          select: {
+            color: true,
+          },
+        },
       },
     });
-    if (!product || product.length === 0)
-      throw new Error("No product found in this category");
-
-    const sortedProducts = product.sort((a, b) => a.prio - b.prio);
-    return sortedProducts;
   } catch (error: any) {
     console.error("Database Error:", error);
 
@@ -103,16 +108,34 @@ export async function getProductsByCategory(
       `Failed to fetch products. Error message: ${error.message}`,
     );
   }
+  if (!products || products.length === 0)
+    throw new Error("No product found in this category");
+
+  // Transformiere jedes Produkt ähnlich wie in getProductById, aber lasse colorSuffix weg
+  const transformedProducts = products.map((product) => {
+    const { colorConnection, ...rest } = product;
+
+    // Hier wird nur das color-Objekt übernommen
+    const colors = colorConnection.map(({ color }) => color);
+    return {
+      ...rest,
+      colors,
+    };
+  });
+
+  return transformedProducts;
 }
 
 // cache the products
-export const getCachedProductByIdsByCategory: (
+export const getCachedProductByCategory: (
   category: string,
-) => Promise<ProductCategoryProps[]> = unstable_cache(
+) => Promise<ProductByCategoryProps[]> = unstable_cache(
   getProductsByCategory,
   ["products-by-category"],
   { revalidate: 60 * 60 * 24 }, // 24 hours
 );
+
+// ********************* check password reset *********************
 
 export async function isPasswordAlreadyReset(token: string | undefined) {
   if (!token) return false;

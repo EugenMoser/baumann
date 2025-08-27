@@ -7,17 +7,14 @@ import {
   Zap,
 } from "lucide-react";
 
-export type ProductCategoriesProps = {
+export type CategoryProps = {
   category: "moebel" | "halterung" | "wasser" | "lueftung" | "elektro";
   name: string;
   href: string;
 };
 
 // Icon-Map für die verschiedenen Kategorien
-export const categoryIcons: Record<
-  ProductCategoriesProps["category"],
-  LucideIcon
-> = {
+export const categoryIcons: Record<CategoryProps["category"], LucideIcon> = {
   moebel: BedDouble,
   halterung: Brackets,
   wasser: Droplets,
@@ -25,7 +22,7 @@ export const categoryIcons: Record<
   elektro: Zap,
 };
 
-const productCategories: ProductCategoriesProps[] = [
+const productCategories: CategoryProps[] = [
   {
     category: "moebel",
     name: "Möbel",

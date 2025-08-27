@@ -6,14 +6,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import productCategories, {
-  type ProductCategoriesProps,
+  type CategoryProps,
 } from "@/constants/productCategories";
 
 interface ProductCategorySelectProps {
   name: string;
   title: string;
-  value: ProductCategoriesProps["category"];
-  onChange: (value: ProductCategoriesProps["category"]) => void;
+  value: CategoryProps["category"];
+  onChange: (value: CategoryProps["category"]) => void;
   "aria-describedby": string;
   error?: string | string[];
 }
