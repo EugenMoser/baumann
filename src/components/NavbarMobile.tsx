@@ -44,17 +44,17 @@ export default function NavbarMobile({
             onClick={() => setOpen(false)}
           />
           {/* Menu */}
-          <div className="fixed inset-0 z-20 flex w-max flex-col justify-start bg-white dark:bg-black lg:hidden">
+          <div className="fixed inset-0 left-[70%] z-20 flex flex-col justify-start bg-white dark:bg-black lg:hidden">
             <Button
               variant="outline"
-              className="text-navbar-itemForegroun absolute right-10 top-10 z-50 h-[36px] w-[36px] bg-navbar-itemBackground p-0 hover:bg-navbar-hover hover:text-navbar lg:hidden"
+              className="text-navbar-itemForegroun absolute right-10 top-5 z-50 h-[36px] w-[36px] bg-navbar-itemBackground p-0 hover:bg-navbar-hover hover:text-navbar lg:hidden"
               onClick={() => setOpen(!open)}
               aria-label={open ? "Menü schließen" : "Menü öffnen"}
             >
               {/* Icons mit eigener Animation */}
               <X className="d h-[1.2rem] w-[1.2rem]" />
             </Button>
-            <NavigationMenuList className="ml-10 mr-10 mt-[40%] flex flex-col gap-5 text-xl">
+            <NavigationMenuList className="mx-10 mt-[40%] flex flex-col gap-5 text-xl">
               {productCategories.map((category) => (
                 <NavigationMenuItem
                   key={category.category}
@@ -77,7 +77,10 @@ export default function NavbarMobile({
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>
-            <ThemeToggle mobile />
+            <div className="mx-10 mt-5">
+              <ThemeToggle mobile />
+              //todo add contact
+            </div>
           </div>
         </>
       )}

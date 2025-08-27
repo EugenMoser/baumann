@@ -41,10 +41,9 @@ export default function ThemeToggle({ mobile }: ThemeToggleProps) {
         "hidden rounded-md bg-navbar-itemBackground p-3 hover:bg-navbar-itemForeground hover:text-navbar lg:flex",
 
         {
-          "flex lg:hidden": mobile,
+          "flex w-[50%] lg:hidden": mobile,
         },
       )}
-      //className="hidden rounded-md bg-navbar-itemBackground p-3 hover:bg-navbar-itemForeground hover:text-navbar lg:flex"
       ariaLabel="Theme wechseln"
     >
       <Sun className="duration-400 h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
