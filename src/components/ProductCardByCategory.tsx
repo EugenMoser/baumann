@@ -9,7 +9,7 @@ interface ProductByCategoryCardProps {
   product: ProductCategoryProps;
 }
 
-function ProductByCategoryCard({
+export default function ProductCardByCategory({
   product,
 }: ProductByCategoryCardProps): React.JSX.Element {
   // check if product.imageUrlSmall is start with "http" or "https"
@@ -42,5 +42,3 @@ function ProductByCategoryCard({
     </>
   );
 }
-
-export default ProductByCategoryCard;

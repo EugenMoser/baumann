@@ -1,4 +1,4 @@
-import ProductByCategoryCard from "@/components/ProductByCategoryCard";
+import ProductCardByCategory from "@/components/ProductCardByCategory";
 import { getCachedProductByIdsByCategory } from "@/lib/database";
 import { ProductCategoryProps } from "@/types/ProductCategoryProps";
 
@@ -21,7 +21,7 @@ async function ProductsByCategoryPage({
             key={product.id}
             className="mb-6 flex items-center gap-6 bg-slate-200"
           >
-            <ProductByCategoryCard product={product} />
+            <ProductCardByCategory product={product} />
           </li>
         ))}
       </ul>
