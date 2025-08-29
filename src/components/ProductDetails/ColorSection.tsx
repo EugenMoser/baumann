@@ -23,13 +23,13 @@ function ColorSection({ colors }: ColorSectionProps): React.JSX.Element {
   const params = new URLSearchParams(searchParams);
 
   //************* */
-  // ⬅️ Lokaler State für sofortige Reaktion
+
   const [selectedColorId, setSelectedColorId] = useState(
-    searchParams.get("color") || (colors[0]?.id ?? ""),
+    searchParams.get("color") || (colors[0]?.id ?? ""), // default to first color if none selected
   );
 
   useEffect(() => {
-    // wenn kein Param gesetzt, initialisieren
+    // if no search param is set, initialize
     if (!searchParams.get("color") && selectedColorId) {
       params.set("color", selectedColorId);
       replace(`${pathname}?${params.toString()}`);
