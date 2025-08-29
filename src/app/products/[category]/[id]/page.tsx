@@ -41,20 +41,16 @@ async function ProductPage({
   return (
     <main>
       <h1 className="mb-6">{product.name}</h1>
-      <div className="my-8 flex w-full flex-row items-start gap-8">
-        <section className="flex w-[50%] flex-col">
+      <div className="my-8 flex w-full flex-col items-start gap-8 lg:flex-row">
+        <section className="flex w-full flex-col lg:w-[50%]">
           <ProductSection product={product} />
         </section>
-        <div className="flex w-[50%] flex-col gap-8">
+        <div className="flex w-[50%] flex-col">
           <section className="flex flex-col">
             <ArticleSection articles={product.articles} />
           </section>
-          <hr className="border-solid border-foreground" />
           <section>
-            <ColorSection
-              colors={product.colors}
-              selectedColor={selectedColor}
-            />
+            <ColorSection colors={product.colors} />
           </section>
 
           <section>

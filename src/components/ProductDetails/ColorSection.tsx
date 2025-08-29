@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -9,15 +9,9 @@ import { ColorProps } from "@/types/ProductProps";
 
 interface ColorSectionProps {
   colors: ColorProps[];
-  selectedColor: ColorProps | undefined;
-  // onSelect: (id: string) => void;
 }
 
-function ColorSection({
-  colors,
-  selectedColor,
-  // onSelect,
-}: ColorSectionProps): React.JSX.Element {
+function ColorSection({ colors }: ColorSectionProps): React.JSX.Element {
   // This useRef stores an array of references to each RadioGroupItem element.
   // The array helps access individual radio buttons directly (e.g., for focus management).
   // It starts as an empty array and gets updated dynamically as the elements mount.
@@ -28,47 +22,53 @@ function ColorSection({
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
 
-  // get current value from the SearchParams
-  const defaultSelectedValue = searchParams.get("color") || "";
-  useEffect(() => {
-    // set initial color value to to the first color
-    const defaultColorValue: string = colors.length > 0 ? colors[0].id : "";
+  //************* */
+  // ⬅️ Lokaler State für sofortige Reaktion
+  const [selectedColorId, setSelectedColorId] = useState(
+    searchParams.get("color") || (colors[0]?.id ?? ""),
+  );
 
-    // prevent the URL from being replaced unnecessarily
-    if (!defaultSelectedValue && defaultColorValue) {
-      params.set("color", defaultColorValue);
+  useEffect(() => {
+    // wenn kein Param gesetzt, initialisieren
+    if (!searchParams.get("color") && selectedColorId) {
+      params.set("color", selectedColorId);
       replace(`${pathname}?${params.toString()}`);
     }
-  }, [colors, searchParams, pathname, replace]);
+  }, [selectedColorId, searchParams, pathname, replace]);
 
-  function handleSelect(colorId: string): void {
-    // Avoids unnecessary updates
-    if (defaultSelectedValue === colorId) return;
+  function handleSelect(colorId: string) {
+    if (selectedColorId === colorId) return;
+    setSelectedColorId(colorId); // ⚡ sofortiges Feedback
     params.set("color", colorId);
     replace(`${pathname}?${params.toString()}`);
   }
 
-  function getCheckedColor(id: string): boolean {
-    return defaultSelectedValue === id;
-  }
-
   return (
     <>
-      <h1>Color Infos</h1>
-      <p>{selectedColor?.name}</p>
+      <h3 className="mb-4">
+        Farbe
+        <br />
+        <span className="text-article">
+          In welcher Farbe benötigen Sie das Produkt?
+        </span>
+      </h3>
+
+      <p className="mb-4">
+        {colors.find((color) => color.id === selectedColorId)?.name}
+      </p>
 
       <RadioGroup
-        defaultValue={selectedColor?.name}
-        onValueChange={(event) => handleSelect(event)}
+        className="flex gap-4"
+        value={selectedColorId}
+        onValueChange={handleSelect}
       >
         {colors.map((color, index) => {
-          const isChecked = getCheckedColor(color.id);
-
+          const isChecked = selectedColorId === color.id;
           return (
             <div key={index}>
               <RadioGroupItem
                 ref={(el) => {
-                  radioRefs.current[index] = el;
+                  radioRefs.current[index] = el; // Store reference to each radio button
                 }}
                 value={color.id}
                 id={index.toString()}
@@ -78,8 +78,9 @@ function ColorSection({
                   } as React.CSSProperties
                 }
                 className={clsx(
-                  `border-none bg-[var(--bg-color)] p-4`,
-                  isChecked && "p-4 ring-2 ring-red-900 ring-offset-2",
+                  `border-[0.5px] border-foreground bg-[var(--bg-color)] p-4`,
+                  isChecked &&
+                    "ring-color-active ring-2 ring-offset-2 ring-offset-background",
                 )}
                 aria-label={color.name}
               />
@@ -87,6 +88,7 @@ function ColorSection({
           );
         })}
       </RadioGroup>
+      <hr className="my-8 border-solid border-foreground" />
     </>
   );
 }

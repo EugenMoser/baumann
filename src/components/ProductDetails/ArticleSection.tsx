@@ -82,6 +82,7 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
               ))}
             </SelectContent>
           </Select>
+          <hr className="my-8 border-solid border-foreground" />
         </>
       )}
     </>

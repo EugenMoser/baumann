@@ -13,7 +13,6 @@
   :root {
     --background: 180, 18%, 96%;
     --foreground: 208, 52%, 10%;
-    --background-hover: 180, 18%, 96%;
 
     /** Navbar */
     --navbar: 180, 18%, 96%;
@@ -30,6 +29,9 @@
 
     /**Article Details */
     --article: 240, 2%, 54%;
+
+    /*Color Picker */
+    --color-active: 240, 2%, 54%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
@@ -89,7 +91,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    /* --ring: 240 4.9% 83.9%; */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
