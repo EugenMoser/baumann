@@ -11,8 +11,6 @@ export default function ProductSection({
 }: ProductSectionProps): React.JSX.Element {
   return (
     <>
-      <h1 className="mb-6">Produkt Infos {product.name}</h1>
-
       <h3 className="mb-4">{product.description1}</h3>
       <div className="mb-4">
         <p>{product.description2}</p>

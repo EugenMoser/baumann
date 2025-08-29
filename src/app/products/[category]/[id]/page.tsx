@@ -40,25 +40,31 @@ async function ProductPage({
 
   return (
     <main>
-      <section className="flex w-[50%] flex-col">
-        <ProductSection product={product} />
-      </section>
+      <h1 className="mb-6">{product.name}</h1>
+      <div className="my-8 flex flex-row items-start gap-8">
+        <section className="flex w-[50%] flex-col">
+          <ProductSection product={product} />
+        </section>
+        <div>
+          <section>
+            <ArticleSection articles={product.articles} />
+          </section>
 
-      <section>
-        <ArticleSection articles={product.articles} />
-      </section>
+          <section>
+            <ColorSection
+              colors={product.colors}
+              selectedColor={selectedColor}
+            />
+          </section>
 
-      <section>
-        <ColorSection colors={product.colors} selectedColor={selectedColor} />
-      </section>
-
-      <section>
-        <ProductInfoSection
-          selectedArticle={selectedArticle}
-          selectedColor={selectedColor}
-        />
-      </section>
-
+          <section>
+            <ProductInfoSection
+              selectedArticle={selectedArticle}
+              selectedColor={selectedColor}
+            />
+          </section>
+        </div>
+      </div>
       <section>
         <CustomButton
           type="button"
