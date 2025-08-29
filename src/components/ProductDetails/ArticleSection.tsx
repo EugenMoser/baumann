@@ -59,10 +59,13 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
     <>
       {isArticleDescriptionAvailable && (
         <>
-          <h2>Produkt-Variante</h2>
-          <p className="text-article mb-4">
-            In welcher Variante benötigen Sie das Produkt?
-          </p>
+          <h3 className="mb-4">
+            Produkt-Variante
+            <br />
+            <span className="text-article">
+              In welcher Variante benötigen Sie das Produkt?
+            </span>
+          </h3>
 
           <Select
             defaultValue={defaultSelectedValue}
