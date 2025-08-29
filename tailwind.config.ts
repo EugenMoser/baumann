@@ -29,6 +29,10 @@ export default {
           hover: "hsl(var(--card-hover))",
         },
 
+        article: {
+          DEFAULT: "hsl(var(--article))",
+        },
+
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

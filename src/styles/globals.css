@@ -28,6 +28,9 @@
     --card-foreground: 208, 52%, 10%;
     --card-hover: 196, 30%, 24%;
 
+    /**Article Details */
+    --article: 240, 2%, 54%;
+
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary: 198.6 88.7% 48.4%; /* sky-500 */
@@ -67,6 +70,9 @@
     --card-background: 196, 30%, 24%;
     --card-foreground: 180, 18%, 96%;
     --card-hover: 180, 16%, 79%;
+
+    /**Product Details */
+    --article-text: 240, 2%, 74%;
 
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;

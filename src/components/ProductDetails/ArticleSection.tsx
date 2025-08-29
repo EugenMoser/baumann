@@ -1,14 +1,7 @@
 "use client";
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import {
   Select,
@@ -66,16 +59,19 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
     <>
       {isArticleDescriptionAvailable && (
         <>
-          <h1>Article Infos</h1>
+          <h2>Produkt-Variante</h2>
+          <p className="text-article mb-4">
+            In welcher Variante benötigen Sie das Produkt?
+          </p>
 
           <Select
             defaultValue={defaultSelectedValue}
             onValueChange={(event) => handleSelect(event)}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="border-article w-full rounded-md border">
               <SelectValue placeholder="Bitte wählen" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="border-article w-full border-[0.5px]">
               {articles.map((article, index) => (
                 <SelectItem key={index} value={article.id}>
                   {article.description1}
