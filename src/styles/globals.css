@@ -13,6 +13,7 @@
   :root {
     --background: 180, 18%, 96%;
     --foreground: 208, 52%, 10%;
+    --background-hover: 180, 18%, 96%;
 
     /** Navbar */
     --navbar: 180, 18%, 96%;
@@ -52,6 +53,8 @@
   .dark {
     --background: 208, 52%, 10%;
     --foreground: 180, 18%, 96%;
+    --background-hover: 208, 52%, 10%;
+
     /** Navbar */
     --navbar: 208, 52%, 10%;
     --navbar-item-background: 196, 30%, 24%;
@@ -117,5 +120,17 @@
 
   .dynamicGrid {
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  }
+
+  .buttonChildSelector {
+    button {
+      background-color: hsla(var(--background), 0.8);
+      &:first-of-type {
+        left: 0.5rem;
+      }
+      &:last-child {
+        right: 0.5rem;
+      }
+    }
   }
 }

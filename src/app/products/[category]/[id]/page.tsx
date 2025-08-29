@@ -40,7 +40,7 @@ async function ProductPage({
 
   return (
     <main>
-      <section>
+      <section className="flex w-[50%] flex-col">
         <ProductSection product={product} />
       </section>
 
@@ -60,11 +60,6 @@ async function ProductPage({
       </section>
 
       <section>
-        {/* <CustomButton
-          type="button"
-          buttonType="goBack"
-          category={product.category}
-        /> */}
         <CustomButton
           type="button"
           buttonType="redirect"
@@ -73,14 +68,24 @@ async function ProductPage({
           ariaLabel="Zurück zur Kategorie"
         />
       </section>
-      <Link
+      {/* <Link
         href={{
           pathname: `/dashboard/updateProduct`,
           query: { id: product?.id },
         }}
       >
         <button>Update Product</button>
-      </Link>
+        
+      </Link> 
+        <Link
+        href={{
+          pathname: `/dashboard/deleteProduct`,
+          query: { id: product?.id },
+        }}
+      >
+        
+        <button>Delete Product</button>
+      </Link>*/}
     </main>
   );
 }

@@ -10,8 +10,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "(var(--background))",
-        foreground: "(var(--foreground))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        backgroundHover: "hsla(var(--background)/0.5)",
 
         navbar: {
           DEFAULT: "hsl(var(--navbar))",

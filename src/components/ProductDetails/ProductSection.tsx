@@ -1,35 +1,26 @@
-import Image from "next/image";
-
-import { cloudinaryImageUrl } from "@/constants/config";
 import { ProductWithColorAndArticlesProps } from "@/types/ProductProps";
+
+import ImageCarousell from "./ImageCarousel";
 
 interface ProductSectionProps {
   product: ProductWithColorAndArticlesProps;
 }
 
-function ProductSection({ product }: ProductSectionProps): React.JSX.Element {
+export default function ProductSection({
+  product,
+}: ProductSectionProps): React.JSX.Element {
   return (
     <>
-      <h1>Produkt Infos {product.productId}</h1>
+      <h1 className="mb-6">Produkt Infos {product.name}</h1>
 
-      <p>{product.name}</p>
-      <p>{product.description1}</p>
-      <p>{product.description2}</p>
-      <p>{product.description3}</p>
-      <p>{product.description4}</p>
-      <p>{product.material}</p>
-      <div className="flex aspect-[4/3] w-[400px] justify-center">
-        <Image
-          src={`${cloudinaryImageUrl}${product.imageUrlBig1!.replace(/ /g, "_")}`}
-          alt={product.name}
-          width={400}
-          height={400}
-          loading="lazy"
-          className="object-contain"
-        />
+      <h3 className="mb-4">{product.description1}</h3>
+      <div className="mb-4">
+        <p>{product.description2}</p>
+        <p>{product.description3}</p>
+        <p>{product.description4}</p>
       </div>
+      <p className="mb-6">{product.material}</p>
+      <ImageCarousell product={product} />
     </>
   );
 }
-
-export default ProductSection;
