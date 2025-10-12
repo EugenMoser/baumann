@@ -1,10 +1,21 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import clsx from "clsx";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group";
 import { ColorProps } from "@/types/ProductProps";
 
 interface ColorSectionProps {
@@ -32,7 +43,7 @@ function ColorSection({ colors }: ColorSectionProps): React.JSX.Element {
     // if no search param is set, initialize
     if (!searchParams.get("color") && selectedColorId) {
       params.set("color", selectedColorId);
-      replace(`${pathname}?${params.toString()}`);
+      replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
   }, [selectedColorId, searchParams, pathname, replace]);
 
@@ -40,7 +51,7 @@ function ColorSection({ colors }: ColorSectionProps): React.JSX.Element {
     if (selectedColorId === colorId) return;
     setSelectedColorId(colorId); // ⚡ sofortiges Feedback
     params.set("color", colorId);
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
   return (
@@ -80,7 +91,7 @@ function ColorSection({ colors }: ColorSectionProps): React.JSX.Element {
                 className={clsx(
                   `border-[0.5px] border-foreground bg-[var(--bg-color)] p-4`,
                   isChecked &&
-                    "ring-color-active ring-2 ring-offset-2 ring-offset-background",
+                    "ring-2 ring-color-active ring-offset-2 ring-offset-background",
                 )}
                 aria-label={color.name}
               />

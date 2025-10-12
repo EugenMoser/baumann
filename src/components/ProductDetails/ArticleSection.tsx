@@ -1,7 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import {
   Select,
@@ -26,25 +33,19 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
   const defaultSelectedValue = searchParams.get("article") || "";
 
   //if boolean is false, dont show article section
-  const [isArticleDescriptionAvailable, setIsArticleDescriptionAvailable] =
-    useState(true);
-
-  useEffect(() => {
-    // check (in every article ) if description1 is available
-    // if description is not available, hide article section
-    setIsArticleDescriptionAvailable(
-      articles.some((article) => article.description1),
-    );
-  }, [articles]);
+  const isArticleDescriptionAvailable: boolean = articles.some(
+    (article) => article.description1,
+  );
 
   useEffect(() => {
     // set initial the default article value to selected article id
-    const defaultArticleValue = articles.length === 1 ? articles[0].id : "";
+    const defaultArticleValue: string =
+      articles.length === 1 ? articles[0].id : "";
 
     // prevent the URL from being replaced unnecessarily
     if (!defaultSelectedValue && defaultArticleValue) {
       params.set("article", defaultArticleValue);
-      replace(`${pathname}?${params.toString()}`);
+      replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
   }, [articles, searchParams, pathname, replace]);
 
@@ -52,7 +53,7 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
     // Avoids unnecessary updates
     if (defaultSelectedValue === articleId) return;
     params.set("article", articleId);
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
   return (
@@ -71,10 +72,10 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
             defaultValue={defaultSelectedValue}
             onValueChange={(event) => handleSelect(event)}
           >
-            <SelectTrigger className="border-article w-full rounded-md border">
+            <SelectTrigger className="w-full rounded-md border border-article">
               <SelectValue placeholder="Bitte wählen" />
             </SelectTrigger>
-            <SelectContent className="border-article w-full border-[0.5px]">
+            <SelectContent className="w-full border-[0.5px] border-article">
               {articles.map((article, index) => (
                 <SelectItem key={index} value={article.id}>
                   {article.description1}
