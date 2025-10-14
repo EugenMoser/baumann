@@ -1,5 +1,9 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import {
+  Suspense,
+  useEffect,
+  useState,
+} from "react";
 
 import clsx from "clsx";
 import Image from "next/image";
@@ -36,7 +40,6 @@ export default function ImageCarousell({
     .filter(Boolean) // Remove any null or undefined values
     .map((url) => cloudinaryImageUrl + url!.replace(/ /g, "_")); // Prepend cloudinaryImageUrl and replace spaces with underscores
 
-  console.log("----->>>>> url Array", urlArray);
   const [existsUrl, setExistsUrl] = useState<string[]>([]);
 
   useEffect(() => {
@@ -44,22 +47,22 @@ export default function ImageCarousell({
     if (typeof window === "undefined") return;
 
     // check all images in parallel
-    Promise.all(
-      urlArray.map(
-        (url) =>
-          new Promise<string | null>((resolve) => {
-            const image = new window.Image();
-            // Set the image src to trigger loading
-            image.src = url;
-            image.onload = () => resolve(url);
-            image.onerror = () => resolve(null);
-            image.src = url;
-          }),
-      ),
-    ).then((results) => {
-      // Filter out any null results
+    const checkImages = async () => {
+      const results = await Promise.all(
+        urlArray.map(
+          (url) =>
+            new Promise<string | null>((resolve) => {
+              const image = new window.Image();
+              image.onload = () => resolve(url);
+              image.onerror = () => resolve(null);
+              image.src = url;
+            }),
+        ),
+      );
       setExistsUrl(results.filter(Boolean) as string[]);
-    });
+    };
+
+    checkImages();
   }, []);
 
   return (
@@ -68,7 +71,7 @@ export default function ImageCarousell({
         {existsUrl.length > 0 ? (
           <Carousel
             className={clsx(
-              "buttonChildSelector mb-6 max-w-[500px]",
+              "buttonChildSelector mb-6",
               existsUrl.length === 1 && "[&>button]:hidden", // hides arrow buttons
             )}
             opts={{

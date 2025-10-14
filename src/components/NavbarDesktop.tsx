@@ -18,7 +18,7 @@ export default function NavbarDesktop({
   pathname,
 }: NavbarDesktopProps): React.JSX.Element {
   return (
-    <>
+    <div className="gap-4">
       {productCategories.map((category: CategoryProps) => (
         <NavigationMenuLink asChild key={category.category}>
           <Link
@@ -46,6 +46,6 @@ export default function NavbarDesktop({
           </Link>
         </NavigationMenuLink>
       ))}
-    </>
+    </div>
   );
 }

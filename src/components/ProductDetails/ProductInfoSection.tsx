@@ -27,14 +27,14 @@ function getAllFeatures(article: ArticleProps): React.ReactNode {
 
   if (descriptions.length === 0) return null;
   return (
-    <>
-      <h3>Besonderheiten</h3>
+    <div className="mb-4">
+      <h3 className="underline underline-offset-4">Besonderheiten</h3>
       <ul>
         {descriptions.map((description: string | null) => (
           <li key={article.id + description}>{description}</li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 //todo move to helper file
@@ -49,15 +49,17 @@ function getAllVPE(article: ArticleProps): React.ReactNode {
   if (vpe.length === 0) return null;
 
   return (
-    <>
-      <h3>Mögliche Verpackungseinheiten (VPE):</h3>
+    <div className="mb-4">
+      <h3 className="underline underline-offset-4">
+        Mögliche Verpackungseinheiten (VPE):
+      </h3>
       {/* //todo ListWithHeadline move to list component  */}
       <ul>
         {vpe.map((vpe: string | null) => (
           <li key={article.id + vpe}>{addThousendSeperator(vpe)} Stück</li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
@@ -76,7 +78,7 @@ function ProductInfoSection({
     <div
       className={clsx(
         "flex flex-col border p-4",
-        !selectedArticle && "bg-red-500",
+        !selectedArticle && "bg-basicColors-red",
       )}
     >
       {!selectedArticle && (
@@ -86,11 +88,13 @@ function ProductInfoSection({
       )}
       {selectedArticle && selectedColor && (
         <>
-          <h2 className="font-bold">Artikelnummer: {articleWithColorNumber}</h2>
+          <h2 className="mg-4 font-black">
+            Artikelnummer: {articleWithColorNumber}
+          </h2>
           {getAllFeatures(selectedArticle)}
           {getAllVPE(selectedArticle)}
           <Button
-            className="al bg-button-background text-button-foreground hover:bg-button-hover hover:text-button w-[50%] self-end rounded-md"
+            className="al w-[50%] self-end rounded-md bg-button-background text-button-foreground hover:bg-button-hover hover:text-button"
             onClick={() => sendInquiry(articleWithColorNumber)}
           >
             Unverbindlich anfragen

@@ -18,12 +18,9 @@ export default function Navbar({}: NavbarProps): React.JSX.Element {
 
   return (
     <NavigationMenu
-      className={clsx(
-        "lg:navFirstDiv mb-8 flex max-w-full justify-between lg:justify-between",
-        {
-          "justify-end lg:justify-end": pathname === "/",
-        },
-      )}
+      className={clsx("lg:navFirstDiv mb-8 flex max-w-full md:justify-end", {
+        "justify-end lg:justify-end": pathname === "/",
+      })}
     >
       {pathname !== "/" && <NavbarDesktop pathname={pathname} />}
       {pathname !== "/" && <NavbarMobile pathname={pathname} />}

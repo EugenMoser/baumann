@@ -2,7 +2,10 @@
 import { useState } from "react";
 
 import clsx from "clsx";
-import { Menu, X } from "lucide-react";
+import {
+  Menu,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -40,7 +43,7 @@ export default function NavbarMobile({
         <>
           {/* Overlay */}
           <div
-            className="fixed inset-0 z-10 bg-black/70"
+            className="bg-overlay fixed inset-0 z-10"
             onClick={() => setOpen(false)}
           />
           {/* Menu */}
@@ -79,7 +82,7 @@ export default function NavbarMobile({
             </NavigationMenuList>
             <div className="mx-10 mt-5">
               <ThemeToggle mobile />
-              //todo add contact
+              {/* //todo add contact */}
             </div>
           </div>
         </>

@@ -45,7 +45,7 @@ async function ProductPage({
         <section className="flex w-full flex-col lg:w-[50%]">
           <ProductSection product={product} />
         </section>
-        <div className="flex w-[50%] flex-col">
+        <div className="flex w-full flex-col lg:w-[50%]">
           <section className="flex flex-col">
             <ArticleSection articles={product.articles} />
           </section>

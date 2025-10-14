@@ -10,7 +10,7 @@ import productCategories, {
 export default async function Home() {
   //hi claude
   return (
-    <main>
+    <main className="justify-self-center">
       <h1 className="mb-4">
         Spritzgussteile aus dem Allgäu – seit über 40 Jahren
       </h1>

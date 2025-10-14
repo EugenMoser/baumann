@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+  font-family: "Rubik";
+  src: url("/fonts/Rubik-VariableFont_wght.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -39,26 +39,10 @@
     --button-foreground: 208, 52%, 10%;
     --button-hover: 196, 30%, 24%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 198.6 88.7% 48.4%; /* sky-500 */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 200.6 94.4% 86.1%; /* sky-200 */
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    /** Other */
+    --red: 0 84.2% 60.2%;
     --border: 199.4 95.5% 73.9%; /* sky-300 */
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --overlay: 0, 0%, 0%, 0.6;
     --radius: 0.3rem;
   }
   .dark {
@@ -88,29 +72,10 @@
     --button-foreground: 180, 18%, 96%;
     --button-hover: 180, 16%, 79%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 198.6 88.7% 48.4%; /* sky-500 */
-
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    /** Other */
     --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    /* --ring: 240 4.9% 83.9%; */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --overlay: 0, 0%, 0%, 0.4;
   }
-
   * {
     @apply border-border;
   }
