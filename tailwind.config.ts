@@ -37,6 +37,13 @@ export default {
           active: "hsl(var(--color-active))",
         },
 
+        button: {
+          DEFAULT: "hsl(var(--button))",
+          background: "hsl(var(--button-background))",
+          foreground: "hsl(var(--button-foreground))",
+          hover: "hsl(var(--button-hover))",
+        },
+
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

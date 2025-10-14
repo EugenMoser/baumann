@@ -22,7 +22,12 @@ export default function RootLayout({
     <html lang="de" suppressHydrationWarning={true}>
       <body className="ml-32 mr-32 mt-8">
         <SessionProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem={true}
+            disableTransitionOnChange
+          >
             <Navbar />
             {children}
           </ThemeProvider>

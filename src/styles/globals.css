@@ -30,8 +30,14 @@
     /**Article Details */
     --article: 240, 2%, 54%;
 
-    /*Color Picker */
+    /** Color Picker */
     --color-active: 240, 2%, 54%;
+
+    /** Button */
+    --button: 180, 18%, 96%;
+    --button-background: 180, 16%, 79%;
+    --button-foreground: 208, 52%, 10%;
+    --button-hover: 196, 30%, 24%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
@@ -75,6 +81,12 @@
 
     /**Product Details */
     --article-text: 240, 2%, 74%;
+
+    /** Button */
+    --button: 208, 52%, 10%;
+    --button-background: 196, 30%, 24%;
+    --button-foreground: 180, 18%, 96%;
+    --button-hover: 180, 16%, 79%;
 
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
