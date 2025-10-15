@@ -17,10 +17,11 @@ export default async function Home() {
       <section className="mb-16 flex flex-col lg:flex-row">
         <Image
           src="/images/Maschine.jpeg"
+          priority
           alt="Spritzguss Maschine"
           width={400}
           height={200}
-          className="mr-8 w-[400px] justify-start object-contain"
+          className="mr-8 justify-start object-contain"
         />
         <p className="mb-4 mt-8 w-[50%] lg:mt-0">
           Als familiengeführtes Unternehmen entwickeln und fertigen wir
@@ -47,7 +48,7 @@ export default async function Home() {
             >
               <Link
                 href={`/products/${productCategory.category}`}
-                className="group flex items-center justify-center gap-4 rounded-md border border-transparent bg-card-background p-4 transition-all duration-300 hover:bg-card-hover focus:outline-none focus:ring-2 focus:ring-primary"
+                className="focus:ring-primary group flex items-center justify-center gap-4 rounded-md border border-transparent bg-card-background p-4 transition-all duration-300 hover:bg-card-hover focus:outline-none focus:ring-2"
               >
                 <div className="group-hover:bg-accent-hover flex h-12 w-12 items-center justify-center rounded-full bg-card transition-colors">
                   <IconComponent className="transition-transform duration-300 group-hover:scale-125" />

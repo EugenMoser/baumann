@@ -5,14 +5,16 @@ import { prisma } from "@/lib/prisma";
 import {
   ProductByCategoryFromDBProps,
   ProductByCategoryProps,
-} from "@/types/ProductByCategoryProps";
-import {
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
-} from "@/types/ProductProps";
-import { Admin, Color, PasswordReset } from "@prisma/client";
+} from "@/types/product";
+import {
+  Admin,
+  Color,
+  PasswordReset,
+} from "@prisma/client";
 
-import isTokenValid from "./helpers/isTokenValid";
+import isTokenValid from "../features/auth/helpers/isTokenValid";
 
 //todo: fetch products from database in a separate file like lib/database.ts
 //todo actions only for CRUD operations

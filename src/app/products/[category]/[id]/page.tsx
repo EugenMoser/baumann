@@ -1,16 +1,14 @@
-import Link from "next/link";
-
-import CustomButton from "@/components/CustomButton";
-import ArticleSection from "@/components/ProductDetails/ArticleSection";
-import ColorSection from "@/components/ProductDetails/ColorSection";
-import ProductInfoSection from "@/components/ProductDetails/ProductInfoSection";
-import ProductSection from "@/components/ProductDetails/ProductSection";
+import ArticleSection from "@/components/products/ArticleSection";
+import ColorSection from "@/components/products/ColorSection";
+import ProductInfoSection from "@/components/products/ProductInfoSection";
+import ProductSection from "@/components/products/ProductSection";
+import CustomButton from "@/components/shared/CustomButton";
 import { getCachedProductById } from "@/lib/database";
 import {
   ArticleProps,
   ColorProps,
   ProductWithColorAndArticlesProps,
-} from "@/types/ProductProps";
+} from "@/types/product";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;

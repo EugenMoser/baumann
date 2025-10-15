@@ -1,11 +1,9 @@
 import { Suspense } from "react";
 
-import { log } from "console";
-
-import ProductCardByCategory from "@/components/ProductCardByCategory";
+import ProductCardByCategory from "@/components/products/ProductCardByCategory";
 import productCategories from "@/constants/productCategories";
 import { getCachedProductByCategory } from "@/lib/database";
-import { ProductByCategoryProps } from "@/types/ProductByCategoryProps";
+import { ProductByCategoryProps } from "@/types/product";
 
 import Loading from "./loading";
 
