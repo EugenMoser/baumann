@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 
+import { addProductAction } from "src/features/products/actions/addProduct";
+
+import CustomButton from "@/components/shared/CustomButton";
 import { CategoryProps } from "@/constants/productCategories";
 import { ProductNotificationFormStates } from "@/types/form";
 import { ProductFormDataProps } from "@/types/product";
@@ -10,13 +13,9 @@ import ProductCategorySelect from "./ProductCategorySelect";
 import ProductInputField from "./ProductInputField";
 import ProductTextField from "./ProductTextField";
 
-interface ProductDetailsFormProps {
-  state: ProductNotificationFormStates;
-}
+interface ProductDetailsFormProps {}
 
-export default function ProductDetailsForm({
-  state,
-}: ProductDetailsFormProps): React.JSX.Element {
+export default function ProductDetailsForm({}: ProductDetailsFormProps): React.JSX.Element {
   const [formData, setFormData] = useState<
     ProductFormDataProps & {
       imageSmall: File | null;
@@ -32,6 +31,12 @@ export default function ProductDetailsForm({
     material: "",
     imageSmall: null,
   });
+  const initialState = {
+    message: "",
+    errors: {},
+    actionSuccess: false,
+  };
+  const [state, formAction] = useActionState(addProductAction, initialState);
 
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -63,8 +68,8 @@ export default function ProductDetailsForm({
   };
 
   return (
-    <>
-      <h2>----------- Product --------------</h2>
+    <form action={formAction}>
+      <h1>----------- Product hinzufügen --------------</h1>
       <ProductCategorySelect
         name="Bitte Kategory wählen"
         title="Product - Kategory"
@@ -167,6 +172,7 @@ export default function ProductDetailsForm({
         aria-describedby="fileUploadSmall-error"
         error={state.errors?.imageSmall}
       /> */}
+
       <div className="flex flex-col gap-2">
         <label htmlFor="imageSmall" className="font-semibold">
           Datei auswählen
@@ -180,7 +186,7 @@ export default function ProductDetailsForm({
         />
 
         {formData.imageSmall?.name && (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {formData.imageSmall?.name}
           </p>
         )}
@@ -206,6 +212,12 @@ export default function ProductDetailsForm({
           {state.message}
         </div>
       )}
-    </>
+      <CustomButton
+        type="submit"
+        buttonType="defaultButton"
+        title="Produkt hinzufügen"
+        ariaLabel="Produkt hinzufügen"
+      />
+    </form>
   );
 }
