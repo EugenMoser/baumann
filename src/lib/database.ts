@@ -8,11 +8,7 @@ import {
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
 } from "@/types/product";
-import {
-  Admin,
-  Color,
-  PasswordReset,
-} from "@prisma/client";
+import { Admin, Color, PasswordReset } from "@prisma/client";
 
 import isTokenValid from "../features/auth/helpers/isTokenValid";
 
@@ -66,7 +62,7 @@ async function getProductById(
     articles: sortedArticles,
     colors: sortedColorConnection,
   };
-
+  console.log(productWithColorAndArticle);
   return productWithColorAndArticle;
 }
 

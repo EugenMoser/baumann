@@ -1,15 +1,12 @@
 import { log } from "console";
 
 import { prisma } from "@/lib/prisma";
-import {
-  ImageUploadState,
-  ProductNotificationFormStates,
-} from "@/types/form";
+import { ImageUploadState, ProductNotificationFormStates } from "@/types/form";
 import { ProductFormDataProps } from "@/types/product";
 
 import { ImageSmallFormSchema } from "../schemas/imageFormSchema";
 import { ProductDetailsFormSchema } from "../schemas/productSchema";
-import uploadSingleImageAction from "./imageUpload";
+import uploadSingleImageAction from "./uploadImage";
 
 interface AddProductDetailsActionProps {
   productFormData: ProductFormDataProps;

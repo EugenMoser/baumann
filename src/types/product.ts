@@ -1,13 +1,8 @@
 import { z } from "zod";
 
-import {
-  ProductDetailsFormSchema,
-} from "@/features/products/schemas/productSchema";
-import {
-  Article,
-  Color,
-  Prisma,
-} from "@prisma/client";
+import { ProductDetailsFormSchema } from "@/features/products/schemas/productSchema";
+import { ColorProps } from "@/types/color";
+import { Prisma } from "@prisma/client";
 
 export type ProductWithColorConnectionProps = Prisma.ProductGetPayload<{
   include: {
@@ -28,10 +23,6 @@ export type ProductWithColorAndArticlesProps = Omit<
 > & {
   colors: ColorProps[];
 };
-
-export type ArticleProps = Article;
-
-export type ColorProps = Color & { colorSuffix?: number };
 
 // export interface ProductFormDataProps {
 //   category: string;
@@ -55,7 +46,7 @@ export type ProductByCategoryFromDBProps = {
   description1: string | null;
   imageUrlSmall: string | null;
 
-  colorConnection: { color: Color }[];
+  colorConnection: { color: ColorProps }[];
 };
 
 export type ProductByCategoryProps = Omit<

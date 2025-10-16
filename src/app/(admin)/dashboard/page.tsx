@@ -8,15 +8,14 @@ export default async function DashboardPage() {
     <>
       <h1>Willkommen im Dashboard</h1>
       <Link href="/dashboard/addProduct">Produkt hinzufügen</Link>
-
-      {/* <CustomButton type="button" buttonType="logout" /> */}
-      <CustomButton
+      <Link href="/dashboard/addArticle">Artikel hinzufügen</Link>
+      {/* <CustomButton
         type="button"
         buttonType="logout"
         title="Logout"
         className="rounded bg-red-500 p-2 text-white"
         ariaLabel="Logout"
-      />
+      /> */}
     </>
   );
 }

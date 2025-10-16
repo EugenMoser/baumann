@@ -2,10 +2,9 @@
 
 import { useActionState, useState } from "react";
 
-import { addProductAction } from "src/features/products/actions/addProduct";
-
 import CustomButton from "@/components/shared/CustomButton";
 import { CategoryProps } from "@/constants/productCategories";
+import { addProductAction } from "@/features/products/actions/addProduct";
 import { ProductNotificationFormStates } from "@/types/form";
 import { ProductFormDataProps } from "@/types/product";
 
@@ -41,21 +40,19 @@ export default function ProductDetailsForm({}: ProductDetailsFormProps): React.J
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const {
-      name,
-      value,
-      type,
-    }: { name: string; value: string | number; type: string } =
-      event.target as HTMLInputElement;
-    const files = (event.target as HTMLInputElement).files;
+    const target = event.target as HTMLInputElement;
+    const { name, value, type, files } = target;
+
+    let newValue: File | null | number | string = value;
+    if (type === "file") {
+      newValue = files?.[0] ?? null; // handle file upload
+    } else if (type === "number") {
+      newValue = Number(value); // handle number input productPrio
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]:
-        type === "file"
-          ? files?.[0] // handle file upload
-          : type === "number"
-            ? Number(value) // handle number input productPrio
-            : value,
+      [name]: newValue,
     }));
   };
 

@@ -17,7 +17,6 @@ export async function addProductAction(
 ): Promise<ProductNotificationFormStates> {
   // count products and articles in database and increment by 1
   const nextProductId: number = (await prisma.product.count()) + 1;
-  const nextArticleId: number = (await prisma.article.count()) + 1;
 
   //* ------create timestamp
   // create timestamps for product, article and color
@@ -46,7 +45,7 @@ export async function addProductAction(
   const mockArticleNumber = "9999";
   const createdSmallImageName = `a_${mockArticleNumber}-TEST`;
 
-  //*------add produkt to mongodb
+  //*------add produkt to database
   const addProductDetailsResult: ProductNotificationFormStates =
     await addProductDetailsAction({
       productFormData,
@@ -65,44 +64,4 @@ export async function addProductAction(
   }
 
   return { message: "Produkt erfolgreich hinzugefügt" };
-
-  //! --------Artikle
-  // const validatedArticleFields = ArticleDetailsFormSchema.safeParse({
-  //   articlePrio: formData.get("articlePrio"),
-  //   articleName: formData.get("articleName"),
-  //   descriptionArticle1: formData.get("descriptionArticle1"),
-  //   descriptionArticle2: formData.get("descriptionArticle2"),
-  //   descriptionArticle3: formData.get("descriptionArticle3"),
-  //   descriptionArticle4: formData.get("descriptionArticle4"),
-  //   vpe1: formData.get("vpe1"),
-  //   vpe2: formData.get("vpe2"),
-  //   vpe3: formData.get("vpe3"),
-  //   vpe4: formData.get("vpe4"),
-  // });
-  // If form validation fails, return errors early. Otherwise, continue.
-  // if (!validatedArticleFields.success) {
-  //   return {
-  //     errors: validatedArticleFields.error.flatten().FormFieldErrors,
-  //     message: "Produktdaten konnten nicht angelegt werden.",
-  //   };
-  // }
-
-  // const {
-  //   articlePrio,
-  //   articleName,
-  //   descriptionArticle1,
-  //   descriptionArticle2,
-  //   descriptionArticle3,
-  //   descriptionArticle4,
-  //   vpe1,
-  //   vpe2,
-  //   vpe3,
-  //   vpe4,
-  // } = validatedArticleFields.data;
-  //todo: timestamp.create + update  + nextArticleId hinzufügen
 }
-
-// ********************* article details actions *********************
-// ********************* color details actions *********************
-
-// ********************* login actions ******************************************
