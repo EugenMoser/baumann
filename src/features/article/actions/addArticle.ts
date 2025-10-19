@@ -1,5 +1,7 @@
 "use server";
 
+import { log } from "console";
+
 import { CategoryProps } from "@/constants/productCategories";
 import { prisma } from "@/lib/prisma";
 import { ArticleFormDataProps } from "@/types/article";
@@ -18,8 +20,7 @@ export async function addArticleAction(
   //* ------create timestamp
   // create timestamps for product, article and color
   const timestamps = createTimestamps("Product", "Article", "Color");
-
-  // get form data
+  // *------get form data
   const articleFormData: ArticleFormDataProps = {
     articlePrio: Number(formData.get("articlePrio")),
     articleNumber: formData.get("articleNumber") as string,
@@ -37,17 +38,16 @@ export async function addArticleAction(
     vpe3: (formData.get("vpe3") as string) || undefined,
     vpe4: (formData.get("vpe4") as string) || undefined,
   };
-  //  validated article fields
+  // *----- validated article fields
   const validatedArticleFields = ArticleDetailsFormSchema.safeParse({
     ...articleFormData,
   });
 
-  // validation
   const articleErrors = !validatedArticleFields.success && {
     ...validatedArticleFields.error.flatten().fieldErrors,
   };
 
-  // return errors if validation fails
+  // *------return errors if validation fails
   if (articleErrors) {
     return {
       success: false,
@@ -71,24 +71,25 @@ export async function addArticleAction(
 
   // *------add article to database
   try {
-    await prisma.article.create({
-      data: {
-        productId: productId,
-        prio: articlePrio,
-        number: articleNumber,
-        name: articleName,
-        description1: descriptionArticle1,
-        description2: descriptionArticle2,
-        description3: descriptionArticle3,
-        description4: descriptionArticle4,
-        vpe1: vpe1?.toString() || "",
-        vpe2: vpe2?.toString() || "",
-        vpe3: vpe3?.toString() || "",
-        vpe4: vpe4?.toString() || "",
-        createdAt: timestamps.createdAtProduct,
-        updatedAt: timestamps.updatedAtProduct,
-      },
+    // await prisma.article.create({
+    console.log({
+      productId: productId,
+      prio: articlePrio,
+      number: articleNumber,
+      name: articleName,
+      description1: descriptionArticle1,
+      description2: descriptionArticle2,
+      description3: descriptionArticle3,
+      description4: descriptionArticle4,
+      vpe1: vpe1?.toString() || "",
+      vpe2: vpe2?.toString() || "",
+      vpe3: vpe3?.toString() || "",
+      vpe4: vpe4?.toString() || "",
+      createdAt: timestamps.createdAtProduct,
+      updatedAt: timestamps.updatedAtProduct,
     });
+    // });
+
     console.info("Article details successfully saved in the database.");
     return { message: "Artikel erfolgreich hinzugefügt" };
   } catch (error: any) {
@@ -101,5 +102,3 @@ export async function addArticleAction(
     };
   }
 }
-
-article hinzufügen testen

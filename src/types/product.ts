@@ -2,7 +2,9 @@ import { z } from "zod";
 
 import { ProductDetailsFormSchema } from "@/features/products/schemas/productSchema";
 import { ColorProps } from "@/types/color";
-import { Prisma } from "@prisma/client";
+import { Prisma, Product } from "@prisma/client";
+
+export type ProductSearchProps = Pick<Product, "productId" | "name">;
 
 export type ProductWithColorConnectionProps = Prisma.ProductGetPayload<{
   include: {
@@ -23,17 +25,6 @@ export type ProductWithColorAndArticlesProps = Omit<
 > & {
   colors: ColorProps[];
 };
-
-// export interface ProductFormDataProps {
-//   category: string;
-//   productPrio: number | number[];
-//   productName: string;
-//   descriptionProduct1?: string | null;
-//   descriptionProduct2?: string | null;
-//   descriptionProduct3?: string | null;
-//   descriptionProduct4?: string | null;
-//   material: string | null;
-// }
 
 export type ProductFormDataProps = z.infer<typeof ProductDetailsFormSchema>;
 

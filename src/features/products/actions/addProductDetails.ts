@@ -1,5 +1,3 @@
-import { log } from "console";
-
 import { prisma } from "@/lib/prisma";
 import { ImageUploadState, ProductNotificationFormStates } from "@/types/form";
 import { ProductFormDataProps } from "@/types/product";

@@ -8,15 +8,55 @@ import {
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
 } from "@/types/product";
-import { Admin, Color, PasswordReset } from "@prisma/client";
+import { Admin, Color, PasswordReset, Product } from "@prisma/client";
 
 import isTokenValid from "../features/auth/helpers/isTokenValid";
 
 //todo: fetch products from database in a separate file like lib/database.ts
 //todo actions only for CRUD operations
 
+// ********************* search products *********************
+export async function searchProducts(
+  query: string,
+): Promise<{ name: string; productId: number }[] | []> {
+  console.log("Suchanfrage:", query);
+
+  if (!query) return [];
+  try {
+    const products: { name: string; productId: number }[] =
+      await prisma.product.findMany({
+        where: {
+          OR: [
+            { name: { contains: query, mode: "insensitive" } },
+            {
+              productId: Number.isNaN(Number(query))
+                ? undefined
+                : Number(query),
+            },
+          ],
+        },
+        select: {
+          name: true,
+          productId: true,
+        },
+        take: 10,
+      });
+    if (!products) throw new Error("Item not found");
+    console.log("--->>> product", products);
+
+    return products;
+  } catch (error: any) {
+    console.error("Database Error:", error);
+
+    // throw the error to error.tsx
+    throw new Error(
+      `Failed to fetch products. Error message: ${error.message}`,
+    );
+  }
+}
+
 // ********************* get product by id *********************
-async function getProductById(
+export async function getProductById(
   id: string,
 ): Promise<ProductWithColorAndArticlesProps> {
   let product: ProductWithColorConnectionProps | null = null;

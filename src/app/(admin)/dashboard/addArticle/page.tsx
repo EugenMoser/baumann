@@ -1,14 +1,20 @@
-import ArticleDetailsForm from "@/components/forms/ArticleDetailsForm";
+"use client";
+import { useState } from "react";
 
-async function AddArticlePage(): Promise<React.JSX.Element> {
-  //todo: fetch product by id to display product name in the form header and to link the article to the product
-  const productId = 4242; //mock productId, should be fetched from a selected product
+import ArticleDetailsForm from "@/components/forms/ArticleDetailsForm";
+import SearchProductCombobox from "@/components/products/SearchProductCombobox";
+
+function AddArticlePage(): React.JSX.Element {
+  const [productId, setProductId] = useState<number | null>(null);
+
+  function productIdHandler(id: number) {
+    setProductId(id);
+  }
   return (
     <>
-      {/* //todo: search field for product hinzufügen und die productId durchgeben */}
-      <ArticleDetailsForm productId={productId} />
+      <SearchProductCombobox productIdHandler={productIdHandler} />
+      {productId && <ArticleDetailsForm productId={productId} />}
     </>
   );
 }
-
 export default AddArticlePage;
