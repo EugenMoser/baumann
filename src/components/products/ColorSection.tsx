@@ -16,7 +16,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "@/components/ui/radio-group";
-import { ColorProps } from "@/types/product";
+import { ColorProps } from "@/types/productProps";
 
 interface ColorSectionProps {
   colors: ColorProps[];

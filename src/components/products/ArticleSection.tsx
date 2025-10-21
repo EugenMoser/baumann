@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArticleProps } from "@/types/product";
+import { ArticleProps } from "@/types/productProps";
 
 interface ArticleSectionProps {
   articles: ArticleProps[];

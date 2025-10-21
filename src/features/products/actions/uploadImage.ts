@@ -2,8 +2,11 @@
 import type { UploadApiResponse } from "cloudinary";
 import { v2 as cloudinary } from "cloudinary";
 
-import { devVariables, prodVariables } from "@/constants/envVariables";
-import { ImageUploadState } from "@/types/form";
+import {
+  devVariables,
+  prodVariables,
+} from "@/constants/envVariables";
+import { ImageUploadState } from "@/types/formProps";
 
 interface FileFormDataProps {
   fileFormData: File;

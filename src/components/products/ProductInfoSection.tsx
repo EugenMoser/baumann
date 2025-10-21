@@ -7,7 +7,7 @@ import sendInquiry from "@/lib/helpers/sendInquire";
 import {
   ArticleProps,
   ColorProps,
-} from "@/types/product";
+} from "@/types/productProps";
 
 import { Button } from "../ui/button";
 

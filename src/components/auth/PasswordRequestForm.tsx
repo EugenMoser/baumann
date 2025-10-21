@@ -9,7 +9,7 @@ import {
 import CustomButton from "@/components/shared/CustomButton";
 import { Input } from "@/components/ui/input";
 import { passwordRequestAction } from "@/features/auth/actions/password";
-import { FormPasswordStates } from "@/types/form";
+import { FormPasswordStates } from "@/types/formProps";
 
 // todo: implement shadcn ui form
 export default function PasswordRequestForm(): React.JSX.Element | null {

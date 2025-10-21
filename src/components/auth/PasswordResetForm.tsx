@@ -11,7 +11,7 @@ import { useSearchParams } from "next/navigation";
 import CustomButton from "@/components/shared/CustomButton";
 import { Input } from "@/components/ui/input";
 import { passwordResetAction } from "@/features/auth/actions/password";
-import { FormPasswordStates } from "@/types/form";
+import { FormPasswordStates } from "@/types/formProps";
 
 // todo: implement shadcn ui form
 export default function PasswordResetForm(): React.JSX.Element | null {

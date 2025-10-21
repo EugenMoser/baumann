@@ -1,12 +1,15 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import {
+  useActionState,
+  useState,
+} from "react";
 
 import CustomButton from "@/components/shared/CustomButton";
 import { CategoryProps } from "@/constants/productCategories";
 import { addProductAction } from "@/features/products/actions/addProduct";
-import { ProductNotificationFormStates } from "@/types/form";
-import { ProductFormDataProps } from "@/types/product";
+import { ProductNotificationFormStates } from "@/types/formProps";
+import { ProductFormDataProps } from "@/types/productProps";
 
 import ProductCategorySelect from "./ProductCategorySelect";
 import ProductInputField from "./ProductInputField";

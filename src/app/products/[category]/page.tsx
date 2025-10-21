@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import ProductCardByCategory from "@/components/products/ProductCardByCategory";
 import productCategories from "@/constants/productCategories";
 import { getCachedProductByCategory } from "@/lib/database";
-import { ProductByCategoryProps } from "@/types/product";
+import { ProductByCategoryProps } from "@/types/productProps";
 
 import Loading from "./loading";
 

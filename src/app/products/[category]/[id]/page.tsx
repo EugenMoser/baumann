@@ -8,7 +8,7 @@ import {
   ArticleProps,
   ColorProps,
   ProductWithColorAndArticlesProps,
-} from "@/types/product";
+} from "@/types/productProps";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;

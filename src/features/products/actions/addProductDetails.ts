@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { ImageUploadState, ProductNotificationFormStates } from "@/types/form";
-import { ProductFormDataProps } from "@/types/product";
+import {
+  ImageUploadState,
+  ProductNotificationFormStates,
+} from "@/types/formProps";
+import { ProductFormDataProps } from "@/types/productProps";
 
 import { ImageSmallFormSchema } from "../schemas/imageFormSchema";
 import { ProductDetailsFormSchema } from "../schemas/productSchema";

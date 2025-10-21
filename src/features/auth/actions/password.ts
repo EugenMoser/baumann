@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 
 import { resetPasswordUrl } from "@/constants/config";
 import { prisma } from "@/lib/prisma";
-import { FormPasswordStates } from "@/types/form";
+import { FormPasswordStates } from "@/types/formProps";
 import {
   Admin,
   PasswordReset,

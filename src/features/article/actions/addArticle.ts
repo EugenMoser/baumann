@@ -4,8 +4,8 @@ import { log } from "console";
 
 import { CategoryProps } from "@/constants/productCategories";
 import { prisma } from "@/lib/prisma";
-import { ArticleFormDataProps } from "@/types/article";
-import { ArticleNotificationFormStates } from "@/types/form";
+import { ArticleFormDataProps } from "@/types/articleProps";
+import { ArticleNotificationFormStates } from "@/types/formProps";
 
 import createTimestamps from "../../../lib/helpers/createTimestamps";
 import { ArticleDetailsFormSchema } from "../schema/articleFormSchema";

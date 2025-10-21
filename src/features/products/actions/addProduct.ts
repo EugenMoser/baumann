@@ -2,8 +2,8 @@
 
 import { CategoryProps } from "@/constants/productCategories";
 import { prisma } from "@/lib/prisma";
-import { ProductNotificationFormStates } from "@/types/form";
-import { ProductFormDataProps } from "@/types/product";
+import { ProductNotificationFormStates } from "@/types/formProps";
+import { ProductFormDataProps } from "@/types/productProps";
 
 import createTimestamps from "../../../lib/helpers/createTimestamps";
 import addProductDetailsAction from "./addProductDetails";
