@@ -1,10 +1,15 @@
 import { z } from "zod";
 
-import { ProductDetailsFormSchema } from "@/features/products/schemas/productSchema";
-import { ColorProps } from "@/types/color";
-import { Prisma, Product } from "@prisma/client";
+import {
+  ProductDetailsFormSchema,
+} from "@/features/products/schemas/productSchema";
+import { ColorProps } from "@/types/colorProps";
+import {
+  Prisma,
+  Product,
+} from "@prisma/client";
 
-export type ProductSearchProps = Pick<Product, "productId" | "name">;
+export type ProductSearchProps = Pick<Product, "name" | "productId">;
 
 export type ProductWithColorConnectionProps = Prisma.ProductGetPayload<{
   include: {
