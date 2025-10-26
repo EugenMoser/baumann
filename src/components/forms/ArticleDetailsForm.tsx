@@ -49,9 +49,9 @@ export default function ArticleDetailsForm({
   // Show toast notification when add article failed or success
   useEffect(() => {
     if (state.success) {
-      toast.success("Artikel wurde hinzugefügt");
+      toast.success(state.message || "Artikel wurde hinzugefügt");
     } else if (!state.success && Object.keys(state.errors ?? {}).length > 0) {
-      toast.error("Fehler beim Hinzufügen des Artikels");
+      toast.error(state.globalError || "Fehler beim Hinzufügen des Artikels");
     }
   }, [state.success, state.errors]);
 

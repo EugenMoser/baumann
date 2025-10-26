@@ -2,6 +2,7 @@
 
 import {
   useActionState,
+  useEffect,
   useState,
 } from "react";
 
@@ -44,6 +45,15 @@ export default function ProductDetailsForm({}: ProductDetailsFormProps): React.J
     success: false,
   };
   const [state, formAction] = useActionState(addProductAction, initialState);
+
+  // Show toast notification when add product failed or success
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.message || "Produkt wurde hinzugefügt");
+    } else if (!state.success && Object.keys(state.errors ?? {}).length > 0) {
+      toast.error(state.globalError || "Fehler beim Hinzufügen des Produkts");
+    }
+  }, [state.success, state.errors]);
 
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -195,27 +205,6 @@ export default function ProductDetailsForm({}: ProductDetailsFormProps): React.J
           </p>
         )}
       </div>
-
-      {state.globalError && (
-        <div
-          id="globalError"
-          aria-live="polite"
-          aria-atomic="true"
-          className="mb-2 text-red-600"
-        >
-          {state.globalError}
-        </div>
-      )}
-      {state.message && (
-        <div
-          id="message"
-          aria-live="polite"
-          aria-atomic="true"
-          className="mb-2 text-green-600"
-        >
-          {state.message}
-        </div>
-      )}
 
       <CustomButton
         type="submit"
