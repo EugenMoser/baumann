@@ -65,7 +65,7 @@ export default function SearchProductCombobox({
       setProducts(result);
     }
     fetchProducts();
-  }, [search, setSearch]);
+  }, [debouncedSearch]);
 
   return (
     <>
