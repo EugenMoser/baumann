@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 interface ColorInputFieldProps {
   type: string;
   colorId: string;
+  name: string;
   title: string;
   value: string;
   "aria-describedby": string;
@@ -21,7 +22,7 @@ export default function ColorInputField(
       <Input
         id={props.colorId}
         type={props.type}
-        name={props.title}
+        name={props.name}
         placeholder={props.placeholder}
         value={props.value}
         onChange={props.onChange}

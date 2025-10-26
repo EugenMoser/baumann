@@ -15,8 +15,8 @@ export async function addColorAction(
   // *------get form data
   const colorFormData: ColorFormDataProps = {
     colorId: formData.get("colorId") as string,
-    colorName: formData.get("colorName") as string,
-    colorCode: formData.get("colorCode") as string,
+    colorName: formData.get("name") as string,
+    colorCode: formData.get("code") as string,
     colorSuffix: Number(formData.get("colorSuffix")),
   };
 
@@ -49,8 +49,8 @@ export async function addColorAction(
       name: colorName,
       code: colorCode,
       colorSuffix,
-      createdAt: timestamps.createdAt,
-      updatedAt: timestamps.updatedAt,
+      createdAt: timestamps.createdAtColor,
+      updatedAt: timestamps.updatedAtColor,
     });
 
     return { message: "Farbe erfolgreich hinzugefügt", success: true };
