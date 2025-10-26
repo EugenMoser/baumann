@@ -12,10 +12,10 @@ import CustomButton from "@/components/shared/CustomButton";
 import { CategoryProps } from "@/constants/productCategories";
 import { addProductAction } from "@/features/products";
 import {
+  ProductFormDataProps,
   ProductFormFieldErrors,
   ProductNotificationFormStates,
-} from "@/types/formProps";
-import { ProductFormDataProps } from "@/types/productProps";
+} from "@/features/products/types";
 
 import ProductCategorySelect from "./ProductCategorySelect";
 import ProductInputField from "./ProductInputField";

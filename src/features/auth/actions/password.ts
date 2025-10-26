@@ -4,8 +4,8 @@ import { randomBytes } from "crypto";
 import nodemailer from "nodemailer";
 
 import { resetPasswordUrl } from "@/constants/config";
+import { FormPasswordStates } from "@/features/auth/types";
 import { prisma } from "@/lib/prisma";
-import { FormPasswordStates } from "@/types/formProps";
 import {
   Admin,
   PasswordReset,

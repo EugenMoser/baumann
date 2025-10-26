@@ -6,7 +6,7 @@ import {
   devVariables,
   prodVariables,
 } from "@/constants/envVariables";
-import { ImageUploadState } from "@/types/formProps";
+import { ImageUploadState } from "@/features/products/types";
 
 interface FileFormDataProps {
   fileFormData: File;

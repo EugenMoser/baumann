@@ -7,8 +7,9 @@ import {
 
 import { toast } from "sonner";
 
+import type { ArticleDetailsFormSchema } from "@/features/article";
 import { addArticleAction } from "@/features/article";
-import { ArticleNotificationFormStates } from "@/types/formProps";
+import { ArticleNotificationFormStates } from "@/features/article/types";
 
 import CustomButton from "../shared/CustomButton";
 import ArticleInputField from "./ArticleInputField";

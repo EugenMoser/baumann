@@ -1,13 +1,13 @@
 "use server";
 import { unstable_cache } from "next/cache";
 
-import { prisma } from "@/lib/prisma";
 import {
   ProductByCategoryFromDBProps,
   ProductByCategoryProps,
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
-} from "@/types/productProps";
+} from "@/features/products/types";
+import { prisma } from "@/lib/prisma";
 import {
   Admin,
   Color,

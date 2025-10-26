@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { cloudinaryImageUrl } from "@/constants/config";
-import { ProductByCategoryProps } from "@/types/productProps";
+import { ProductByCategoryProps } from "@/features/products/types";
 import {
   RadioGroup,
   RadioGroupItem,

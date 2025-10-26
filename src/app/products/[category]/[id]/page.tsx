@@ -3,12 +3,10 @@ import ColorSection from "@/components/products/ColorSection";
 import ProductInfoSection from "@/components/products/ProductInfoSection";
 import ProductSection from "@/components/products/ProductSection";
 import CustomButton from "@/components/shared/CustomButton";
+import { ArticleProps } from "@/features/article/types";
+import { ColorProps } from "@/features/color/types";
+import { ProductWithColorAndArticlesProps } from "@/features/products/types";
 import { getCachedProductById } from "@/lib/database";
-import {
-  ArticleProps,
-  ColorProps,
-  ProductWithColorAndArticlesProps,
-} from "@/types/productProps";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;

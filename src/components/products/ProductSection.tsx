@@ -1,4 +1,4 @@
-import { ProductWithColorAndArticlesProps } from "@/types/productProps";
+import { ProductWithColorAndArticlesProps } from "@/features/products/types";
 
 import ImageCarousell from "./ImageCarousel";
 

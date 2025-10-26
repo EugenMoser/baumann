@@ -3,7 +3,7 @@
 import { AuthError } from "next-auth";
 import { signIn } from "src/auth";
 
-import { FormPasswordStates } from "@/types/formProps";
+import { FormPasswordStates } from "@/features/auth/types";
 
 import { LoginFormSchema } from "../schemas/loginFormSchema";
 

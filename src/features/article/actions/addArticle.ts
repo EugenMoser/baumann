@@ -1,11 +1,11 @@
 "use server";
 
 import { ArticleDetailsFormSchema } from "@/features/article";
-import { prisma } from "@/lib/prisma";
-import { ArticleFormDataProps } from "@/types/articleProps";
-import { ArticleNotificationFormStates } from "@/types/formProps";
-
-import createTimestamps from "../../../lib/helpers/createTimestamps";
+import {
+  ArticleFormDataProps,
+  ArticleNotificationFormStates,
+} from "@/features/article/types";
+import createTimestamps from "@/lib/helpers/createTimestamps";
 
 // ********************* article details actions *********************
 
@@ -16,7 +16,7 @@ export async function addArticleAction(
 ): Promise<ArticleNotificationFormStates> {
   //* ------create timestamp
   // create timestamps for product, article and color
-  const timestamps = createTimestamps("Product", "Article", "Color");
+  const timestamps = createTimestamps("Article");
   // *------get form data
   const articleFormData: ArticleFormDataProps = {
     articlePrio: Number(formData.get("articlePrio")),
@@ -69,7 +69,6 @@ export async function addArticleAction(
   // *------add article to database
   try {
     // await prisma.article.create({
-
     //   data: {
     console.log({
       productId: productId,
@@ -95,9 +94,7 @@ export async function addArticleAction(
     console.error("Errors due to adding article details:", error);
     return {
       success: false,
-      globalError:
-        "Artikeldetails konnten nicht gespeichert werden. Bitte versuche es erneut: " +
-        error.message,
+      globalError: `Artikel konnten nicht gespeichert werden. Bitte versuche es erneut: ${error.message}`,
     };
   }
 }

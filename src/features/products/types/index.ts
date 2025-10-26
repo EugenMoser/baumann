@@ -1,9 +1,10 @@
 import { z } from "zod";
 
+import { ColorProps } from "@/features/color/types";
+import { NotificationFormStates } from "@/features/globalTypes";
 import {
   ProductDetailsFormSchema,
 } from "@/features/products/schemas/productSchema";
-import { ColorProps } from "@/types/colorProps";
 import {
   Prisma,
   Product,
@@ -31,6 +32,7 @@ export type ProductWithColorAndArticlesProps = Omit<
   colors: ColorProps[];
 };
 
+// Form data for creating or updating a product
 export type ProductFormDataProps = z.infer<typeof ProductDetailsFormSchema>;
 
 //type for retrieval from the database with nested color structure
@@ -45,9 +47,31 @@ export type ProductByCategoryFromDBProps = {
   colorConnection: { color: ColorProps }[];
 };
 
+// Type for retrieval from the database with colors flattened
 export type ProductByCategoryProps = Omit<
   ProductByCategoryFromDBProps,
   "colorConnection"
 > & {
   colors: ColorProps[];
+};
+
+// Field specific errors for product form
+export type ProductFormFieldErrors = {
+  category?: string[];
+  productPrio?: string[];
+  productName?: string[];
+  descriptionProduct1?: string[];
+  descriptionProduct2?: string[];
+  descriptionProduct3?: string[];
+  descriptionProduct4?: string[];
+  material?: string[];
+  imageSmall?: string[];
+};
+
+export type ProductNotificationFormStates = NotificationFormStates & {
+  errors?: ProductFormFieldErrors; // field specific errors
+};
+
+export type ImageUploadState = ProductNotificationFormStates & {
+  url?: string; // URL of the uploaded image
 };

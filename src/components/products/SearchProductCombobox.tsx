@@ -25,10 +25,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ProductSearchProps } from "@/features/products/types";
 import { searchProducts } from "@/lib/database";
 import useDebounce from "@/lib/hooks/useDebounce";
 import { cn } from "@/lib/utils";
-import { ProductSearchProps } from "@/types/productProps";
 import { Label } from "@radix-ui/react-label";
 
 interface SearchProductComboboxProps {

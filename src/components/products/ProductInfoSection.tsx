@@ -2,12 +2,10 @@
 
 import clsx from "clsx";
 
+import { ArticleProps } from "@/features/article/types";
+import { ColorProps } from "@/features/color/types";
 import addThousendSeperator from "@/lib/helpers/addThousendSeparator";
 import sendInquiry from "@/lib/helpers/sendInquire";
-import {
-  ArticleProps,
-  ColorProps,
-} from "@/types/productProps";
 
 import { Button } from "../ui/button";
 

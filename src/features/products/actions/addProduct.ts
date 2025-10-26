@@ -1,12 +1,12 @@
 "use server";
 
 import { CategoryProps } from "@/constants/productCategories";
-import { prisma } from "@/lib/prisma";
 import {
   ImageUploadState,
+  ProductFormDataProps,
   ProductNotificationFormStates,
-} from "@/types/formProps";
-import { ProductFormDataProps } from "@/types/productProps";
+} from "@/features/products/types";
+import { prisma } from "@/lib/prisma";
 
 import createTimestamps from "../../../lib/helpers/createTimestamps";
 import { ImageSmallFormSchema } from "../schemas/imageFormSchema";
