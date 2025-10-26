@@ -61,6 +61,7 @@ export default function CustomButton({
           className={className}
           disabled={isDisabled}
           aria-label={ariaLabel}
+          title={title}
         >
           {children || title}
         </Button>

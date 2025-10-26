@@ -1,14 +1,11 @@
 "use server";
 
-import { log } from "console";
-
-import { CategoryProps } from "@/constants/productCategories";
+import { ArticleDetailsFormSchema } from "@/features/article";
 import { prisma } from "@/lib/prisma";
 import { ArticleFormDataProps } from "@/types/articleProps";
 import { ArticleNotificationFormStates } from "@/types/formProps";
 
 import createTimestamps from "../../../lib/helpers/createTimestamps";
-import { ArticleDetailsFormSchema } from "../schema/articleFormSchema";
 
 // ********************* article details actions *********************
 
@@ -72,6 +69,8 @@ export async function addArticleAction(
   // *------add article to database
   try {
     // await prisma.article.create({
+
+    //   data: {
     console.log({
       productId: productId,
       prio: articlePrio,
@@ -87,11 +86,11 @@ export async function addArticleAction(
       vpe4: vpe4?.toString() || "",
       createdAt: timestamps.createdAtProduct,
       updatedAt: timestamps.updatedAtProduct,
+      // },
     });
-    // });
 
     console.info("Article details successfully saved in the database.");
-    return { message: "Artikel erfolgreich hinzugefügt" };
+    return { message: "Artikel erfolgreich hinzugefügt", success: true };
   } catch (error: any) {
     console.error("Errors due to adding article details:", error);
     return {

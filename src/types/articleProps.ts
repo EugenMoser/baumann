@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { ArticleDetailsFormSchema } from "@/features/article/schema/articleFormSchema";
+import { ArticleDetailsFormSchema } from "@/features/article";
 import { Article } from "@prisma/client";
 
 export type ArticleProps = Article;

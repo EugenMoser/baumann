@@ -5,10 +5,15 @@ import {
   useState,
 } from "react";
 
+import { toast } from "sonner";
+
 import CustomButton from "@/components/shared/CustomButton";
 import { CategoryProps } from "@/constants/productCategories";
-import { addProductAction } from "@/features/products/actions/addProduct";
-import { ProductNotificationFormStates } from "@/types/formProps";
+import { addProductAction } from "@/features/products";
+import {
+  ProductFormFieldErrors,
+  ProductNotificationFormStates,
+} from "@/types/formProps";
 import { ProductFormDataProps } from "@/types/productProps";
 
 import ProductCategorySelect from "./ProductCategorySelect";
@@ -33,10 +38,10 @@ export default function ProductDetailsForm({}: ProductDetailsFormProps): React.J
     material: "",
     imageSmall: null,
   });
-  const initialState = {
+  const initialState: ProductNotificationFormStates = {
     message: "",
     errors: {},
-    actionSuccess: false,
+    success: false,
   };
   const [state, formAction] = useActionState(addProductAction, initialState);
 
@@ -69,7 +74,6 @@ export default function ProductDetailsForm({}: ProductDetailsFormProps): React.J
 
   return (
     <form action={formAction}>
-      <h1>----------- Product hinzufügen --------------</h1>
       <ProductCategorySelect
         name="Bitte Kategory wählen"
         title="Product - Kategory"
@@ -212,9 +216,15 @@ export default function ProductDetailsForm({}: ProductDetailsFormProps): React.J
           {state.message}
         </div>
       )}
+
       <CustomButton
         type="submit"
-        buttonType="defaultButton"
+        buttonType="onClickFunction"
+        onClickFunction={() =>
+          state.success
+            ? toast.success("Artikel wurde hinzugefügt")
+            : toast.error("Fehler beim Hinzufügen des Artikels")
+        }
         title="Produkt hinzufügen"
         ariaLabel="Produkt hinzufügen"
       />

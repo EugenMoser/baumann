@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 
 import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 import SessionProvider from "./SessionProvider";
 
@@ -20,7 +21,10 @@ export default function RootLayout({
   return (
     //suppressHydrationWarning is used to avoid hydration errors when using the ThemeProvider https://github.com/pacocoursey/next-themes
     <html lang="de" suppressHydrationWarning>
-      <body className="mx-4 mt-8 sm:mx-8 md:mx-16 lg:mx-32 2xl:mx-64">
+      <body
+        className="mx-4 mt-8 sm:mx-8 md:mx-16 lg:mx-32 2xl:mx-64"
+        suppressHydrationWarning
+      >
         <SessionProvider>
           <ThemeProvider
             attribute="class"
@@ -32,6 +36,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </SessionProvider>
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );

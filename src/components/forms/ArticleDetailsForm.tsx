@@ -1,9 +1,14 @@
 "use client";
-import { useActionState, useState } from "react";
+import {
+  useActionState,
   useEffect,
+  useState,
+} from "react";
 
-import { addArticleAction } from "@/features/article/actions/addArticle";
 import { toast } from "sonner";
+
+import { addArticleAction } from "@/features/article";
+import { ArticleNotificationFormStates } from "@/types/formProps";
 
 import CustomButton from "../shared/CustomButton";
 import ArticleInputField from "./ArticleInputField";
@@ -31,10 +36,10 @@ export default function ArticleDetailsForm({
     vpe4: "",
   });
 
-  const initialState = {
+  const initialState: ArticleNotificationFormStates = {
     message: "",
     errors: {},
-    actionSuccess: false,
+    success: false,
   };
 
   // Bind productId to the action
@@ -69,8 +74,6 @@ export default function ArticleDetailsForm({
 
   return (
     <form action={formAction}>
-      <h2>----------- Artikel hinzufügen --------------</h2>
-
       <ArticleInputField
         id="articlePrio"
         name="articlePrio"
@@ -83,7 +86,7 @@ export default function ArticleDetailsForm({
         max={1000000}
         onChange={handleOnChange}
         aria-describedby="articlePrio-error"
-        //error={state.errors?.articlePrio}
+        error={state.errors?.articlePrio}
       />
       <ArticleInputField
         id="articleNumber"
@@ -94,6 +97,7 @@ export default function ArticleDetailsForm({
         value={formData.articleNumber}
         onChange={handleOnChange}
         aria-describedby="articleNumber-error"
+        error={state.errors?.articleNumber}
       />
 
       <ArticleInputField
@@ -105,6 +109,7 @@ export default function ArticleDetailsForm({
         value={formData.articleName}
         onChange={handleOnChange}
         aria-describedby="articleName-error"
+        error={state.errors?.articleName}
       />
       <ArticleTextField
         id="descriptionArticle1"
@@ -114,6 +119,7 @@ export default function ArticleDetailsForm({
         value={formData.descriptionArticle1}
         onChange={handleOnChange}
         aria-describedby="descriptionArticle1-error"
+        error={state.errors?.descriptionArticle1}
       />
       <ArticleTextField
         id="descriptionArticle2"
@@ -123,6 +129,7 @@ export default function ArticleDetailsForm({
         value={formData.descriptionArticle2}
         onChange={handleOnChange}
         aria-describedby="descriptionArticle2-error"
+        error={state.errors?.descriptionArticle2}
       />
       <ArticleTextField
         id="descriptionArticle3"
@@ -132,6 +139,7 @@ export default function ArticleDetailsForm({
         value={formData.descriptionArticle3}
         onChange={handleOnChange}
         aria-describedby="descriptionArticle3-error"
+        error={state.errors?.descriptionArticle3}
       />
       <ArticleTextField
         id="descriptionArticle4"
@@ -141,6 +149,7 @@ export default function ArticleDetailsForm({
         value={formData.descriptionArticle4}
         onChange={handleOnChange}
         aria-describedby="descriptionArticle4-error"
+        error={state.errors?.descriptionArticle4}
       />
       <ArticleInputField
         id="vpe1"
@@ -152,6 +161,7 @@ export default function ArticleDetailsForm({
         step={10}
         onChange={handleOnChange}
         aria-describedby="vpe1-error"
+        error={state.errors?.vpe1}
       />
       <ArticleInputField
         id="vpe2"
@@ -163,6 +173,7 @@ export default function ArticleDetailsForm({
         step={10}
         onChange={handleOnChange}
         aria-describedby="vpe2-error"
+        error={state.errors?.vpe2}
       />
       <ArticleInputField
         id="vpe3"
@@ -174,6 +185,7 @@ export default function ArticleDetailsForm({
         step={10}
         onChange={handleOnChange}
         aria-describedby="vpe3-error"
+        error={state.errors?.vpe3}
       />
       <ArticleInputField
         id="vpe4"
@@ -185,7 +197,9 @@ export default function ArticleDetailsForm({
         step={10}
         onChange={handleOnChange}
         aria-describedby="vpe4-error"
+        error={state.errors?.vpe4}
       />
+
       <CustomButton
         type="submit"
         buttonType="defaultButton"

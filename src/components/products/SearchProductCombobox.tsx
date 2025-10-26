@@ -2,7 +2,11 @@
 
 import * as React from "react";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import clsx from "clsx";
+import {
+  Check,
+  ChevronsUpDown,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,22 +23,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { searchProducts } from "@/lib/database";
+import useDebounce from "@/lib/hooks/useDebounce";
 import { cn } from "@/lib/utils";
-import { ProductSearchProps } from "@/types/product";
-
-// Debounce helper
-function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState(value);
-  React.useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-  return debouncedValue;
-}
+import { ProductSearchProps } from "@/types/productProps";
+import { Label } from "@radix-ui/react-label";
 
 interface SearchProductComboboxProps {
   productIdHandler: (id: number) => void;
@@ -42,84 +34,91 @@ interface SearchProductComboboxProps {
 export default function SearchProductCombobox({
   productIdHandler,
 }: SearchProductComboboxProps): React.JSX.Element {
-  const [open, setOpen] = React.useState(false);
-  const [search, setSearch] = React.useState("");
-  const [selected, setSelected] = React.useState<ProductSearchProps | null>(
-    null,
-  );
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [search, setSearch] = React.useState<string>("");
+  const [selectedItem, setSelectedItem] =
+    React.useState<ProductSearchProps | null>(null);
   const [products, setProducts] = React.useState<ProductSearchProps[] | []>([]);
   const debouncedSearch = useDebounce(search, 400);
 
   React.useEffect(() => {
-    if (selected !== null) {
-      productIdHandler(selected.productId);
+    if (selectedItem !== null) {
+      productIdHandler(selectedItem.productId);
     }
-  }, [selected, productIdHandler]);
+  }, [selectedItem, productIdHandler]);
 
   // search products (with debounced)
   React.useEffect(() => {
     async function fetchProducts() {
+      // If search is empty, clear products
       if (debouncedSearch.length === 0) {
         setProducts([]);
         return;
       }
       const result: ProductSearchProps[] | [] =
         await searchProducts(debouncedSearch);
+
       setProducts(result);
     }
     fetchProducts();
-  }, [debouncedSearch]);
+  }, [search, setSearch]);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild className="bg-background">
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[min-content] justify-between"
-        >
-          {selected ? selected.name : "Produkt suchen..."}
-          <ChevronsUpDown className="opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command className="bg-background">
-          <CommandInput
-            onValueChange={setSearch}
-            placeholder="Produkt suchen..."
-            className="h-9 bg-background"
-          />
-          <CommandList className="bg-background">
-            <CommandEmpty>Kein Produkt gefunden.</CommandEmpty>
-            <CommandGroup>
-              {products.map((product) => (
-                <CommandItem
-                  key={product.productId}
-                  value={product.name}
-                  onSelect={() => {
-                    setSelected({
-                      productId: product.productId,
-                      name: product.name,
-                    });
-                    setOpen(false);
-                  }}
-                >
-                  {product.name}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      selected?.productId === product.productId
-                        ? "opacity-100"
-                        : "opacity-0",
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <>
+      <Label className={cn("mb-2 block text-sm font-medium")}>
+        Bitte wähle das Produkt aus, dem der Artikel zugeordnet werden soll.
+      </Label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="mb-4 max-w-96 justify-between overflow-hidden"
+          >
+            {selectedItem ? selectedItem.name : "Produkt suchen..."}
+            <ChevronsUpDown className="opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="max-w-96 p-0">
+          <Command className="bg-background">
+            <CommandInput
+              onValueChange={setSearch}
+              value={search}
+              placeholder="Produkt suchen..."
+              className="h-9 bg-background"
+              autoComplete="off"
+            />
+            <CommandList>
+              <CommandEmpty>Kein Produkt gefunden.</CommandEmpty>
+              <CommandGroup>
+                {products.map((product) => (
+                  <CommandItem
+                    className="cursor-pointer"
+                    key={product.productId}
+                    value={`${product.productId} ${product.name}`}
+                    onSelect={() => {
+                      setSelectedItem(product);
+                      setOpen(false);
+                    }}
+                  >
+                    {product.productId} {product.name}
+                    <Check
+                      className={clsx(
+                        "ml-auto cursor-pointer",
+
+                        selectedItem?.productId === product.productId
+                          ? "opacity-100"
+                          : "opacity-0",
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </>
   );
 }

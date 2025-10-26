@@ -12,6 +12,8 @@ function AddArticlePage(): React.JSX.Element {
   }
   return (
     <>
+      <h2>----------- Artikel hinzufügen --------------</h2>
+
       <SearchProductCombobox productIdHandler={productIdHandler} />
       {productId && <ArticleDetailsForm productId={productId} />}
     </>
