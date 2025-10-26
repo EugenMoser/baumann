@@ -7,8 +7,13 @@ import {
   ProductByCategoryProps,
   ProductWithColorAndArticlesProps,
   ProductWithColorConnectionProps,
-} from "@/types/product";
-import { Admin, Color, PasswordReset, Product } from "@prisma/client";
+} from "@/types/productProps";
+import {
+  Admin,
+  Color,
+  PasswordReset,
+  Product,
+} from "@prisma/client";
 
 import isTokenValid from "../features/auth/helpers/isTokenValid";
 

@@ -1,7 +1,9 @@
 "use client";
 import { useActionState, useState } from "react";
+  useEffect,
 
 import { addArticleAction } from "@/features/article/actions/addArticle";
+import { toast } from "sonner";
 
 import CustomButton from "../shared/CustomButton";
 import ArticleInputField from "./ArticleInputField";
@@ -38,6 +40,15 @@ export default function ArticleDetailsForm({
   // Bind productId to the action
   const addArticleWithId = addArticleAction.bind(null, productId);
   const [state, formAction] = useActionState(addArticleWithId, initialState);
+
+  // Show toast notification when add article failed or success
+  useEffect(() => {
+    if (state.success) {
+      toast.success("Artikel wurde hinzugefügt");
+    } else if (!state.success && Object.keys(state.errors ?? {}).length > 0) {
+      toast.error("Fehler beim Hinzufügen des Artikels");
+    }
+  }, [state.success, state.errors]);
 
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
