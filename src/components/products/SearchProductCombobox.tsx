@@ -1,6 +1,9 @@
 "use client";
 
-import * as React from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
 
 import clsx from "clsx";
 import {
@@ -34,21 +37,22 @@ interface SearchProductComboboxProps {
 export default function SearchProductCombobox({
   productIdHandler,
 }: SearchProductComboboxProps): React.JSX.Element {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const [search, setSearch] = React.useState<string>("");
-  const [selectedItem, setSelectedItem] =
-    React.useState<ProductSearchProps | null>(null);
-  const [products, setProducts] = React.useState<ProductSearchProps[] | []>([]);
+  const [open, setOpen] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
+  const [selectedItem, setSelectedItem] = useState<ProductSearchProps | null>(
+    null,
+  );
+  const [products, setProducts] = useState<ProductSearchProps[] | []>([]);
   const debouncedSearch = useDebounce(search, 400);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedItem !== null) {
       productIdHandler(selectedItem.productId);
     }
   }, [selectedItem, productIdHandler]);
 
   // search products (with debounced)
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetchProducts() {
       // If search is empty, clear products
       if (debouncedSearch.length === 0) {
