@@ -4,12 +4,23 @@ import {
   ColorNotificationFormStates,
 } from "@/features/color";
 import createTimestamps from "@/lib/helpers/createTimestamps";
+import { requireAuth } from "@/lib/helpers/requireAuth";
 import { prisma } from "@/lib/prisma";
 
 export async function addColorAction(
   previousState: ColorNotificationFormStates,
   formData: FormData,
 ): Promise<ColorNotificationFormStates> {
+  // Require authentication
+  try {
+    await requireAuth();
+  } catch (error) {
+    return {
+      success: false,
+      globalError: "Nicht autorisiert. Bitte melden Sie sich an.",
+    };
+  }
+
   const timestamps = createTimestamps("Color");
 
   // *------get form data

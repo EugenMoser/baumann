@@ -6,6 +6,7 @@ import {
   ArticleNotificationFormStates,
 } from "@/features/article/types";
 import createTimestamps from "@/lib/helpers/createTimestamps";
+import { requireAuth } from "@/lib/helpers/requireAuth";
 
 // ********************* article details actions *********************
 
@@ -14,6 +15,16 @@ export async function addArticleAction(
   previousState: ArticleNotificationFormStates,
   formData: FormData,
 ): Promise<ArticleNotificationFormStates> {
+  // Require authentication
+  try {
+    await requireAuth();
+  } catch (error) {
+    return {
+      success: false,
+      globalError: "Nicht autorisiert. Bitte melden Sie sich an.",
+    };
+  }
+
   //* ------create timestamp
   // create timestamps for product, article and color
   const timestamps = createTimestamps("Article");
