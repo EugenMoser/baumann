@@ -1,7 +1,4 @@
-"use server";
 import Link from "next/link";
-
-import CustomButton from "@/components/shared/CustomButton";
 
 export default async function DashboardPage() {
   return (
@@ -13,13 +10,6 @@ export default async function DashboardPage() {
         <Link href="/dashboard/addArticle">Artikel hinzufügen</Link>
         <Link href="/dashboard/addColor">Farbe hinzufügen</Link>
       </div>
-      {/* <CustomButton
-        type="button"
-        buttonType="logout"
-        title="Logout"
-        className="rounded bg-red-500 p-2 text-white"
-        ariaLabel="Logout"
-      /> */}
     </>
   );
 }
