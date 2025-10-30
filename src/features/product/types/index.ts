@@ -2,15 +2,16 @@ import { z } from "zod";
 
 import { ColorProps } from "@/features/color/types";
 import { NotificationFormStates } from "@/features/globalTypes";
-import {
-  ProductDetailsFormSchema,
-} from "@/features/products/schemas/productSchema";
+import { ProductDetailsFormSchema } from "@/features/product";
 import {
   Prisma,
   Product,
 } from "@prisma/client";
 
-export type ProductSearchProps = Pick<Product, "name" | "productId">;
+export type ProductSearchProps = Pick<
+  Product,
+  "name" | "productId" | "description1"
+>;
 
 export type ProductWithColorConnectionProps = Prisma.ProductGetPayload<{
   include: {

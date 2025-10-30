@@ -6,7 +6,8 @@ import {
   devVariables,
   prodVariables,
 } from "@/constants/envVariables";
-import { ImageUploadState } from "@/features/products/types";
+import { ImageUploadState } from "@/features/product/types";
+import { requireAuth } from "@/lib/helpers/requireAuth";
 
 interface FileFormDataProps {
   fileFormData: File;
@@ -24,6 +25,16 @@ cloudinary.config({
 export default async function uploadSingleImageAction(
   props: FileFormDataProps,
 ): Promise<ImageUploadState> {
+  // Require authentication
+  try {
+    await requireAuth();
+  } catch (error) {
+    return {
+      success: false,
+      globalError: "Nicht autorisiert. Bitte melden Sie sich an.",
+    };
+  }
+
   //validate image file in addProductDetailsAction.ts for a better error handling
 
   // check the environment and set the cloudinary folder accordingly
