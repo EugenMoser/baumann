@@ -1,9 +1,7 @@
 import Link from "next/link";
 
 import { getAllColors } from "@/features/color";
-import {
-  ProductWithArticleForm,
-} from "@/features/product/forms/ProductWithArticleForm";
+import { ProductWithArticleForm } from "@/features/product/forms/ProductWithArticleForm";
 
 /**
  * Server component: fetches available colors and renders the product creation form.
@@ -17,7 +15,7 @@ export default async function AddProductPage(): Promise<React.JSX.Element> {
         <h1 className="text-2xl font-bold">Produkt mit Artikel hinzufügen</h1>
         <Link
           href="/dashboard/products"
-          className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+          className="rounded bg-button-background px-4 py-2 hover:bg-button-hover hover:text-button-background"
         >
           ← Zurück
         </Link>

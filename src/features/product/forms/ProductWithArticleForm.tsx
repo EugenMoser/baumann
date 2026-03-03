@@ -16,6 +16,8 @@ import {
   ProductWithArticleFormFieldErrors,
 } from "@/features/product";
 
+import { ColorSelectorField } from "./ColorSelectorField";
+
 interface ProductWithArticleFormProps {
   onSuccess?: (productId: number) => void;
   colors: ColorProps[];
@@ -233,36 +235,14 @@ export function ProductWithArticleForm({
       </div>
 
       {/* Color Selection */}
-      {colors.length > 0 && (
-        <div className="rounded-lg border p-6">
-          <h2 className="mb-4 text-xl font-semibold">Farben zuordnen</h2>
-          <div className="flex flex-wrap gap-3">
-            {colors.map((color) => {
-              const checked = selectedColorIds.includes(color.colorId);
-              return (
-                <label
-                  key={color.colorId}
-                  className={`flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors ${
-                    checked ? "border-blue-500 bg-blue-50" : "hover:bg-gray-50"
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    className="hidden"
-                    checked={checked}
-                    onChange={() => toggleColor(color.colorId)}
-                  />
-                  <span
-                    className="h-5 w-5 rounded-full border"
-                    style={{ backgroundColor: color.code }}
-                  />
-                  {color.name}
-                </label>
-              );
-            })}
-          </div>
-        </div>
-      )}
+      <div className="rounded-lg border p-6">
+        <h2 className="mb-4 text-xl font-semibold">Farben zuordnen</h2>
+        <ColorSelectorField
+          allColors={colors}
+          selectedColorIds={selectedColorIds}
+          onToggle={toggleColor}
+        />
+      </div>
 
       {/* Submit Button */}
       <CustomButton

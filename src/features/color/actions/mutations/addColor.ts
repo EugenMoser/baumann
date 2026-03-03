@@ -57,7 +57,7 @@ export async function addColor(
 
   // *------add color to database
   try {
-    await prisma.color.create({
+    const createdColor = await prisma.color.create({
       data: {
         colorId,
         name: colorName,
@@ -68,7 +68,11 @@ export async function addColor(
     });
 
     revalidatePath("/dashboard");
-    return { message: "Farbe erfolgreich hinzugefügt", success: true };
+    return {
+      message: "Farbe erfolgreich hinzugefügt",
+      success: true,
+      createdColor,
+    };
   } catch (error: any) {
     console.error("Errors due to adding color details:", error);
     return {

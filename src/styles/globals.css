@@ -11,112 +11,365 @@
 
 @layer base {
   :root {
-    --background: 180, 18%, 96%;
-    --foreground: 208, 52%, 10%;
-    --background-hover: 180, 18%, 96%;
+    /* Base Colors */
+    --background: 180 18% 96%;
+    --foreground: 208 52% 10%;
 
-    /** Navbar */
-    --navbar: 180, 18%, 96%;
-    --navbar-item-background: 180, 16%, 79%;
-    --navbar-item-foreground: 208, 52%, 10%;
-    --navbar-hover: 196, 30%, 24%;
-    --navbar-active: 196, 30%, 24%;
+    /* Muted (subtler backgrounds/text) */
+    --muted: 180 16% 79%;
+    --muted-foreground: 208 52% 10%;
 
-    /** Card */
-    --card: 180, 18%, 96%;
-    --card-background: 180, 16%, 79%;
-    --card-foreground: 208, 52%, 10%;
-    --card-hover: 196, 30%, 24%;
+    /* Card */
+    --card: 180 18% 96%;
+    --card-foreground: 208 52% 10%;
 
-    /**Article Details */
-    --article: 240, 2%, 54%;
+    /* Popover & Dropdown */
+    --popover: 180 18% 96%;
+    --popover-foreground: 208 52% 10%;
 
-    /** Color Picker */
-    --color-active: 240, 2%, 54%;
+    /* Primary (main brand color) */
+    --primary: 196 30% 24%;
+    --primary-foreground: 180 18% 96%;
 
-    /** Button */
-    --button: 180, 18%, 96%;
-    --button-background: 180, 16%, 79%;
-    --button-foreground: 208, 52%, 10%;
-    --button-hover: 196, 30%, 24%;
+    /* Secondary */
+    --secondary: 180 16% 79%;
+    --secondary-foreground: 208 52% 10%;
 
-    /** Other */
-    --red: 0 84.2% 60.2%;
-    --border: 199.4 95.5% 73.9%; /* sky-300 */
-    --overlay: 0, 0%, 0%, 0.6;
+    /* Accent (for highlights) */
+    --accent: 180 16% 79%;
+    --accent-foreground: 208 52% 10%;
+
+    /* Destructive (errors, delete actions) */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 180 18% 96%;
+
+    /* Success */
+    --success: 142 76% 36%;
+    --success-foreground: 180 18% 96%;
+
+    /* Warning */
+    --warning: 38 92% 50%;
+    --warning-foreground: 208 52% 10%;
+
+    /* Info/Focus (blue for focus states) */
+    --info: 217 91% 60%;
+    --info-foreground: 180 18% 96%;
+
+    /* Border */
+    --border: 199.4 95.5% 73.9%;
+    --input: 199.4 95.5% 73.9%;
+
+    /* Ring (focus ring) */
+    --ring: 217 91% 60%;
+    --ring-offset: 180 18% 96%;
+
+    /* Text variations */
+    --text-primary: 208 52% 10%;
+    --text-secondary: 240 2% 54%;
+    --text-muted: 240 2% 74%;
+
+    /* Overlay */
+    --overlay: 0 0% 0%;
+    --overlay-opacity: 0.6;
+
+    /* Radius */
     --radius: 0.3rem;
   }
+
   .dark {
-    --background: 208, 52%, 10%;
-    --foreground: 180, 18%, 96%;
-    --background-hover: 208, 52%, 10%;
+    /* Base Colors */
+    --background: 208 52% 10%;
+    --foreground: 180 18% 96%;
 
-    /** Navbar */
-    --navbar: 208, 52%, 10%;
-    --navbar-item-background: 196, 30%, 24%;
-    --navbar-item-foreground: 180, 18%, 96%;
-    --navbar-hover: 180, 16%, 79%;
-    --navbar-active: 180, 16%, 79%;
+    /* Muted */
+    --muted: 196 30% 24%;
+    --muted-foreground: 180 18% 96%;
 
-    /** Card */
-    --card: 208, 52%, 10%;
-    --card-background: 196, 30%, 24%;
-    --card-foreground: 180, 18%, 96%;
-    --card-hover: 180, 16%, 79%;
+    /* Card */
+    --card: 208 52% 10%;
+    --card-foreground: 180 18% 96%;
 
-    /**Product Details */
-    --article-text: 240, 2%, 74%;
+    /* Popover & Dropdown */
+    --popover: 196 30% 24%;
+    --popover-foreground: 180 18% 96%;
 
-    /** Button */
-    --button: 208, 52%, 10%;
-    --button-background: 196, 30%, 24%;
-    --button-foreground: 180, 18%, 96%;
-    --button-hover: 180, 16%, 79%;
+    /* Primary */
+    --primary: 180 16% 79%;
+    --primary-foreground: 208 52% 10%;
 
-    /** Other */
+    /* Secondary */
+    --secondary: 196 30% 24%;
+    --secondary-foreground: 180 18% 96%;
+
+    /* Accent */
+    --accent: 196 30% 24%;
+    --accent-foreground: 180 18% 96%;
+
+    /* Destructive */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 180 18% 96%;
+
+    /* Success */
+    --success: 142 76% 36%;
+    --success-foreground: 180 18% 96%;
+
+    /* Warning */
+    --warning: 38 92% 50%;
+    --warning-foreground: 208 52% 10%;
+
+    /* Info/Focus */
+    --info: 217 91% 60%;
+    --info-foreground: 180 18% 96%;
+
+    /* Border */
     --border: 240 3.7% 15.9%;
-    --overlay: 0, 0%, 0%, 0.4;
+    --input: 240 3.7% 15.9%;
+
+    /* Ring */
+    --ring: 217 91% 60%;
+    --ring-offset: 208 52% 10%;
+
+    /* Text variations */
+    --text-primary: 180 18% 96%;
+    --text-secondary: 240 2% 74%;
+    --text-muted: 240 2% 54%;
+
+    /* Overlay */
+    --overlay: 0 0% 0%;
+    --overlay-opacity: 0.4;
   }
+
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-family: "Inter", sans-serif;
-    box-sizing: box-border;
+    box-sizing: border-box;
   }
+
   h1 {
-    font-size: 2rem;
-    font-weight: 700;
+    @apply text-4xl font-bold;
   }
+
   h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
+    @apply text-2xl font-bold;
   }
+
   h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
+    @apply text-xl font-semibold;
+  }
+
+  h4 {
+    @apply text-lg font-semibold;
+  }
+
+  h5 {
+    @apply text-base font-semibold;
+  }
+
+  h6 {
+    @apply text-sm font-semibold;
+  }
+}
+
+@layer components {
+  /* Navbar Components */
+  .navbar {
+    @apply border-b border-border bg-background;
+  }
+
+  .navbar-item {
+    @apply rounded-md px-4 py-2 text-foreground transition-colors;
+    @apply hover:bg-muted hover:text-muted-foreground;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+
+  .navbar-item-active {
+    @apply bg-primary text-primary-foreground;
+    @apply hover:bg-primary/90;
+  }
+
+  /* Card Components */
+  .card {
+    @apply rounded-lg border border-border bg-card text-card-foreground shadow-sm;
+    @apply transition-colors;
+  }
+
+  .card-hover {
+    @apply hover:bg-accent hover:text-accent-foreground;
+  }
+
+  /* Button Components */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium;
+    @apply transition-colors duration-200;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground;
+    @apply hover:bg-primary/90;
+    @apply active:bg-primary/80;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground;
+    @apply hover:bg-secondary/80;
+    @apply active:bg-secondary/70;
+  }
+
+  .btn-destructive {
+    @apply bg-destructive text-destructive-foreground;
+    @apply hover:bg-destructive/90;
+    @apply active:bg-destructive/80;
+  }
+
+  .btn-outline {
+    @apply border-input border bg-background;
+    @apply hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .btn-link {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  /* Dropdown/Menu Components */
+  .dropdown-menu {
+    @apply bg-popover text-popover-foreground rounded-md border border-border shadow-lg;
+    @apply animate-in fade-in-0 zoom-in-95;
+  }
+
+  .dropdown-item {
+    @apply relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm;
+    @apply outline-none transition-colors;
+    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply focus:bg-accent focus:text-accent-foreground;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .dropdown-item-destructive {
+    @apply text-destructive;
+    @apply hover:bg-destructive hover:text-destructive-foreground;
+    @apply focus:bg-destructive focus:text-destructive-foreground;
+  }
+
+  /* Input Components */
+  .input {
+    @apply border-input flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm;
+    @apply ring-offset-background;
+    @apply placeholder:text-muted-foreground;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .input-error {
+    @apply border-destructive;
+    @apply focus-visible:ring-destructive;
+  }
+
+  /* Alert/Message Components */
+  .alert {
+    @apply relative w-full rounded-lg border p-4;
+  }
+
+  .alert-info {
+    @apply border-info/50 bg-info/10 text-info;
+  }
+
+  .alert-success {
+    @apply border-success/50 bg-success/10 text-success;
+  }
+
+  .alert-warning {
+    @apply border-warning/50 bg-warning/10 text-warning;
+  }
+
+  .alert-error {
+    @apply border-destructive/50 bg-destructive/10 text-destructive;
+  }
+
+  /* Badge Components */
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+    @apply transition-colors;
+  }
+
+  .badge-default {
+    @apply bg-primary text-primary-foreground;
+    @apply hover:bg-primary/80;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary text-secondary-foreground;
+    @apply hover:bg-secondary/80;
+  }
+
+  .badge-outline {
+    @apply border-input border text-foreground;
+  }
+
+  .badge-destructive {
+    @apply bg-destructive text-destructive-foreground;
+    @apply hover:bg-destructive/80;
+  }
+
+  /* Overlay */
+  .overlay {
+    @apply fixed inset-0 z-50;
+    background-color: hsla(var(--overlay), var(--overlay-opacity));
   }
 }
 
 @layer utilities {
-  .navFirstDiv > div:first-child {
-    @apply mr-8 w-[-webkit-fill-available] lg:flex;
-  }
-
+  /* Custom Grid */
   .dynamicGrid {
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
   }
 
-  .buttonChildSelector {
-    button {
-      background-color: hsla(var(--background), 0.8);
-      &:first-of-type {
-        left: 0.5rem;
-      }
-      &:last-child {
-        right: 0.5rem;
-      }
-    }
+  /* Text color utilities */
+  .text-muted {
+    @apply text-[hsl(var(--text-muted))];
+  }
+
+  .text-secondary {
+    @apply text-[hsl(var(--text-secondary))];
+  }
+
+  /* Focus utilities */
+  .focus-ring {
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+
+  .focus-ring-info {
+    @apply focus-visible:ring-info focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  }
+
+  /* Scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-border;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted;
   }
 }

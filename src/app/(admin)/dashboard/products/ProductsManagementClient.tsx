@@ -4,9 +4,9 @@ import { useState } from "react";
 
 import Link from "next/link";
 
+import productCategories from "@/constants/productCategories";
 import { DeleteProductButton } from "@/features/product";
 import { ProductWithArticles } from "@/features/product/actions/queries/getAllProducts";
-import productCategories from "@/constants/productCategories";
 
 interface ProductsManagementClientProps {
   products: ProductWithArticles[];
@@ -59,7 +59,7 @@ export default function ProductsManagementClient({
                 <th className="p-3 font-semibold">Produkt-ID</th>
                 <th className="p-3 font-semibold">Name</th>
                 <th className="p-3 font-semibold">Kategorie</th>
-                <th className="p-3 font-semibold">Prio</th>
+                <th className="p-3 font-semibold">Artikelnummern</th>
                 <th className="p-3 font-semibold">Aktionen</th>
               </tr>
             </thead>
@@ -69,7 +69,9 @@ export default function ProductsManagementClient({
                   <td className="p-3">{product.productId}</td>
                   <td className="p-3 font-medium">{product.name}</td>
                   <td className="p-3">{getCategoryName(product.category)}</td>
-                  <td className="p-3">{product.prio}</td>
+                  <td className="p-3">
+                    {product.articles.map((a) => a.number).join(" | ")}
+                  </td>
                   <td className="flex gap-2 p-3">
                     <Link
                       href={`/dashboard/products/${product.productId}`}

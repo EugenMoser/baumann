@@ -17,4 +17,5 @@ export type ColorFormFieldErrors = {
 
 export type ColorNotificationFormStates = NotificationFormStates & {
   errors?: ColorFormFieldErrors; // field specific errors
+  createdColor?: Color; // returned after successful creation
 };

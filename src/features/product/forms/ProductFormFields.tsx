@@ -154,7 +154,7 @@ export function ProductFormFields({
         <button
           type="button"
           onClick={() => document.getElementById("imagesSmall")?.click()}
-          className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
+          className="w-fit rounded border bg-button-background px-4 py-2 hover:bg-button-hover hover:text-button-background"
         >
           Dateien auswählen (max. 10)
         </button>
@@ -191,7 +191,7 @@ export function ProductFormFields({
         <button
           type="button"
           onClick={() => document.getElementById("imagesBig")?.click()}
-          className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
+          className="w-fit rounded border bg-button-background px-4 py-2 hover:bg-button-hover hover:text-button-background"
         >
           Dateien auswählen (max. 10)
         </button>
