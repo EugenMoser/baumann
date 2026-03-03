@@ -12,9 +12,12 @@ import NavbarMobile from "./NavbarMobile";
 import ThemeToggle from "./ThemeToggle";
 
 interface NavbarProps {}
-export default function Navbar({}: NavbarProps): React.JSX.Element {
+export default function Navbar({}: NavbarProps): React.JSX.Element | null {
   const pathname = usePathname();
   const { data: session } = useSession();
+
+  // Hide the entire header on dashboard routes
+  if (pathname.startsWith("/dashboard")) return null;
 
   return (
     <NavigationMenu

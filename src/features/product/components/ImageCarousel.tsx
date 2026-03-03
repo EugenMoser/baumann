@@ -19,22 +19,20 @@ import PlaceholderImage from "./PlaceholderImage";
 interface ImageCarousellProps {
   product: {
     name: string;
-    imageUrlBig1: string;
-    imageUrlBig2?: string | null;
-    imageUrlBig3?: string | null;
+    imageUrlsBig: string[];
   };
 }
 
 export default function ImageCarousell({
   product,
 }: ImageCarousellProps): React.JSX.Element {
-  const urlArray = [
-    product.imageUrlBig1,
-    product.imageUrlBig2,
-    product.imageUrlBig3,
-  ]
-    .filter(Boolean) // Remove any null or undefined values
-    .map((url) => cloudinaryImageUrl + url!.replace(/ /g, "_")); // Prepend cloudinaryImageUrl and replace spaces with underscores
+  const urlArray = product.imageUrlsBig
+    .filter(Boolean)
+    .map((url) =>
+      url.startsWith("http")
+        ? url
+        : cloudinaryImageUrl + url.replace(/ /g, "_"),
+    );
 
   const [existsUrl, setExistsUrl] = useState<string[]>([]);
 

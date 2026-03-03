@@ -1,41 +1,28 @@
-"use client";
+import Link from "next/link";
 
-import { useState } from "react";
+import { getAllColors } from "@/features/color";
+import {
+  ProductWithArticleForm,
+} from "@/features/product/forms/ProductWithArticleForm";
 
-import { redirect } from "next/navigation";
-
-import { ProductWithArticleForm } from "@/features/product/forms/ProductWithArticleForm";
-
-export default function AddProductPage(): React.JSX.Element {
-  const [createdProductId, setCreatedProductId] = useState<number | null>(null);
+/**
+ * Server component: fetches available colors and renders the product creation form.
+ */
+export default async function AddProductPage(): Promise<React.JSX.Element> {
+  const colors = await getAllColors();
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="mb-6 text-2xl font-bold">
-        Produkt mit Artikel hinzufügen
-      </h1>
-
-      {createdProductId ? (
-        <div className="rounded-lg border border-green-500 bg-green-50 p-4">
-          <p className="text-green-800">
-            ✓ Produkt und Artikel erfolgreich angelegt!
-          </p>
-          <p className="text-green-800">
-            Möchtest du einen Weiteren Artikel für dieses Produkt
-            {createdProductId} hinzufügen?
-          </p>
-          <button
-            onClick={() =>
-              redirect(`/dashboard/articles/new?productId=${createdProductId}`)
-            }
-            className="mt-2 rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-          >
-            Weiteren Artikel hinzufügen
-          </button>
-        </div>
-      ) : (
-        <ProductWithArticleForm onSuccess={setCreatedProductId} />
-      )}
+      <div className="mb-6 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Produkt mit Artikel hinzufügen</h1>
+        <Link
+          href="/dashboard/products"
+          className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+        >
+          ← Zurück
+        </Link>
+      </div>
+      <ProductWithArticleForm colors={colors ?? []} />
     </div>
   );
 }

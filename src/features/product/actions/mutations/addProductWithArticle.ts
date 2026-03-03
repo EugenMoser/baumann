@@ -14,7 +14,6 @@ import createTimestamps from "@/lib/helpers/createTimestamps";
 import { requireAuth } from "@/lib/helpers/requireAuth";
 import { prisma } from "@/lib/prisma";
 
-import { ImageSmallFormSchema } from "../../schema/imageFormSchema";
 import { ProductDetailsFormSchema } from "../../schema/productSchema";
 import uploadSingleImageAction from "../upload/uploadImage";
 
@@ -73,8 +72,6 @@ export async function addProductWithArticleAction(
     vpe4: (formData.get("vpe4") as string) || undefined,
   };
 
-  const fileFormData = formData.get("imageSmall");
-
   // Validate product fields
   const validatedProductFields = ProductDetailsFormSchema.safeParse({
     ...productFormData,
@@ -85,14 +82,19 @@ export async function addProductWithArticleAction(
     ...articleFormData,
   });
 
-  // Validate image file
-  const uploadedImageSmall: File | undefined =
-    fileFormData instanceof File && fileFormData.size > 0
-      ? fileFormData
-      : undefined;
-  const validatedImageFile = ImageSmallFormSchema.safeParse({
-    imageSmall: uploadedImageSmall,
-  });
+  // Validate: at least one small image required
+  const smallImageFiles: File[] = [];
+  for (let i = 0; i < 10; i++) {
+    const file = formData.get(`imageSmall-${i}`);
+    if (file instanceof File && file.size > 0) {
+      smallImageFiles.push(file);
+    }
+  }
+
+  const imageSmallError =
+    smallImageFiles.length === 0
+      ? { imageSmall: ["Bitte lade mindestens ein kleines Bild hoch."] }
+      : false;
 
   // Collect all validation errors
   const productErrors = !validatedProductFields.success && {
@@ -103,40 +105,60 @@ export async function addProductWithArticleAction(
     ...validatedArticleFields.error.flatten().fieldErrors,
   };
 
-  const imageErrors = !validatedImageFile.success && {
-    ...validatedImageFile.error.flatten().fieldErrors,
-  };
-
   // Return if any validation failed
-  if (productErrors || articleErrors || imageErrors) {
+  if (productErrors || articleErrors || imageSmallError) {
     return {
       success: false,
       errors: {
         ...(productErrors || {}),
         ...(articleErrors || {}),
-        ...(imageErrors || {}),
+        ...(imageSmallError || {}),
       },
       globalError:
         "Validierung fehlgeschlagen. Bitte überprüfen Sie alle Felder.",
     };
   }
 
-  // Create image name using article number
-  const createdSmallImageName = `a_${articleFormData.articleNumber}-${productFormData.productName.substring(0, 20)}`; // e.g., a_1234-Produktname
+  // Create image basename using article number and article name
+  const imageBaseName = `${articleFormData.articleNumber}-${articleFormData.articleName.substring(0, 30)}`;
 
-  // Upload image to cloudinary
-  const uploadedImageResult: ImageUploadState = await uploadSingleImageAction({
-    fileFormData: fileFormData as File,
-    imageName: createdSmallImageName,
-  });
+  // Upload all small images (a1_, a2_, ...)
+  const smallImageUrls: string[] = [];
+  for (let i = 0; i < smallImageFiles.length; i++) {
+    const imageName = `a${i + 1}_${imageBaseName}`;
+    const result: ImageUploadState = await uploadSingleImageAction({
+      fileFormData: smallImageFiles[i],
+      imageName,
+    });
+    if (!result.success) {
+      return {
+        success: false,
+        globalError:
+          result.globalError || "Fehler beim Hochladen des kleinen Bildes.",
+      };
+    }
+    if (result.url) smallImageUrls.push(result.url);
+  }
 
-  if (!uploadedImageResult.success) {
-    console.error("Error uploading image:", uploadedImageResult.errors);
-    return {
-      success: false,
-      globalError:
-        uploadedImageResult.globalError || "Fehler beim Hochladen des Bildes.",
-    };
+  // Upload big images (optional, up to 10)
+  const bigImageFiles: File[] = [];
+  for (let i = 0; i < 10; i++) {
+    const file = formData.get(`imageBig-${i}`);
+    if (file instanceof File && file.size > 0) {
+      bigImageFiles.push(file);
+    }
+  }
+
+  const bigImageUrls: string[] = [];
+  for (let i = 0; i < bigImageFiles.length; i++) {
+    const bigImageName = `b${i + 1}_${imageBaseName}`;
+    const result: ImageUploadState = await uploadSingleImageAction({
+      fileFormData: bigImageFiles[i],
+      imageName: bigImageName,
+    });
+    if (result.success && result.url) {
+      bigImageUrls.push(result.url);
+    }
   }
 
   const {
@@ -179,8 +201,8 @@ export async function addProductWithArticleAction(
           description3: descriptionProduct3,
           description4: descriptionProduct4,
           material,
-          imageUrlSmall: uploadedImageResult.url!,
-          imageUrlBig1: "",
+          imageUrlsSmall: smallImageUrls,
+          imageUrlsBig: bigImageUrls,
           createdAt: timestamps.createdAtProduct,
           updatedAt: timestamps.updatedAtProduct,
         },
@@ -205,6 +227,21 @@ export async function addProductWithArticleAction(
           updatedAt: timestamps.updatedAtArticle,
         },
       });
+
+      // Create color connections for selected colors
+      const selectedColorIds = formData.getAll("colorIds") as string[];
+      for (let i = 0; i < selectedColorIds.length; i++) {
+        const colorId = selectedColorIds[i];
+        if (colorId) {
+          await tx.productColor.create({
+            data: {
+              productId: nextProductId,
+              colorId,
+              colorSuffix: i,
+            },
+          });
+        }
+      }
     });
 
     revalidatePath("/dashboard");

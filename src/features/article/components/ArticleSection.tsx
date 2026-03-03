@@ -1,14 +1,7 @@
 "use client";
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import {
   Select,
@@ -75,9 +68,13 @@ function ArticleSection({ articles }: ArticleSectionProps): React.JSX.Element {
             <SelectTrigger className="w-full rounded-md border border-article">
               <SelectValue placeholder="Bitte wählen" />
             </SelectTrigger>
-            <SelectContent className="w-full border-[0.5px] border-article">
+            <SelectContent className="w-full border-[0.5px] border-article bg-background">
               {articles.map((article, index) => (
-                <SelectItem key={index} value={article.id}>
+                <SelectItem
+                  key={index}
+                  value={article.id}
+                  className="cursor-pointer hover:bg-card-hover hover:text-background"
+                >
                   {article.description1}
                 </SelectItem>
               ))}

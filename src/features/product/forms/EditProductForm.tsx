@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
@@ -38,6 +38,9 @@ export function EditProductForm({
     descriptionProduct4: product.description4 ?? null,
     material: product.material ?? "",
   });
+
+  const [imagesSmall, setImagesSmall] = useState<File[]>([]);
+  const [imagesBig, setImagesBig] = useState<File[]>([]);
 
   const initialState: ProductNotificationFormStates = {
     message: "",
@@ -80,8 +83,20 @@ export function EditProductForm({
     }));
   };
 
+  /**
+   * Intercept form submit to append image files from React state,
+   * since file inputs with type="file" aren't serialised by default FormData.
+   */
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    imagesSmall.forEach((file, i) => fd.set(`imageSmall-${i}`, file));
+    imagesBig.forEach((file, i) => fd.set(`imageBig-${i}`, file));
+    startTransition(() => formAction(fd));
+  };
+
   return (
-    <form action={formAction} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <ProductCategorySelect
         name="Bitte Kategorie wählen"
         title="Produkt - Kategorie"
@@ -166,6 +181,99 @@ export function EditProductForm({
         aria-describedby="material-error"
         error={state.errors?.material}
       />
+
+      {/* Small images section */}
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold">
+          Kleine Bilder für Produktliste (bis zu 10)
+        </label>
+        {product.imageUrlsSmall.length > 0 && (
+          <div className="mb-1">
+            <p className="text-muted-foreground mb-1 text-sm">
+              Aktuelle Bilder:
+            </p>
+            <ul className="text-muted-foreground space-y-1 text-sm">
+              {product.imageUrlsSmall.map((url, i) => (
+                <li key={i}>
+                  a{i + 1}: {url.split("/").pop()}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <input
+          id="editImagesSmall"
+          type="file"
+          accept=".webp"
+          multiple
+          className="hidden"
+          onChange={(e) => {
+            setImagesSmall(Array.from(e.target.files ?? []).slice(0, 10));
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => document.getElementById("editImagesSmall")?.click()}
+          className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
+        >
+          Neue Bilder auswählen (ersetzt aktuelle)
+        </button>
+        {imagesSmall.length > 0 && (
+          <ul className="text-muted-foreground space-y-1 text-sm">
+            {imagesSmall.map((file, i) => (
+              <li key={i}>
+                a{i + 1}: {file.name}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* Big images section */}
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold">Große Bilder (bis zu 10)</label>
+        {product.imageUrlsBig.length > 0 && (
+          <div className="mb-1">
+            <p className="text-muted-foreground mb-1 text-sm">
+              Aktuelle Bilder:
+            </p>
+            <ul className="text-muted-foreground space-y-1 text-sm">
+              {product.imageUrlsBig.map((url, i) => (
+                <li key={i}>
+                  b{i + 1}: {url.split("/").pop()}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <input
+          id="editImagesBig"
+          type="file"
+          accept=".webp"
+          multiple
+          className="hidden"
+          onChange={(e) => {
+            setImagesBig(Array.from(e.target.files ?? []).slice(0, 10));
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => document.getElementById("editImagesBig")?.click()}
+          className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
+        >
+          Neue Bilder auswählen (ersetzt aktuelle)
+        </button>
+        {imagesBig.length > 0 && (
+          <ul className="text-muted-foreground space-y-1 text-sm">
+            {imagesBig.map((file, i) => (
+              <li key={i}>
+                b{i + 1}: {file.name}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       <CustomButton
         type="submit"
         buttonType="defaultButton"

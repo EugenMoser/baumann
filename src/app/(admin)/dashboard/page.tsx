@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default async function DashboardPage() {
+export default function DashboardPage() {
   return (
     <div className="container mx-auto py-8">
       <h1 className="mb-6 text-2xl font-bold">Willkommen im Dashboard</h1>
@@ -21,31 +21,6 @@ export default async function DashboardPage() {
               className="rounded-md bg-blue-600 px-4 py-3 text-center text-white hover:bg-blue-700"
             >
               Farben verwalten
-            </Link>
-          </div>
-        </div>
-
-        {/* Create new */}
-        <div className="rounded-lg border p-6">
-          <h2 className="mb-4 text-lg font-semibold">Neu anlegen</h2>
-          <div className="flex flex-col gap-3">
-            <Link
-              href="/dashboard/products/new"
-              className="rounded-md bg-green-600 px-4 py-3 text-center text-white hover:bg-green-700"
-            >
-              + Produkt mit Artikel hinzufügen
-            </Link>
-            <Link
-              href="/dashboard/articles/new"
-              className="rounded-md bg-green-600 px-4 py-3 text-center text-white hover:bg-green-700"
-            >
-              + Artikel zu bestehendem Produkt hinzufügen
-            </Link>
-            <Link
-              href="/dashboard/colors/new"
-              className="rounded-md bg-green-600 px-4 py-3 text-center text-white hover:bg-green-700"
-            >
-              + Farbe hinzufügen
             </Link>
           </div>
         </div>

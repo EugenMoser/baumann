@@ -24,20 +24,18 @@ model PasswordReset {
 }
 
 model Product {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  productId     Int     @unique @map("product_id")
-  prio          Int
-  category      String
-  name          String
-  description1  String?
-  description2  String?
-  description3  String?
-  description4  String?
-  material      String?
-  imageUrlSmall String  @map("imageUrl_small")
-  imageUrlBig1  String  @map("imageUrl_big1")
-  imageUrlBig2  String? @map("imageUrl_big2")
-  imageUrlBig3  String? @map("imageUrl_big3")
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId      Int      @unique @map("product_id")
+  prio           Int
+  category       String
+  name           String
+  description1   String?
+  description2   String?
+  description3   String?
+  description4   String?
+  material       String?
+  imageUrlsSmall String[] @map("imageUrls_small")
+  imageUrlsBig   String[] @map("imageUrls_big")
 
   articles        Article[]
   colorConnection ProductColor[]

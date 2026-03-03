@@ -21,13 +21,14 @@ export async function getProductsByCategory(
         prio: true,
         name: true,
         description1: true,
-        imageUrlSmall: true,
+        imageUrlsSmall: true,
         colorConnection: {
           select: {
             color: true,
           },
         },
       },
+      orderBy: { prio: "asc" },
     });
   } catch (error: any) {
     console.error("Database Error:", error);

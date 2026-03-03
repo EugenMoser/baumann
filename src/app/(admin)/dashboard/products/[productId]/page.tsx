@@ -1,14 +1,16 @@
 import Link from "next/link";
 
 import { DeleteArticleButton, EditArticleForm } from "@/features/article";
+import { getAllColors } from "@/features/color";
 import { EditProductForm, getProductByProductId } from "@/features/product";
+import { ProductColorManagement } from "@/features/product/components/ProductColorManagement";
 
 interface EditProductPageProps {
   params: Promise<{ productId: string }>;
 }
 
 /**
- * Dashboard page for editing a product and managing its articles.
+ * Dashboard page for editing a product and managing its articles and colors.
  */
 export default async function EditProductPage({
   params,
@@ -41,6 +43,8 @@ export default async function EditProductPage({
     );
   }
 
+  const allColors = await getAllColors();
+
   return (
     <div className="container mx-auto max-w-4xl py-8">
       <div className="mb-6 flex items-center justify-between">
@@ -51,7 +55,7 @@ export default async function EditProductPage({
           href="/dashboard/products"
           className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
         >
-          Zurück
+          ← Zurück
         </Link>
       </div>
 
@@ -59,6 +63,16 @@ export default async function EditProductPage({
       <div className="mb-8 rounded-lg border p-6">
         <h2 className="mb-4 text-xl font-semibold">Produktinformationen</h2>
         <EditProductForm product={product} />
+      </div>
+
+      {/* Color Management */}
+      <div className="mb-8 rounded-lg border p-6">
+        <h2 className="mb-4 text-xl font-semibold">Farben</h2>
+        <ProductColorManagement
+          productId={product.productId}
+          currentColors={product.colors}
+          allColors={allColors ?? []}
+        />
       </div>
 
       {/* Articles Section */}

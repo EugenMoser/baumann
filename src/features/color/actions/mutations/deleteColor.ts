@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { NotificationFormStates } from "@/features/globalTypes";
+import { NotificationFormStates } from "@/features/product/types/globalTypes";
 import { requireAuth } from "@/lib/helpers/requireAuth";
 import { prisma } from "@/lib/prisma";
 

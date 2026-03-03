@@ -13,18 +13,13 @@ interface ProductByCategoryCardProps {
 export function ProductCardByCategory({
   product,
 }: ProductByCategoryCardProps): React.JSX.Element {
-  console.log("product", product);
-
-  // check if product.imageUrlSmall is start with "http" or "https"
-  // if not, prepend cloudinaryImageUrl and replace spaces with underscores
-  const convertedImageUrlSmall =
-    product.imageUrlSmall &&
-    (product.imageUrlSmall.startsWith("http") ||
-      product.imageUrlSmall.startsWith("https"))
-      ? // its the new image url uploaded via form
-        product.imageUrlSmall
-      : // its the old image url, uploaded manually
-        `${cloudinaryImageUrl}${product.imageUrlSmall!.replace(/ /g, "_")}`;
+  // Use first small image; handle both full http URLs and cloudinary-relative paths
+  const firstSmallImage = product.imageUrlsSmall?.[0] ?? null;
+  const convertedImageUrlSmall = firstSmallImage
+    ? firstSmallImage.startsWith("http") || firstSmallImage.startsWith("https")
+      ? firstSmallImage
+      : `${cloudinaryImageUrl}${firstSmallImage.replace(/ /g, "_")}`
+    : null;
   return (
     <Link
       className="mx-16 flex h-64 min-w-80 flex-col bg-card-background p-6 md:mx-0 md:h-72"
@@ -33,13 +28,17 @@ export function ProductCardByCategory({
       {/* image + headline */}
       <section className="mb-2 flex max-h-24 min-h-24 items-center gap-6 overflow-auto">
         <div className="h-20 min-w-20 overflow-hidden rounded-full">
-          <Image
-            src={convertedImageUrlSmall}
-            alt={product.name}
-            width={80}
-            height={80}
-            loading="lazy"
-          />
+          {convertedImageUrlSmall ? (
+            <Image
+              src={convertedImageUrlSmall}
+              alt={product.name}
+              width={80}
+              height={80}
+              loading="lazy"
+            />
+          ) : (
+            <div className="h-20 w-20 rounded-full bg-gray-200" />
+          )}
         </div>
         <h3
           style={{ hyphens: "auto" }}

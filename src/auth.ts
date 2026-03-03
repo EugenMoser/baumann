@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-import { getAdminByEmail } from "@/features/auth";
+import { getAdminByEmail } from "@/features/auth/actions/getAdminByEmail";
 import { Admin } from "@prisma/client";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

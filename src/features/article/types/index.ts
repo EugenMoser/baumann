@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { ArticleDetailsFormSchema } from "@/features/article";
-import { NotificationFormStates } from "@/features/globalTypes";
+import { NotificationFormStates } from "@/features/product/types/globalTypes";
 import { Article } from "@prisma/client";
 
 export type ArticleProps = Article;

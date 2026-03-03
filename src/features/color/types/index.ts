@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { ColorDetailsFormSchema } from "@/features/color";
-import { NotificationFormStates } from "@/features/globalTypes";
+import { NotificationFormStates } from "@/features/product/types/globalTypes";
 import { Color } from "@prisma/client";
 
 export type ColorProps = Color & { colorSuffix?: number };

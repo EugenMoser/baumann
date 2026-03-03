@@ -31,7 +31,7 @@ export async function searchProductCards(
           prio: true,
           name: true,
           description1: true,
-          imageUrlSmall: true,
+          imageUrlsSmall: true,
           colorConnection: {
             select: {
               color: true,

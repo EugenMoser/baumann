@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import {
+  ImageUploadState,
   ProductFormDataProps,
   ProductNotificationFormStates,
 } from "@/features/product/types";
@@ -10,6 +11,7 @@ import { requireAuth } from "@/lib/helpers/requireAuth";
 import { prisma } from "@/lib/prisma";
 
 import { ProductDetailsFormSchema } from "../../schema/productSchema";
+import uploadSingleImageAction from "../upload/uploadImage";
 
 /**
  * Server Action to update an existing product.
@@ -67,6 +69,60 @@ export async function updateProductAction(
   } = validated.data;
 
   try {
+    const imageBaseName = `${productId}-${productName.replace(/ /g, "-").substring(0, 30)}`;
+
+    // Upload new small images if provided (optional — replaces existing)
+    const newSmallFiles: File[] = [];
+    for (let i = 0; i < 10; i++) {
+      const file = formData.get(`imageSmall-${i}`);
+      if (file instanceof File && file.size > 0) newSmallFiles.push(file);
+    }
+
+    let imageUrlsSmall: string[] | undefined;
+    if (newSmallFiles.length > 0) {
+      imageUrlsSmall = [];
+      for (let i = 0; i < newSmallFiles.length; i++) {
+        const result: ImageUploadState = await uploadSingleImageAction({
+          fileFormData: newSmallFiles[i],
+          imageName: `a${i + 1}_${imageBaseName}`,
+        });
+        if (!result.success) {
+          return {
+            success: false,
+            globalError:
+              result.globalError || "Fehler beim Hochladen des kleinen Bildes.",
+          };
+        }
+        if (result.url) imageUrlsSmall.push(result.url);
+      }
+    }
+
+    // Upload new big images if provided (optional — replaces existing)
+    const newBigFiles: File[] = [];
+    for (let i = 0; i < 10; i++) {
+      const file = formData.get(`imageBig-${i}`);
+      if (file instanceof File && file.size > 0) newBigFiles.push(file);
+    }
+
+    let imageUrlsBig: string[] | undefined;
+    if (newBigFiles.length > 0) {
+      imageUrlsBig = [];
+      for (let i = 0; i < newBigFiles.length; i++) {
+        const result: ImageUploadState = await uploadSingleImageAction({
+          fileFormData: newBigFiles[i],
+          imageName: `b${i + 1}_${imageBaseName}`,
+        });
+        if (!result.success) {
+          return {
+            success: false,
+            globalError:
+              result.globalError || "Fehler beim Hochladen des großen Bildes.",
+          };
+        }
+        if (result.url) imageUrlsBig.push(result.url);
+      }
+    }
+
     await prisma.product.update({
       where: { productId },
       data: {
@@ -78,6 +134,8 @@ export async function updateProductAction(
         description3: descriptionProduct3,
         description4: descriptionProduct4,
         material,
+        ...(imageUrlsSmall !== undefined && { imageUrlsSmall }),
+        ...(imageUrlsBig !== undefined && { imageUrlsBig }),
       },
     });
 

@@ -2,6 +2,8 @@
 export * from "./actions/mutations/addProductWithArticle";
 export * from "./actions/mutations/updateProduct";
 export * from "./actions/mutations/deleteProduct";
+export * from "./actions/mutations/addColorToProduct";
+export * from "./actions/mutations/removeColorFromProduct";
 export * from "./actions/queries/getAllProducts";
 export * from "./actions/queries/getProductById";
 export * from "./actions/queries/getProductByProductId";
@@ -15,6 +17,7 @@ export * from "./actions/upload/uploadImage";
 export * from "./components/ImageCarousel";
 export * from "./components/PlaceholderImage";
 export * from "./components/ProductCardByCategory";
+export * from "./components/ProductColorManagement";
 export * from "./components/ProductInfoSection";
 export * from "./components/ProductSection";
 export * from "./components/ProductSearchCombobox";

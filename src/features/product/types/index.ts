@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 import { ColorProps } from "@/features/color/types";
-import { NotificationFormStates } from "@/features/globalTypes";
 import { ProductDetailsFormSchema } from "@/features/product";
+import { NotificationFormStates } from "@/features/product/types/globalTypes";
 import { Prisma, Product } from "@prisma/client";
 
 export type ProductSearchProps = Pick<
@@ -42,7 +42,7 @@ export type ProductByCategoryFromDBProps = {
   prio: number;
   name: string;
   description1: string | null;
-  imageUrlSmall: string | null;
+  imageUrlsSmall: string[];
 
   colorConnection: { color: ColorProps }[];
 };

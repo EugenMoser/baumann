@@ -13,6 +13,7 @@
   :root {
     --background: 180, 18%, 96%;
     --foreground: 208, 52%, 10%;
+    --background-hover: 180, 18%, 96%;
 
     /** Navbar */
     --navbar: 180, 18%, 96%;

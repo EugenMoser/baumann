@@ -1,12 +1,13 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
 import CustomButton from "@/components/shared/CustomButton";
 import { CategoryProps } from "@/constants/productCategories";
 import { ArticleFormDataProps, ArticleFormFields } from "@/features/article";
+import { ColorProps } from "@/features/color/types";
 import {
   addProductWithArticleAction,
   ProductFormDataProps,
@@ -17,15 +18,18 @@ import {
 
 interface ProductWithArticleFormProps {
   onSuccess?: (productId: number) => void;
+  colors: ColorProps[];
 }
 
 export function ProductWithArticleForm({
   onSuccess,
+  colors,
 }: ProductWithArticleFormProps): React.JSX.Element {
   const [formData, setFormData] = useState<
     ProductFormDataProps &
       ArticleFormDataProps & {
-        imageSmall: File | null;
+        imagesSmall: File[];
+        imagesBig: File[];
       }
   >({
     // Product fields
@@ -37,7 +41,8 @@ export function ProductWithArticleForm({
     descriptionProduct3: null,
     descriptionProduct4: null,
     material: "",
-    imageSmall: null,
+    imagesSmall: [],
+    imagesBig: [],
 
     // Article fields
     articlePrio: 1000,
@@ -52,6 +57,8 @@ export function ProductWithArticleForm({
     vpe3: "",
     vpe4: "",
   });
+
+  const [selectedColorIds, setSelectedColorIds] = useState<string[]>([]);
 
   const initialState: ProductNotificationFormStates = {
     message: "",
@@ -81,16 +88,42 @@ export function ProductWithArticleForm({
     }
   }, [state.success, state.errors, state.productId, onSuccess]);
 
+  // Show success state inline when no external onSuccess handler
+  if (state.success && state.productId && !onSuccess) {
+    return (
+      <div className="rounded-lg border border-green-500 bg-green-50 p-6">
+        <p className="mb-2 text-green-800">
+          ✓ Produkt und Artikel erfolgreich angelegt!
+        </p>
+        <p className="mb-4 text-green-800">
+          Möchtest du einen weiteren Artikel für dieses Produkt hinzufügen?
+        </p>
+        <div className="flex gap-3">
+          <a
+            href={`/dashboard/articles/new?productId=${state.productId}`}
+            className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+          >
+            Weiteren Artikel hinzufügen
+          </a>
+          <a
+            href="/dashboard/products"
+            className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+          >
+            Zur Produktliste
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const target = event.target as HTMLInputElement;
-    const { name, value, type, files } = target;
+    const { name, value, type } = target;
 
-    let newValue: File | null | number | string = value;
-    if (type === "file") {
-      newValue = files?.[0] ?? null;
-    } else if (type === "number") {
+    let newValue: null | number | string = value;
+    if (type === "number") {
       newValue = Number(value);
     }
 
@@ -107,8 +140,50 @@ export function ProductWithArticleForm({
     }));
   };
 
+  const handleSmallImagesChange = (files: File[]) => {
+    setFormData((prev) => ({ ...prev, imagesSmall: files }));
+  };
+
+  const handleBigImagesChange = (files: File[]) => {
+    setFormData((prev) => ({ ...prev, imagesBig: files }));
+  };
+
+  const toggleColor = (colorId: string) => {
+    setSelectedColorIds((prev) =>
+      prev.includes(colorId)
+        ? prev.filter((id) => id !== colorId)
+        : [...prev, colorId],
+    );
+  };
+
+  /**
+   * Intercept form submit to append big image files and color IDs,
+   * since these are tracked in React state and not in DOM inputs.
+   */
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+
+    // Append small image files from state
+    formData.imagesSmall.forEach((file, i) => {
+      fd.set(`imageSmall-${i}`, file);
+    });
+
+    // Append big image files from state
+    formData.imagesBig.forEach((file, i) => {
+      fd.set(`imageBig-${i}`, file);
+    });
+
+    // Append selected color IDs
+    selectedColorIds.forEach((id) => fd.append("colorIds", id));
+
+    startTransition(() => {
+      formAction(fd);
+    });
+  };
+
   return (
-    <form action={formAction} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8">
       {/* Product Section */}
       <div className="rounded-lg border p-6">
         <h2 className="mb-4 text-xl font-semibold">Produktinformationen</h2>
@@ -122,11 +197,14 @@ export function ProductWithArticleForm({
             descriptionProduct3: formData.descriptionProduct3,
             descriptionProduct4: formData.descriptionProduct4,
             material: formData.material,
-            imageSmall: formData.imageSmall,
+            imagesSmall: formData.imagesSmall,
+            imagesBig: formData.imagesBig,
           }}
           errors={errors}
           onChange={handleOnChange}
           onCategoryChange={handleOnChangeSelect}
+          onSmallImagesChange={handleSmallImagesChange}
+          onBigImagesChange={handleBigImagesChange}
         />
       </div>
 
@@ -153,6 +231,38 @@ export function ProductWithArticleForm({
           onChange={handleOnChange}
         />
       </div>
+
+      {/* Color Selection */}
+      {colors.length > 0 && (
+        <div className="rounded-lg border p-6">
+          <h2 className="mb-4 text-xl font-semibold">Farben zuordnen</h2>
+          <div className="flex flex-wrap gap-3">
+            {colors.map((color) => {
+              const checked = selectedColorIds.includes(color.colorId);
+              return (
+                <label
+                  key={color.colorId}
+                  className={`flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors ${
+                    checked ? "border-blue-500 bg-blue-50" : "hover:bg-gray-50"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    className="hidden"
+                    checked={checked}
+                    onChange={() => toggleColor(color.colorId)}
+                  />
+                  <span
+                    className="h-5 w-5 rounded-full border"
+                    style={{ backgroundColor: color.code }}
+                  />
+                  {color.name}
+                </label>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Submit Button */}
       <CustomButton

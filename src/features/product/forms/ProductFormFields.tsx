@@ -6,7 +6,10 @@ import { ProductInputField } from "./ProductInputField";
 import { ProductTextField } from "./ProductTextField";
 
 interface ProductFormFieldsProps {
-  formData: ProductFormDataProps & { imageSmall: File | null };
+  formData: ProductFormDataProps & {
+    imagesSmall: File[];
+    imagesBig: File[];
+  };
   errors?: {
     category?: string[];
     productPrio?: string[];
@@ -22,6 +25,8 @@ interface ProductFormFieldsProps {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   onCategoryChange: (value: CategoryProps["category"]) => void;
+  onSmallImagesChange: (files: File[]) => void;
+  onBigImagesChange: (files: File[]) => void;
 }
 
 /**
@@ -33,6 +38,8 @@ export function ProductFormFields({
   errors,
   onChange,
   onCategoryChange,
+  onSmallImagesChange,
+  onBigImagesChange,
 }: ProductFormFieldsProps): React.JSX.Element {
   return (
     <div className="space-y-4">
@@ -128,32 +135,74 @@ export function ProductFormFields({
         error={errors?.material}
       />
 
+      {/* Small images upload (up to 10) */}
       <div className="flex flex-col gap-2">
-        <label htmlFor="imageSmall" className="font-semibold">
-          Bild für Produktliste (kleines Bild) auswählen
+        <label className="font-semibold">
+          Kleine Bilder für Produktliste (bis zu 10, mindestens 1)
         </label>
         <input
-          id="imageSmall"
-          name="imageSmall"
+          id="imagesSmall"
           type="file"
           accept=".webp"
+          multiple
           className="hidden"
-          onChange={onChange}
+          onChange={(e) => {
+            const files = Array.from(e.target.files ?? []).slice(0, 10);
+            onSmallImagesChange(files);
+          }}
         />
         <button
           type="button"
-          onClick={() => document.getElementById("imageSmall")?.click()}
+          onClick={() => document.getElementById("imagesSmall")?.click()}
           className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
         >
-          Datei auswählen
+          Dateien auswählen (max. 10)
         </button>
-        {formData.imageSmall?.name && (
-          <p className="text-muted-foreground text-sm">
-            {formData.imageSmall?.name}
-          </p>
+        {formData.imagesSmall.length > 0 && (
+          <ul className="text-muted-foreground space-y-1 text-sm">
+            {formData.imagesSmall.map((file, i) => (
+              <li key={i}>
+                a{i + 1}: {file.name}
+              </li>
+            ))}
+          </ul>
         )}
         {errors?.imageSmall && (
           <p className="text-sm text-red-500">{errors.imageSmall[0]}</p>
+        )}
+      </div>
+
+      {/* Big images upload (up to 10) */}
+      <div className="flex flex-col gap-2">
+        <label className="font-semibold">
+          Große Bilder (bis zu 10, optional)
+        </label>
+        <input
+          id="imagesBig"
+          type="file"
+          accept=".webp"
+          multiple
+          className="hidden"
+          onChange={(e) => {
+            const files = Array.from(e.target.files ?? []).slice(0, 10);
+            onBigImagesChange(files);
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => document.getElementById("imagesBig")?.click()}
+          className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
+        >
+          Dateien auswählen (max. 10)
+        </button>
+        {formData.imagesBig.length > 0 && (
+          <ul className="text-muted-foreground space-y-1 text-sm">
+            {formData.imagesBig.map((file, i) => (
+              <li key={i}>
+                b{i + 1}: {file.name}
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </div>
