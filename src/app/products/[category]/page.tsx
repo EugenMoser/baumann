@@ -3,8 +3,10 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
 import productCategories from "@/constants/productCategories";
-import { getCachedProductByCategory } from "@/features/product";
-import ProductCardByCategory from "@/features/product/components/ProductCardByCategory";
+import {
+  getCachedProductByCategory,
+  ProductCardByCategory,
+} from "@/features/product";
 import { ProductByCategoryProps } from "@/features/product/types";
 
 import Loading from "./loading";

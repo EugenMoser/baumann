@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 // ********************* search products *********************
 export async function searchProducts(
   query: string,
-): Promise<ProductSearchProps[] | []> {
+): Promise<ProductSearchProps[]> {
   if (!query) return [];
   try {
     const products: ProductSearchProps[] = await prisma.product.findMany({
@@ -12,7 +12,9 @@ export async function searchProducts(
         OR: [
           { name: { contains: query, mode: "insensitive" } },
           {
-            productId: Number.isNaN(Number(query)) ? undefined : Number(query),
+            articles: {
+              some: { number: { contains: query, mode: "insensitive" } },
+            },
           },
         ],
       },

@@ -10,7 +10,7 @@ interface ProductByCategoryCardProps {
   product: ProductByCategoryProps;
 }
 
-export default function ProductCardByCategory({
+export function ProductCardByCategory({
   product,
 }: ProductByCategoryCardProps): React.JSX.Element {
   console.log("product", product);

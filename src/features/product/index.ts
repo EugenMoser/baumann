@@ -7,6 +7,7 @@ export * from "./actions/queries/getProductById";
 export * from "./actions/queries/getProductByProductId";
 export * from "./actions/queries/getProductsByCategory";
 export * from "./actions/queries/searchProducts";
+export * from "./actions/queries/searchProductCards";
 
 export * from "./actions/upload/uploadImage";
 

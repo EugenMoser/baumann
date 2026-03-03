@@ -4,7 +4,7 @@ import React from "react";
 export default function ProductCardByCategorySkeleton(): React.JSX.Element {
   return (
     <div
-      className="flex h-64 min-w-80 flex-col bg-card-background p-6 animate-pulse"
+      className="flex h-64 min-w-80 animate-pulse flex-col bg-card-background p-6"
       aria-hidden
     >
       <section className="mb-2 flex max-h-24 min-h-24 items-center gap-6">
@@ -21,9 +21,9 @@ export default function ProductCardByCategorySkeleton(): React.JSX.Element {
           <div className="h-4 w-5/6 rounded bg-slate-200 dark:bg-slate-700" />
         </section>
         <section className="flex items-center">
-          <div className="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 ring-1" />
-          <div className="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 ring-1 -ml-2" />
-          <div className="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 ring-1 -ml-2" />
+          <div className="h-8 w-8 rounded-full bg-slate-200 ring-1 dark:bg-slate-700" />
+          <div className="-ml-2 h-8 w-8 rounded-full bg-slate-200 ring-1 dark:bg-slate-700" />
+          <div className="-ml-2 h-8 w-8 rounded-full bg-slate-200 ring-1 dark:bg-slate-700" />
         </section>
       </div>
     </div>
