@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 
 import Navbar from "@/components/layout/Navbar";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeProvider } from "@/components/provider/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 
 import SessionProvider from "./SessionProvider";

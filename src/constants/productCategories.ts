@@ -13,7 +13,7 @@ export type CategoryProps = {
   href: string;
 };
 
-// Icon-Map für die verschiedenen Kategorien
+// Icon map for the different categories
 export const categoryIcons: Record<CategoryProps["category"], LucideIcon> = {
   moebel: BedDouble,
   halterung: Brackets,
@@ -51,5 +51,3 @@ const productCategories: CategoryProps[] = [
 ];
 
 export default productCategories;
-
-//className = "transition-transform duration-300 group-hover:scale-110",

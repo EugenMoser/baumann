@@ -1,8 +1,7 @@
-export default function Loading() {
+export default function Loading(): React.JSX.Element {
   return (
-    <div>
-      <p>Lädt Produkt...</p>
-      {/*//todo: evtl. Spinner hinzufügen */}
+    <div className="flex items-center justify-center py-12">
+      <p className="text-muted-foreground">Loading...</p>
     </div>
   );
 }

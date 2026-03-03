@@ -3,15 +3,14 @@ import { z } from "zod";
 import { ColorProps } from "@/features/color/types";
 import { NotificationFormStates } from "@/features/globalTypes";
 import { ProductDetailsFormSchema } from "@/features/product";
-import {
-  Prisma,
-  Product,
-} from "@prisma/client";
+import { Prisma, Product } from "@prisma/client";
 
 export type ProductSearchProps = Pick<
   Product,
-  "name" | "productId" | "description1"
->;
+  "id" | "name" | "productId" | "category" | "description1"
+> & {
+  description1?: string | null; // make description1 optional
+};
 
 export type ProductWithColorConnectionProps = Prisma.ProductGetPayload<{
   include: {
@@ -69,8 +68,24 @@ export type ProductFormFieldErrors = {
   imageSmall?: string[];
 };
 
+// Combined field errors for product with article form
+export type ProductWithArticleFormFieldErrors = ProductFormFieldErrors & {
+  articlePrio?: string[];
+  articleNumber?: string[];
+  articleName?: string[];
+  descriptionArticle1?: string[];
+  descriptionArticle2?: string[];
+  descriptionArticle3?: string[];
+  descriptionArticle4?: string[];
+  vpe1?: string[];
+  vpe2?: string[];
+  vpe3?: string[];
+  vpe4?: string[];
+};
+
 export type ProductNotificationFormStates = NotificationFormStates & {
-  errors?: ProductFormFieldErrors; // field specific errors
+  errors?: ProductFormFieldErrors | ProductWithArticleFormFieldErrors; // field specific errors
+  productId?: number; // ID of the created or updated product
 };
 
 export type ImageUploadState = ProductNotificationFormStates & {

@@ -1,6 +1,6 @@
-import PasswordResetForm from "@/components/auth/PasswordResetForm";
 import CustomButton from "@/components/shared/CustomButton";
-import { isPasswordAlreadyReset } from "@/lib/database";
+import { isPasswordAlreadyReset } from "@/features/auth";
+import { PasswordResetForm } from "@/features/auth/forms/PasswordResetForm";
 
 type PasswordResetPageProps = {
   searchParams: Promise<{ token?: string }>;

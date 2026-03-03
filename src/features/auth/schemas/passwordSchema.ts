@@ -16,9 +16,9 @@ export const PasswordFormSchema = z.object({
     .min(6, "Passwort muss mindestens 6 Zeichen lang sein."),
 });
 
-export const PasswordRequestForm = PasswordFormSchema.pick({
+export const PasswordRequestFormSchema = PasswordFormSchema.pick({
   email: true,
 });
-export const PasswordResetForm = PasswordFormSchema.omit({
+export const PasswordResetFormSchema = PasswordFormSchema.omit({
   email: true,
 });

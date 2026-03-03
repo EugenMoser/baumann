@@ -6,6 +6,7 @@ export default {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/features/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -61,6 +62,7 @@ export default {
 
   plugins: [
     require("tailwindcss-animate"),
+    require("@tailwindcss/line-clamp"),
     // hide arrow button in input[type=number] (add product form)
     function ({ addBase }: { addBase: any }) {
       addBase({

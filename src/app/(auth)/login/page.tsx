@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { auth } from "src/auth";
 
-import LoginForm from "@/components/auth/LoginForm";
 import CustomButton from "@/components/shared/CustomButton";
+import { LoginForm } from "@/features/auth/forms/LoginForm";
 import { checkSessionAndRedirect } from "@/lib/helpers/checkSessionAndRedirect";
 
 export default async function LoginPage() {
@@ -11,7 +11,7 @@ export default async function LoginPage() {
   });
 
   if (redirectUrl) {
-    redirect(redirectUrl); // Weiterleitung zu /dashboard
+    redirect(redirectUrl); // Redirect to /dashboard
   }
 
   // style https://blocks.so/login

@@ -38,7 +38,7 @@ export default async function Home() {
       <h2 className="mb-4 justify-self-center">Unsere Bereiche</h2>
       <ul className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-6">
         {productCategories.map((productCategory) => {
-          // Hole die passende Icon-Komponente für die aktuelle Kategorie
+          // Get the matching icon component for the current category
           const IconComponent = categoryIcons[productCategory.category];
 
           return (

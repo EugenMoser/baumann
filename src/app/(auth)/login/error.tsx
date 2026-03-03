@@ -1,8 +1,8 @@
 "use client";
 
-import ErrorPage from "@/components/auth/ErrorPage";
+import { ErrorPage } from "@/components/shared/ErrorPage";
 
-export default function Error({
+export default function LoginError({
   error,
   reset,
 }: {

@@ -1,4 +1,4 @@
-import PasswordRequestForm from "@/components/auth/PasswordRequestForm";
+import { PasswordRequestForm } from "@/features/auth/forms/PasswordRequestForm";
 
 function PasswordRequestPage() {
   return (

@@ -2,14 +2,54 @@ import Link from "next/link";
 
 export default async function DashboardPage() {
   return (
-    <>
-      <h1>Willkommen im Dashboard</h1>
-      <div className="mt-4 flex flex-col gap-4">
-        <h2>Wählen Sie eine Aktion aus:</h2>
-        <Link href="/dashboard/addProduct">Produkt hinzufügen</Link>
-        <Link href="/dashboard/addArticle">Artikel hinzufügen</Link>
-        <Link href="/dashboard/addColor">Farbe hinzufügen</Link>
+    <div className="container mx-auto py-8">
+      <h1 className="mb-6 text-2xl font-bold">Willkommen im Dashboard</h1>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Management */}
+        <div className="rounded-lg border p-6">
+          <h2 className="mb-4 text-lg font-semibold">Verwaltung</h2>
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/dashboard/products"
+              className="rounded-md bg-blue-600 px-4 py-3 text-center text-white hover:bg-blue-700"
+            >
+              Produkte verwalten
+            </Link>
+            <Link
+              href="/dashboard/colors"
+              className="rounded-md bg-blue-600 px-4 py-3 text-center text-white hover:bg-blue-700"
+            >
+              Farben verwalten
+            </Link>
+          </div>
+        </div>
+
+        {/* Create new */}
+        <div className="rounded-lg border p-6">
+          <h2 className="mb-4 text-lg font-semibold">Neu anlegen</h2>
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/dashboard/products/new"
+              className="rounded-md bg-green-600 px-4 py-3 text-center text-white hover:bg-green-700"
+            >
+              + Produkt mit Artikel hinzufügen
+            </Link>
+            <Link
+              href="/dashboard/articles/new"
+              className="rounded-md bg-green-600 px-4 py-3 text-center text-white hover:bg-green-700"
+            >
+              + Artikel zu bestehendem Produkt hinzufügen
+            </Link>
+            <Link
+              href="/dashboard/colors/new"
+              className="rounded-md bg-green-600 px-4 py-3 text-center text-white hover:bg-green-700"
+            >
+              + Farbe hinzufügen
+            </Link>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

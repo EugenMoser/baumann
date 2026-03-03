@@ -10,6 +10,8 @@ import productCategories, {
   CategoryProps,
 } from "@/constants/productCategories";
 
+import NavbarSearch from "./NavbarSearch";
+
 interface NavbarDesktopProps {
   pathname: string;
 }
@@ -31,7 +33,7 @@ export default function NavbarDesktop({
                 key={category.category}
                 tabIndex={0}
                 className={clsx(
-                  "flex h-[36px] min-w-32 items-center justify-center rounded-md shadow-sm transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary",
+                  "focus:ring-primary flex h-[36px] min-w-32 items-center justify-center rounded-md shadow-sm transition-all hover:shadow-md focus:outline-none focus:ring-2",
                   {
                     "bg-navbar-active text-navbar underline":
                       pathname === category.href, // Active state
@@ -46,6 +48,7 @@ export default function NavbarDesktop({
           </Link>
         </NavigationMenuLink>
       ))}
+      <NavbarSearch />
     </div>
   );
 }

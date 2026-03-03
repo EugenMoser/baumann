@@ -3,11 +3,9 @@
 import { AuthError } from "next-auth";
 import { signIn } from "src/auth";
 
-import { FormPasswordStates } from "@/features/auth/types";
+import { FormPasswordStates, LoginFormSchema } from "@/features/auth";
 
-import { LoginFormSchema } from "../schemas/loginFormSchema";
-
-export async function loginAction(
+export async function login(
   previousState: FormPasswordStates,
   formData: FormData,
 ): Promise<FormPasswordStates> {

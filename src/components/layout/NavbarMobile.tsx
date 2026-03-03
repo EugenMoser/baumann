@@ -2,10 +2,7 @@
 import { useState } from "react";
 
 import clsx from "clsx";
-import {
-  Menu,
-  X,
-} from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -43,7 +40,7 @@ export default function NavbarMobile({
         <>
           {/* Overlay */}
           <div
-            className="bg-overlay fixed inset-0 z-10"
+            className="fixed inset-0 z-10 bg-overlay"
             onClick={() => setOpen(false)}
           />
           {/* Menu */}
@@ -54,7 +51,7 @@ export default function NavbarMobile({
               onClick={() => setOpen(!open)}
               aria-label={open ? "Menü schließen" : "Menü öffnen"}
             >
-              {/* Icons mit eigener Animation */}
+              {/* Icon with custom animation */}
               <X className="d h-[1.2rem] w-[1.2rem]" />
             </Button>
             <NavigationMenuList className="mx-10 mt-[40%] flex flex-col gap-5 text-xl">
@@ -82,7 +79,7 @@ export default function NavbarMobile({
             </NavigationMenuList>
             <div className="mx-10 mt-5">
               <ThemeToggle mobile />
-              {/* //todo add contact */}
+              {/* TODO: Add contact */}
             </div>
           </div>
         </>

@@ -1,12 +1,12 @@
-import { auth } from "src/auth"; // Importiere die Authentifizierungs-Logik
+import { auth } from "src/auth";
 
 export async function checkSessionAndRedirect({ url }: { url: string }) {
-  const session = await auth(); // Hole die Session
+  const session = await auth(); // Get the current session
 
   if (session) {
-    // Falls die Session existiert, leite weiter
+    // If session exists, redirect
     return { redirect: url as string };
   }
 
-  return { redirect: null }; // Keine Weiterleitung nötig
+  return { redirect: null }; // No redirect needed
 }
