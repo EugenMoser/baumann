@@ -28,7 +28,7 @@ export default function NavbarMobile({
       <Button
         variant="outline"
         className={clsx("btn h-[36px] w-[36px] p-3 xl:hidden", {
-          "z-50": open,
+          "fixed right-5 top-5 z-50": open,
         })}
         onClick={() => setOpen(!open)}
         aria-label={open ? "Menü schließen" : "Menü öffnen"}
