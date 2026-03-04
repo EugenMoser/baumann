@@ -2,10 +2,7 @@
 import * as React from "react";
 
 import clsx from "clsx";
-import {
-  Moon,
-  Sun,
-} from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import CustomButton from "@/components/shared/CustomButton";
@@ -41,16 +38,16 @@ export default function ThemeToggle({ mobile }: ThemeToggleProps) {
       buttonType="themeToggle"
       onClickFunction={handleOnClick}
       className={clsx(
-        "hidden rounded-md bg-navbar-itemBackground p-3 hover:bg-navbar-itemForeground hover:text-navbar lg:flex",
+        "btn group hidden p-3 xl:flex",
 
         {
-          "flex w-[50%] lg:hidden": mobile,
+          "flex h-[36px] w-[36px] xl:hidden": mobile,
         },
       )}
       ariaLabel="Theme wechseln"
     >
-      <Sun className="duration-400 h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="duration-400 absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <Sun className="duration-600 rotate-0 scale-100 transform transition-transform group-active:rotate-12 dark:-rotate-90 dark:scale-0" />
+      <Moon className="duration-600 absolute h-[36px] w-[36px] rotate-90 scale-0 transform transition-transform group-active:-rotate-12 dark:rotate-0 dark:scale-100" />
     </CustomButton>
   );
 }

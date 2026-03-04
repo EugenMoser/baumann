@@ -11,130 +11,140 @@
 
 @layer base {
   :root {
-    /* Base Colors */
-    --background: 180 18% 96%;
-    --foreground: 208 52% 10%;
+    /* =========================
+     BASE SYSTEM (LIGHT)
+     ========================= */
 
-    /* Muted (subtler backgrounds/text) */
-    --muted: 180 16% 79%;
-    --muted-foreground: 208 52% 10%;
+    /* 1️⃣ Base */
+    --background: 210 40% 98%;
+    --foreground: 208 52% 12%;
 
-    /* Card */
-    --card: 180 18% 96%;
-    --card-foreground: 208 52% 10%;
+    /* 2️⃣ Surface */
+    --surface: 196 35% 92%;
+    --surface-hover: 196 45% 85%;
+    --surface-foreground: 208 52% 18%;
 
-    /* Popover & Dropdown */
-    --popover: 180 18% 96%;
-    --popover-foreground: 208 52% 10%;
+    /* 3️⃣ Accent */
+    --accent: 217 91% 55%;
+    --accent-hover: 217 91% 48%;
+    --accent-foreground: 210 40% 98%;
 
-    /* Primary (main brand color) */
-    --primary: 196 30% 24%;
-    --primary-foreground: 180 18% 96%;
+    /* =========================
+     UI TOKENS
+     ========================= */
 
-    /* Secondary */
-    --secondary: 180 16% 79%;
-    --secondary-foreground: 208 52% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: var(--foreground);
 
-    /* Accent (for highlights) */
-    --accent: 180 16% 79%;
-    --accent-foreground: 208 52% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--foreground);
 
-    /* Destructive (errors, delete actions) */
+    --primary: var(--accent);
+    --primary-foreground: var(--accent-foreground);
+
+    --secondary: var(--surface);
+    --secondary-foreground: var(--surface-foreground);
+
+    --tertiary: var(--surface-hover);
+    --tertiary-foreground: var(--surface-foreground);
+
+    --muted: 196 25% 88%;
+    --muted-foreground: 208 20% 45%;
+
+    --border: 208 25% 85%;
+    --input: 208 25% 85%;
+
+    --ring: var(--accent);
+    --ring-offset: var(--background);
+
+    /* =========================
+     STATUS COLORS
+     ========================= */
+
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 180 18% 96%;
+    --destructive-foreground: 210 40% 98%;
 
-    /* Success */
     --success: 142 76% 36%;
-    --success-foreground: 180 18% 96%;
+    --success-foreground: 210 40% 98%;
 
-    /* Warning */
     --warning: 38 92% 50%;
-    --warning-foreground: 208 52% 10%;
+    --warning-foreground: 208 52% 12%;
 
-    /* Info/Focus (blue for focus states) */
-    --info: 217 91% 60%;
-    --info-foreground: 180 18% 96%;
+    --info: var(--accent);
+    --info-foreground: var(--accent-foreground);
 
-    /* Border */
-    --border: 199.4 95.5% 73.9%;
-    --input: 199.4 95.5% 73.9%;
+    /* ========================= */
 
-    /* Ring (focus ring) */
-    --ring: 217 91% 60%;
-    --ring-offset: 180 18% 96%;
-
-    /* Text variations */
-    --text-primary: 208 52% 10%;
-    --text-secondary: 240 2% 54%;
-    --text-muted: 240 2% 74%;
-
-    /* Overlay */
     --overlay: 0 0% 0%;
     --overlay-opacity: 0.6;
-
-    /* Radius */
-    --radius: 0.3rem;
+    --radius: 0.4rem;
   }
 
+  /* =========================
+   DARK MODE
+   ========================= */
+
   .dark {
-    /* Base Colors */
+    /* 1️⃣ Base */
     --background: 208 52% 10%;
     --foreground: 180 18% 96%;
 
-    /* Muted */
-    --muted: 196 30% 24%;
-    --muted-foreground: 180 18% 96%;
+    /* 2️⃣ Surface */
+    --surface: 196 30% 24%;
+    --surface-hover: 196 35% 30%;
+    --surface-foreground: 180 18% 96%;
 
-    /* Card */
-    --card: 208 52% 10%;
-    --card-foreground: 180 18% 96%;
+    /* 3️⃣ Accent */
+    --accent: 217 91% 60%;
+    --accent-hover: 217 91% 68%;
+    --accent-foreground: 210 40% 98%;
 
-    /* Popover & Dropdown */
-    --popover: 196 30% 24%;
-    --popover-foreground: 180 18% 96%;
+    /* =========================
+     UI TOKENS
+     ========================= */
 
-    /* Primary */
-    --primary: 180 16% 79%;
-    --primary-foreground: 208 52% 10%;
+    --card: 208 45% 14%;
+    --card-foreground: var(--foreground);
 
-    /* Secondary */
-    --secondary: 196 30% 24%;
-    --secondary-foreground: 180 18% 96%;
+    --popover: var(--surface);
+    --popover-foreground: var(--foreground);
 
-    /* Accent */
-    --accent: 196 30% 24%;
-    --accent-foreground: 180 18% 96%;
+    --primary: var(--accent);
+    --primary-foreground: var(--accent-foreground);
 
-    /* Destructive */
+    --secondary: var(--surface);
+    --secondary-foreground: var(--surface-foreground);
+
+    --tertiary: var(--surface-hover);
+    --tertiary-foreground: var(--surface-foreground);
+
+    --muted: 196 25% 20%;
+    --muted-foreground: 200 15% 65%;
+
+    --border: 208 30% 20%;
+    --input: 208 30% 20%;
+
+    --ring: var(--accent);
+    --ring-offset: var(--background);
+
+    /* =========================
+     STATUS COLORS
+     ========================= */
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 180 18% 96%;
 
-    /* Success */
     --success: 142 76% 36%;
     --success-foreground: 180 18% 96%;
 
-    /* Warning */
     --warning: 38 92% 50%;
     --warning-foreground: 208 52% 10%;
 
-    /* Info/Focus */
-    --info: 217 91% 60%;
-    --info-foreground: 180 18% 96%;
+    --info: var(--accent);
+    --info-foreground: var(--accent-foreground);
 
-    /* Border */
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    /* ========================= */
 
-    /* Ring */
-    --ring: 217 91% 60%;
-    --ring-offset: 208 52% 10%;
-
-    /* Text variations */
-    --text-primary: 180 18% 96%;
-    --text-secondary: 240 2% 74%;
-    --text-muted: 240 2% 54%;
-
-    /* Overlay */
     --overlay: 0 0% 0%;
     --overlay-opacity: 0.4;
   }
@@ -175,21 +185,21 @@
 }
 
 @layer components {
-  /* Navbar Components */
+  /*Root Page and Navbar Components */
   .navbar {
     @apply border-b border-border bg-background;
   }
 
   .navbar-item {
-    @apply rounded-md px-4 py-2 text-foreground transition-colors;
-    @apply hover:bg-muted hover:text-muted-foreground;
+    @apply bg-surface text-surface-foreground rounded-md px-4 py-2 shadow-sm transition-all;
+    @apply hover:bg-surface-hover hover:text-surface-foreground hover:shadow-md;
     @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
   }
 
-  .navbar-item-active {
+  /* .navbar-item-active {
     @apply bg-primary text-primary-foreground;
     @apply hover:bg-primary/90;
-  }
+  } */
 
   /* Card Components */
   .card {
@@ -328,6 +338,11 @@
 }
 
 @layer utilities {
+  /* Navbar specific utilities */
+  .navFirstDiv > div:first-child {
+    @apply mr-8 w-[-webkit-fill-available] lg:flex;
+  }
+
   /* Custom Grid */
   .dynamicGrid {
     grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));

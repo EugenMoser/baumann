@@ -22,7 +22,7 @@ export function ProductCardByCategory({
     : null;
   return (
     <Link
-      className="mx-16 flex h-64 min-w-80 flex-col bg-card-background p-6 md:mx-0 md:h-72"
+      className="card mx-16 flex h-64 min-w-80 flex-col p-6 md:mx-0 md:h-72"
       href={`/products/${product.category}/${product.id}`}
     >
       {/* image + headline */}

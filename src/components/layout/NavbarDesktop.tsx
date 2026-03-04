@@ -22,23 +22,24 @@ export default function NavbarDesktop({
   return (
     <div className="gap-4">
       {productCategories.map((category: CategoryProps) => (
-        <NavigationMenuLink asChild key={category.category}>
+        <NavigationMenuLink
+          asChild
+          key={category.category}
+          className="hidden xl:flex"
+        >
           <Link
             href={category.href}
             tabIndex={-1}
             className="focus:outline-none"
           >
-            <NavigationMenuList className="hidden w-full max-w-full list-none justify-between lg:flex">
+            <NavigationMenuList className="w-full max-w-full list-none justify-between">
               <NavigationMenuItem
                 key={category.category}
                 tabIndex={0}
                 className={clsx(
-                  "focus:ring-primary flex h-[36px] min-w-32 items-center justify-center rounded-md shadow-sm transition-all hover:shadow-md focus:outline-none focus:ring-2",
+                  "navbar-item flex h-[36px] min-w-32 items-center justify-center",
                   {
-                    "bg-navbar-active text-navbar underline":
-                      pathname === category.href, // Active state
-                    "bg-navbar-itemBackground hover:bg-navbar-hover hover:text-navbar":
-                      pathname !== category.href, // Hover only when not active
+                    underline: pathname === category.href, // Active state
                   },
                 )}
               >
@@ -48,7 +49,6 @@ export default function NavbarDesktop({
           </Link>
         </NavigationMenuLink>
       ))}
-      <NavbarSearch />
     </div>
   );
 }

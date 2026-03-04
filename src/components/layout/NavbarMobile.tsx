@@ -25,16 +25,17 @@ export default function NavbarMobile({
   const [open, setOpen] = useState<boolean>(false);
   return (
     <>
-      {!open && (
-        <Button
-          variant="outline"
-          className="text-navbar-itemForegroun h-[36px] w-[36px] bg-navbar-itemBackground p-0 hover:bg-navbar-hover hover:text-navbar lg:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? "Menü schließen" : "Menü öffnen"}
-        >
-          <Menu className="h-[1.2rem] w-[1.2rem]" />
-        </Button>
-      )}
+      <Button
+        variant="outline"
+        className={clsx("btn h-[36px] w-[36px] p-3 xl:hidden", {
+          "z-50": open,
+        })}
+        onClick={() => setOpen(!open)}
+        aria-label={open ? "Menü schließen" : "Menü öffnen"}
+      >
+        <Menu className={clsx("", { hidden: open })} />
+        <X className={clsx("z-40", { hidden: !open })} />
+      </Button>
 
       {open && (
         <>
@@ -44,28 +45,15 @@ export default function NavbarMobile({
             onClick={() => setOpen(false)}
           />
           {/* Menu */}
-          <div className="fixed inset-0 left-[70%] z-20 flex flex-col justify-start bg-white dark:bg-black lg:hidden">
-            <Button
-              variant="outline"
-              className="text-navbar-itemForegroun absolute right-10 top-5 z-50 h-[36px] w-[36px] bg-navbar-itemBackground p-0 hover:bg-navbar-hover hover:text-navbar lg:hidden"
-              onClick={() => setOpen(!open)}
-              aria-label={open ? "Menü schließen" : "Menü öffnen"}
-            >
-              {/* Icon with custom animation */}
-              <X className="d h-[1.2rem] w-[1.2rem]" />
-            </Button>
-            <NavigationMenuList className="mx-10 mt-[40%] flex flex-col gap-5 text-xl">
+          <div className="fixed inset-0 left-[50%] z-20 flex flex-col justify-start bg-background md:left-[70%] xl:hidden">
+            <NavigationMenuList className="mt-[40%] flex min-w-full flex-col gap-5 text-xl">
               {productCategories.map((category) => (
                 <NavigationMenuItem
                   key={category.category}
                   className={clsx(
-                    "flex h-[36px] w-full grow cursor-pointer items-center justify-center rounded-md p-2",
-
+                    "navbar-item flex h-[36px] min-w-full items-center justify-center",
                     {
-                      "bg-navbar-active text-navbar underline":
-                        pathname === category.href, // Active state
-                      "bg-navbar-itemBackground hover:bg-navbar-hover hover:text-navbar":
-                        pathname !== category.href, // Hover only when not active
+                      underline: pathname === category.href, // Active state
                     },
                   )}
                 >

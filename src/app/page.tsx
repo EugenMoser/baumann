@@ -40,20 +40,16 @@ export default async function Home() {
         {productCategories.map((productCategory) => {
           // Get the matching icon component for the current category
           const IconComponent = categoryIcons[productCategory.category];
-
           return (
-            <li
-              key={productCategory.name}
-              className="rounded-md shadow-sm transition-all duration-300 hover:shadow-md"
-            >
+            <li key={productCategory.name}>
               <Link
                 href={`/products/${productCategory.category}`}
-                className="focus:ring-primary group flex items-center justify-center gap-4 rounded-md border border-transparent bg-card-background p-4 transition-all duration-300 hover:bg-card-hover focus:outline-none focus:ring-2"
+                className="navbar-item -4 group flex items-center justify-center gap-4 transition-all duration-300"
               >
-                <div className="group-hover:bg-accent-hover flex h-12 w-12 items-center justify-center rounded-full bg-card transition-colors">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-background transition-colors">
                   <IconComponent className="transition-transform duration-300 group-hover:scale-125" />
                 </div>
-                <p className="text-base font-medium text-foreground group-hover:text-card">
+                <p className="text-foreground transition-transform duration-300 group-hover:scale-110">
                   {productCategory.name}
                 </p>
               </Link>

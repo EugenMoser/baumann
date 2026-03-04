@@ -1,6 +1,5 @@
 "use client";
 
-import clsx from "clsx";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
@@ -9,24 +8,26 @@ import { NavigationMenu } from "@/components/ui/navigation-menu";
 
 import NavbarDesktop from "./NavbarDesktop";
 import NavbarMobile from "./NavbarMobile";
+import NavbarSearch from "./NavbarSearch";
 import ThemeToggle from "./ThemeToggle";
 
-interface NavbarProps {}
-export default function Navbar({}: NavbarProps): React.JSX.Element | null {
+export default function Navbar(): React.JSX.Element | null {
   const pathname = usePathname();
   const { data: session } = useSession();
 
-  // Hide the entire header on dashboard routes
-  if (pathname.startsWith("/dashboard")) return null;
+  // Hide the entire header on login, dashboard, and root ("/") routes
+  if (
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/dashboard") ||
+    pathname === "/"
+  )
+    return null;
 
   return (
-    <NavigationMenu
-      className={clsx("lg:navFirstDiv mb-8 flex max-w-full md:justify-end", {
-        "justify-end lg:justify-end": pathname === "/",
-      })}
-    >
-      {pathname !== "/" && <NavbarDesktop pathname={pathname} />}
-      {pathname !== "/" && <NavbarMobile pathname={pathname} />}
+    <NavigationMenu className={"navFirstDiv mb-8 flex max-w-full"}>
+      <NavbarDesktop pathname={pathname} />
+      <NavbarSearch />
+      <NavbarMobile pathname={pathname} />
       <ThemeToggle />
 
       {session && (
