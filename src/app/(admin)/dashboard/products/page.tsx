@@ -23,7 +23,7 @@ export default async function ProductsManagementPage(): Promise<React.JSX.Elemen
           </Link>
           <Link
             href="/dashboard/products/new"
-            className="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+            className="bg-success hover:bg-success/90 rounded-md px-4 py-2"
           >
             + Neues Produkt
           </Link>

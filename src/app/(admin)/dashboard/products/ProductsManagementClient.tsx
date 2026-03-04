@@ -75,7 +75,7 @@ export default function ProductsManagementClient({
                   </td>
                   <td className="flex gap-2 p-3">
                     <Link
-                      href={`/dashboard/products/${product.productId}`}
+                      href={`/dashboard/products/${product.productId}/edit`}
                       className="hover:bg-accent-hover/80 bg-accent/90 flex items-center rounded-md px-3 py-1 text-xs text-white"
                     >
                       Bearbeiten

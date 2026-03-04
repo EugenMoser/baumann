@@ -15,15 +15,21 @@ import { Article } from "@prisma/client";
 
 interface EditArticleFormProps {
   article: Article;
+  /** When provided the form is shown directly (standalone page) and navigates here on success/cancel. */
+  redirectTo?: string;
 }
 
 /**
- * Client component form for editing a single article inline.
+ * Client component form for editing a single article.
+ * When `redirectTo` is provided it renders directly in edit mode (standalone page).
+ * Otherwise it shows an inline toggle button (used inside the product detail page).
  */
 export function EditArticleForm({
   article,
+  redirectTo,
 }: EditArticleFormProps): React.JSX.Element {
-  const [isEditing, setIsEditing] = useState(false);
+  // On a standalone page we start directly in edit mode
+  const [isEditing, setIsEditing] = useState(Boolean(redirectTo));
 
   const [formData, setFormData] = useState<ArticleFormDataProps>({
     articlePrio: article.prio,
@@ -51,11 +57,15 @@ export function EditArticleForm({
   useEffect(() => {
     if (state.success) {
       toast.success(state.message || "Artikel wurde aktualisiert.");
-      setIsEditing(false);
+      if (redirectTo) {
+        window.location.href = redirectTo;
+      } else {
+        setIsEditing(false);
+      }
     } else if (!state.success && Object.keys(state.errors ?? {}).length > 0) {
       toast.error(state.globalError || "Fehler beim Aktualisieren.");
     }
-  }, [state.success, state.errors, state.message, state.globalError]);
+  }, [state.success, state.errors, state.message, state.globalError, redirectTo]);
 
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -106,7 +116,13 @@ export function EditArticleForm({
         />
         <button
           type="button"
-          onClick={() => setIsEditing(false)}
+          onClick={() => {
+            if (redirectTo) {
+              window.location.href = redirectTo;
+            } else {
+              setIsEditing(false);
+            }
+          }}
           className="rounded bg-gray-400 px-4 py-2 text-sm text-white hover:bg-gray-500"
         >
           Abbrechen

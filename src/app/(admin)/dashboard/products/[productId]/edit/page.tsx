@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { DeleteArticleButton, EditArticleForm } from "@/features/article";
+import { DeleteArticleButton } from "@/features/article";
 import { getAllColors } from "@/features/color";
 import { EditProductForm, getProductByProductId } from "@/features/product";
 import { ProductColorManagement } from "@/features/product/components/ProductColorManagement";
@@ -95,7 +95,12 @@ export default async function EditProductPage({
               <h3 className="font-semibold">
                 Artikel: {article.number} - {article.name}
               </h3>
-              <EditArticleForm article={article} />
+              <Link
+                href={`/dashboard/articles/${article.id}/edit?q=${productIdStr}`}
+                className="rounded bg-blue-600 px-3 py-1 text-sm text-white hover:bg-blue-700"
+              >
+                Bearbeiten
+              </Link>
               <DeleteArticleButton
                 articleId={article.id}
                 articleName={article.name}

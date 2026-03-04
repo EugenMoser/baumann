@@ -39,8 +39,17 @@ export function EditProductForm({
     material: product.material ?? "",
   });
 
-  const [imagesSmall, setImagesSmall] = useState<File[]>([]);
-  const [imagesBig, setImagesBig] = useState<File[]>([]);
+  // Existing URLs to keep (user can remove individual ones)
+  const [keptSmallUrls, setKeptSmallUrls] = useState<string[]>(
+    product.imageUrlsSmall,
+  );
+  const [keptBigUrls, setKeptBigUrls] = useState<string[]>(
+    product.imageUrlsBig,
+  );
+  // New files staged for upload
+  const [newSmallFiles, setNewSmallFiles] = useState<File[]>([]);
+  const [newBigFiles, setNewBigFiles] = useState<File[]>([]);
+  // Track which existing URLs to keep and which new files to add
 
   const initialState: ProductNotificationFormStates = {
     message: "",
@@ -84,14 +93,21 @@ export function EditProductForm({
   };
 
   /**
-   * Intercept form submit to append image files from React state,
-   * since file inputs with type="file" aren't serialised by default FormData.
+   * Intercept form submit to append kept image URLs and new image files,
+   * since file inputs and URL lists are tracked in React state.
    */
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    imagesSmall.forEach((file, i) => fd.set(`imageSmall-${i}`, file));
-    imagesBig.forEach((file, i) => fd.set(`imageBig-${i}`, file));
+
+    // Append kept URLs so the server knows which existing images to retain
+    keptSmallUrls.forEach((url, i) => fd.set(`keepSmall-${i}`, url));
+    keptBigUrls.forEach((url, i) => fd.set(`keepBig-${i}`, url));
+
+    // Append new files for upload
+    newSmallFiles.forEach((file, i) => fd.set(`imageSmall-${i}`, file));
+    newBigFiles.forEach((file, i) => fd.set(`imageBig-${i}`, file));
+
     startTransition(() => formAction(fd));
   };
 
@@ -187,20 +203,60 @@ export function EditProductForm({
         <label className="font-semibold">
           Kleine Bilder für Produktliste (bis zu 10)
         </label>
-        {product.imageUrlsSmall.length > 0 && (
-          <div className="mb-1">
-            <p className="text-muted-foreground mb-1 text-sm">
-              Aktuelle Bilder:
-            </p>
-            <ul className="text-muted-foreground space-y-1 text-sm">
-              {product.imageUrlsSmall.map((url, i) => (
-                <li key={i}>
+
+        {/* Existing kept images with individual remove button */}
+        {keptSmallUrls.length > 0 && (
+          <div className="space-y-1">
+            <p className="text-muted-foreground text-sm">Aktuelle Bilder:</p>
+            {keptSmallUrls.map((url, i) => (
+              <div key={url} className="flex items-center gap-2 text-sm">
+                <span>
                   a{i + 1}: {url.split("/").pop()}
-                </li>
-              ))}
-            </ul>
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setKeptSmallUrls((prev) => prev.filter((u) => u !== url))
+                  }
+                  className="text-red-500 hover:text-red-700"
+                  aria-label="Bild entfernen"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
           </div>
         )}
+
+        {/* Newly staged files with individual remove button */}
+        {newSmallFiles.length > 0 && (
+          <div className="space-y-1">
+            <p className="text-muted-foreground text-sm">Neue Bilder:</p>
+            {newSmallFiles.map((file, i) => (
+              <div
+                key={file.name + i}
+                className="flex items-center gap-2 text-sm"
+              >
+                <span>
+                  +{i + 1}: {file.name}
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setNewSmallFiles((prev) =>
+                      prev.filter((_, idx) => idx !== i),
+                    )
+                  }
+                  className="text-red-500 hover:text-red-700"
+                  aria-label="Neues Bild entfernen"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
         <input
           id="editImagesSmall"
           type="file"
@@ -208,7 +264,10 @@ export function EditProductForm({
           multiple
           className="hidden"
           onChange={(e) => {
-            setImagesSmall(Array.from(e.target.files ?? []).slice(0, 10));
+            const files = Array.from(e.target.files ?? []).slice(0, 10);
+            setNewSmallFiles((prev) => [...prev, ...files].slice(0, 10));
+            // Reset input so the same file can be re-added after removal
+            e.target.value = "";
           }}
         />
         <button
@@ -216,36 +275,65 @@ export function EditProductForm({
           onClick={() => document.getElementById("editImagesSmall")?.click()}
           className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
         >
-          Neue Bilder auswählen (ersetzt aktuelle)
+          Weitere Bilder hinzufügen
         </button>
-        {imagesSmall.length > 0 && (
-          <ul className="text-muted-foreground space-y-1 text-sm">
-            {imagesSmall.map((file, i) => (
-              <li key={i}>
-                a{i + 1}: {file.name}
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
 
       {/* Big images section */}
       <div className="flex flex-col gap-2">
         <label className="font-semibold">Große Bilder (bis zu 10)</label>
-        {product.imageUrlsBig.length > 0 && (
-          <div className="mb-1">
-            <p className="text-muted-foreground mb-1 text-sm">
-              Aktuelle Bilder:
-            </p>
-            <ul className="text-muted-foreground space-y-1 text-sm">
-              {product.imageUrlsBig.map((url, i) => (
-                <li key={i}>
+
+        {/* Existing kept images with individual remove button */}
+        {keptBigUrls.length > 0 && (
+          <div className="space-y-1">
+            <p className="text-muted-foreground text-sm">Aktuelle Bilder:</p>
+            {keptBigUrls.map((url, i) => (
+              <div key={url} className="flex items-center gap-2 text-sm">
+                <span>
                   b{i + 1}: {url.split("/").pop()}
-                </li>
-              ))}
-            </ul>
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setKeptBigUrls((prev) => prev.filter((u) => u !== url))
+                  }
+                  className="text-red-500 hover:text-red-700"
+                  aria-label="Bild entfernen"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
           </div>
         )}
+
+        {/* Newly staged files with individual remove button */}
+        {newBigFiles.length > 0 && (
+          <div className="space-y-1">
+            <p className="text-muted-foreground text-sm">Neue Bilder:</p>
+            {newBigFiles.map((file, i) => (
+              <div
+                key={file.name + i}
+                className="flex items-center gap-2 text-sm"
+              >
+                <span>
+                  +{i + 1}: {file.name}
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setNewBigFiles((prev) => prev.filter((_, idx) => idx !== i))
+                  }
+                  className="text-red-500 hover:text-red-700"
+                  aria-label="Neues Bild entfernen"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
         <input
           id="editImagesBig"
           type="file"
@@ -253,7 +341,9 @@ export function EditProductForm({
           multiple
           className="hidden"
           onChange={(e) => {
-            setImagesBig(Array.from(e.target.files ?? []).slice(0, 10));
+            const files = Array.from(e.target.files ?? []).slice(0, 10);
+            setNewBigFiles((prev) => [...prev, ...files].slice(0, 10));
+            e.target.value = "";
           }}
         />
         <button
@@ -261,17 +351,8 @@ export function EditProductForm({
           onClick={() => document.getElementById("editImagesBig")?.click()}
           className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
         >
-          Neue Bilder auswählen (ersetzt aktuelle)
+          Weitere Bilder hinzufügen
         </button>
-        {imagesBig.length > 0 && (
-          <ul className="text-muted-foreground space-y-1 text-sm">
-            {imagesBig.map((file, i) => (
-              <li key={i}>
-                b{i + 1}: {file.name}
-              </li>
-            ))}
-          </ul>
-        )}
       </div>
 
       <CustomButton

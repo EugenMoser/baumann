@@ -11,6 +11,7 @@ import { requireAuth } from "@/lib/helpers/requireAuth";
 import { prisma } from "@/lib/prisma";
 
 import { ProductDetailsFormSchema } from "../../schema/productSchema";
+import { deleteImageAction } from "../upload/deleteImage";
 import uploadSingleImageAction from "../upload/uploadImage";
 
 /**
@@ -71,57 +72,90 @@ export async function updateProductAction(
   try {
     const imageBaseName = `${productId}-${productName.replace(/ /g, "-").substring(0, 30)}`;
 
-    // Upload new small images if provided (optional — replaces existing)
+    // Fetch current image URLs from DB to detect which ones were removed
+    const currentProduct = await prisma.product.findUnique({
+      where: { productId },
+      select: { imageUrlsSmall: true, imageUrlsBig: true },
+    });
+
+    // --- Small images ---------------------------------------------------
+    // Kept URLs are sent as keepSmall-0, keepSmall-1, ... hidden form values
+    const keptSmallUrls: string[] = [];
+    for (let i = 0; i < 20; i++) {
+      const url = formData.get(`keepSmall-${i}`);
+      if (typeof url === "string" && url) keptSmallUrls.push(url);
+    }
+
+    // Delete removed images from Cloudinary
+    const keptSmallSet = new Set(keptSmallUrls);
+    const removedSmall = (currentProduct?.imageUrlsSmall ?? []).filter(
+      (url) => !keptSmallSet.has(url),
+    );
+    for (const url of removedSmall) {
+      await deleteImageAction(url);
+    }
+
+    // Upload newly added small images
     const newSmallFiles: File[] = [];
     for (let i = 0; i < 10; i++) {
       const file = formData.get(`imageSmall-${i}`);
       if (file instanceof File && file.size > 0) newSmallFiles.push(file);
     }
-
-    let imageUrlsSmall: string[] | undefined;
-    if (newSmallFiles.length > 0) {
-      imageUrlsSmall = [];
-      for (let i = 0; i < newSmallFiles.length; i++) {
-        const result: ImageUploadState = await uploadSingleImageAction({
-          fileFormData: newSmallFiles[i],
-          imageName: `a${i + 1}_${imageBaseName}`,
-        });
-        if (!result.success) {
-          return {
-            success: false,
-            globalError:
-              result.globalError || "Fehler beim Hochladen des kleinen Bildes.",
-          };
-        }
-        if (result.url) imageUrlsSmall.push(result.url);
+    const uploadedSmallUrls: string[] = [];
+    for (let i = 0; i < newSmallFiles.length; i++) {
+      const idx = keptSmallUrls.length + i;
+      const result: ImageUploadState = await uploadSingleImageAction({
+        fileFormData: newSmallFiles[i],
+        imageName: `a${idx + 1}_${imageBaseName}`,
+      });
+      if (!result.success) {
+        return {
+          success: false,
+          globalError:
+            result.globalError || "Fehler beim Hochladen des kleinen Bildes.",
+        };
       }
+      if (result.url) uploadedSmallUrls.push(result.url);
+    }
+    const imageUrlsSmall = [...keptSmallUrls, ...uploadedSmallUrls];
+
+    // --- Big images -----------------------------------------------------
+    const keptBigUrls: string[] = [];
+    for (let i = 0; i < 20; i++) {
+      const url = formData.get(`keepBig-${i}`);
+      if (typeof url === "string" && url) keptBigUrls.push(url);
     }
 
-    // Upload new big images if provided (optional — replaces existing)
+    const keptBigSet = new Set(keptBigUrls);
+    const removedBig = (currentProduct?.imageUrlsBig ?? []).filter(
+      (url) => !keptBigSet.has(url),
+    );
+    for (const url of removedBig) {
+      await deleteImageAction(url);
+    }
+
     const newBigFiles: File[] = [];
     for (let i = 0; i < 10; i++) {
       const file = formData.get(`imageBig-${i}`);
       if (file instanceof File && file.size > 0) newBigFiles.push(file);
     }
-
-    let imageUrlsBig: string[] | undefined;
-    if (newBigFiles.length > 0) {
-      imageUrlsBig = [];
-      for (let i = 0; i < newBigFiles.length; i++) {
-        const result: ImageUploadState = await uploadSingleImageAction({
-          fileFormData: newBigFiles[i],
-          imageName: `b${i + 1}_${imageBaseName}`,
-        });
-        if (!result.success) {
-          return {
-            success: false,
-            globalError:
-              result.globalError || "Fehler beim Hochladen des großen Bildes.",
-          };
-        }
-        if (result.url) imageUrlsBig.push(result.url);
+    const uploadedBigUrls: string[] = [];
+    for (let i = 0; i < newBigFiles.length; i++) {
+      const idx = keptBigUrls.length + i;
+      const result: ImageUploadState = await uploadSingleImageAction({
+        fileFormData: newBigFiles[i],
+        imageName: `b${idx + 1}_${imageBaseName}`,
+      });
+      if (!result.success) {
+        return {
+          success: false,
+          globalError:
+            result.globalError || "Fehler beim Hochladen des großen Bildes.",
+        };
       }
+      if (result.url) uploadedBigUrls.push(result.url);
     }
+    const imageUrlsBig = [...keptBigUrls, ...uploadedBigUrls];
 
     await prisma.product.update({
       where: { productId },
@@ -134,8 +168,8 @@ export async function updateProductAction(
         description3: descriptionProduct3,
         description4: descriptionProduct4,
         material,
-        ...(imageUrlsSmall !== undefined && { imageUrlsSmall }),
-        ...(imageUrlsBig !== undefined && { imageUrlsBig }),
+        imageUrlsSmall,
+        imageUrlsBig,
       },
     });
 

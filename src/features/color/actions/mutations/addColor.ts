@@ -1,5 +1,6 @@
 "use server";
 
+import { log } from "console";
 import { revalidatePath } from "next/cache";
 
 import {
@@ -39,7 +40,7 @@ export async function addColor(
   const validatedColorFields = ColorDetailsFormSchema.safeParse({
     ...colorFormData,
   });
-
+  log("----->>>>> validatedColorFields", validatedColorFields);
   const colorErrors = !validatedColorFields.success && {
     ...validatedColorFields.error.flatten().fieldErrors,
   };

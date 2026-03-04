@@ -2,13 +2,14 @@
 
 import { useState, useTransition } from "react";
 
+import { log } from "console";
 import { toast } from "sonner";
 
-import { Color } from "@prisma/client";
-
+import { addColor } from "@/features/color/actions/mutations/addColor";
+import { ColorProps } from "@/features/color/types";
 import { addColorToProductAction } from "@/features/product/actions/mutations/addColorToProduct";
 import { removeColorFromProductAction } from "@/features/product/actions/mutations/removeColorFromProduct";
-import { ColorProps } from "@/features/color/types";
+import { Color } from "@prisma/client";
 
 interface ProductColorManagementProps {
   productId: number;
@@ -28,8 +29,19 @@ export function ProductColorManagement({
   const [isPending, startTransition] = useTransition();
   const [selectedColorId, setSelectedColorId] = useState("");
 
+  // State for creating a brand-new color and assigning it
+  const [showNewColorForm, setShowNewColorForm] = useState(false);
+  const [newColorFormData, setNewColorFormData] = useState({
+    colorId: "",
+    colorName: "",
+    colorCode: "#",
+  });
+  const [newColorError, setNewColorError] = useState<string | null>(null);
+
   const currentColorIds = new Set(currentColors.map((c) => c.colorId));
-  const availableToAdd = allColors.filter((c) => !currentColorIds.has(c.colorId));
+  const availableToAdd = allColors.filter(
+    (c) => !currentColorIds.has(c.colorId),
+  );
 
   const handleAdd = () => {
     if (!selectedColorId) return;
@@ -55,6 +67,44 @@ export function ProductColorManagement({
     });
   };
 
+  /** Creates a brand-new color in the DB and immediately assigns it to this product. */
+  const handleCreateAndAdd = () => {
+    startTransition(async () => {
+      const fd = new FormData();
+      fd.set("colorId", newColorFormData.colorId);
+      fd.set("name", newColorFormData.colorName);
+      fd.set("code", newColorFormData.colorCode);
+
+      const createResult = await addColor({ success: false, errors: {} }, fd);
+
+      console.log("----->>>>> create color result", createResult);
+      if (!createResult.success) {
+        setNewColorError(
+          createResult.globalError ?? "Farbe konnte nicht angelegt werden.",
+        );
+        return;
+      }
+
+      const addResult = await addColorToProductAction(
+        productId,
+        newColorFormData.colorId,
+      );
+      if (!addResult.success) {
+        setNewColorError(
+          addResult.error ?? "Farbe konnte nicht zugewiesen werden.",
+        );
+        return;
+      }
+
+      toast.success(
+        `Farbe „${newColorFormData.colorName}" angelegt und zugeordnet.`,
+      );
+      setShowNewColorForm(false);
+      setNewColorFormData({ colorId: "", colorName: "", colorCode: "#" });
+      setNewColorError(null);
+    });
+  };
+
   return (
     <div className="space-y-4">
       {/* Current colors */}
@@ -63,7 +113,9 @@ export function ProductColorManagement({
           Zugeordnete Farben:
         </p>
         {currentColors.length === 0 ? (
-          <p className="text-muted-foreground text-sm">Keine Farben zugeordnet.</p>
+          <p className="text-muted-foreground text-sm">
+            Keine Farben zugeordnet.
+          </p>
         ) : (
           <div className="flex flex-wrap gap-2">
             {currentColors.map((color) => (
@@ -80,7 +132,7 @@ export function ProductColorManagement({
                   type="button"
                   onClick={() => handleRemove(color.colorId, color.name)}
                   disabled={isPending}
-                  className="ml-1 text-red-500 hover:text-red-700 disabled:opacity-50"
+                  className="text-destructive hover:text-destructive-foreground ml-1 disabled:opacity-50"
                   aria-label={`Farbe ${color.name} entfernen`}
                 >
                   ✕
@@ -116,6 +168,79 @@ export function ProductColorManagement({
           </button>
         </div>
       )}
+
+      {/* Create a brand-new color and assign it */}
+      <div>
+        {!showNewColorForm ? (
+          <button
+            type="button"
+            onClick={() => setShowNewColorForm(true)}
+            className="text-accent hover:text-accent-foreground text-sm underline"
+          >
+            + Neue Farbe anlegen
+          </button>
+        ) : (
+          <div className="space-y-2 rounded border p-3 text-sm">
+            <p className="font-medium">Neue Farbe anlegen &amp; zuordnen</p>
+            {newColorError && (
+              <p className="text-destructive text-xs">{newColorError}</p>
+            )}
+            <input
+              type="text"
+              placeholder="Farb-ID (z.B. RAL-9010)"
+              value={newColorFormData.colorId}
+              onChange={(e) =>
+                setNewColorFormData((p) => ({ ...p, colorId: e.target.value }))
+              }
+              className="w-full rounded border px-2 py-1"
+            />
+            <input
+              type="text"
+              placeholder="Farbname"
+              value={newColorFormData.colorName}
+              onChange={(e) =>
+                setNewColorFormData((p) => ({
+                  ...p,
+                  colorName: e.target.value,
+                }))
+              }
+              className="w-full rounded border px-2 py-1"
+            />
+            <input
+              type="text"
+              placeholder="HEX-Code (#FF5733)"
+              value={newColorFormData.colorCode}
+              onChange={(e) =>
+                setNewColorFormData((p) => ({
+                  ...p,
+                  colorCode: e.target.value,
+                }))
+              }
+              className="w-full rounded border px-2 py-1"
+            />
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={handleCreateAndAdd}
+                disabled={isPending}
+                className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700 disabled:opacity-50"
+              >
+                Anlegen &amp; zuordnen
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNewColorForm(false);
+                  setNewColorError(null);
+                }}
+                className="rounded border px-3 py-1 hover:bg-gray-100"
+              >
+                Abbrechen
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
