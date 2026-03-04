@@ -204,11 +204,8 @@
   /* Card Components */
   .card {
     @apply rounded-lg border border-border bg-card text-card-foreground shadow-sm;
+    @apply hover:bg-surface-hover hover:text-surface-foreground;
     @apply transition-colors;
-  }
-
-  .card-hover {
-    @apply hover:bg-accent hover:text-accent-foreground;
   }
 
   /* Button Components */

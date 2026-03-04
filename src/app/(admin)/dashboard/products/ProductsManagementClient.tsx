@@ -36,6 +36,7 @@ export default function ProductsManagementClient({
       )
     : products;
 
+  console.log("----->>>>> filtered", filtered);
   return (
     <>
       <div className="mb-4">
@@ -75,15 +76,15 @@ export default function ProductsManagementClient({
                   <td className="flex gap-2 p-3">
                     <Link
                       href={`/dashboard/products/${product.productId}`}
-                      className="rounded bg-blue-600 px-3 py-1 text-xs text-white hover:bg-blue-700"
+                      className="hover:bg-accent-hover/80 bg-accent/90 flex items-center rounded-md px-3 py-1 text-xs text-white"
                     >
                       Bearbeiten
                     </Link>
                     <Link
-                      href={`/dashboard/articles/new?productId=${product.id}`}
-                      className="rounded bg-indigo-600 px-3 py-1 text-xs text-white hover:bg-indigo-700"
+                      href={`/dashboard/articles/new?productId=${product.productId}`}
+                      className="bg-accent hover:bg-accent-hover flex w-min items-center rounded-md px-3 py-1 text-xs text-white"
                     >
-                      + Artikel
+                      + Artikel hinzufügen
                     </Link>
                     <DeleteProductButton
                       productId={product.productId}

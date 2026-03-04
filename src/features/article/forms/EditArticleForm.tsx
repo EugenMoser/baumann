@@ -77,12 +77,12 @@ export function EditArticleForm({
   if (!isEditing) {
     return (
       <div className="flex items-center gap-2">
-        <p className="text-muted-foreground text-sm">
+        {/* <p className="text-muted-foreground text-sm">
           Prio: {article.prio} | Nummer: {article.number} | Name: {article.name}
-        </p>
+        </p> */}
         <button
           onClick={() => setIsEditing(true)}
-          className="rounded bg-blue-600 px-3 py-1 text-xs text-white hover:bg-blue-700"
+          className="bg-accent text-accent-foreground hover:accent-hover rounded px-3 py-1 text-xs"
         >
           Bearbeiten
         </button>

@@ -95,13 +95,13 @@ export default async function EditProductPage({
               <h3 className="font-semibold">
                 Artikel: {article.number} - {article.name}
               </h3>
+              <EditArticleForm article={article} />
               <DeleteArticleButton
                 articleId={article.id}
                 articleName={article.name}
                 articleCount={product.articles.length}
               />
             </div>
-            <EditArticleForm article={article} />
           </div>
         ))}
       </div>

@@ -22,7 +22,7 @@ export function ProductCardByCategory({
     : null;
   return (
     <Link
-      className="card mx-16 flex h-64 min-w-80 flex-col p-6 md:mx-0 md:h-72"
+      className="card card-hover mx-16 flex h-64 min-w-80 flex-col p-6 md:mx-0 md:h-72"
       href={`/products/${product.category}/${product.id}`}
     >
       {/* image + headline */}
@@ -42,12 +42,12 @@ export function ProductCardByCategory({
         </div>
         <h3
           style={{ hyphens: "auto" }}
-          className="line-clamp-3 overflow-hidden whitespace-normal font-bold"
+          className="line-clamp-3 overflow-hidden"
         >
           {product.name}
         </h3>
       </section>
-      <hr className="border- mb-2 border-foreground" />
+      <hr className="border- border-surface mb-2" />
       <div className="flex h-full flex-col justify-between">
         {/* description*/}
         <section className="line-clamp-2 overflow-hidden whitespace-normal md:line-clamp-3">

@@ -1,6 +1,7 @@
 "use client";
 import { useActionState, useEffect, useState } from "react";
 
+import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
 import type { ArticleFormDataProps } from "@/features/article";
@@ -46,12 +47,19 @@ export default function ArticleForm({
 
   // Bind productId to the action
   const addArticleWithId = addArticle.bind(null, productId);
-  const [state, formAction] = useActionState(addArticleWithId, initialState);
+  const [state, formAction, isPending] = useActionState(
+    addArticleWithId,
+    initialState,
+  );
 
   // Show toast notification when add article failed or success
   useEffect(() => {
     if (state.success) {
       toast.success(state.message || "Artikel wurde hinzugefügt");
+      setTimeout(() => {
+        // Reset form after successful submission
+        redirect(`/dashboard/products`);
+      }, 2000);
     } else if (!state.success && Object.keys(state.errors ?? {}).length > 0) {
       toast.error(state.globalError || "Fehler beim Hinzufügen des Artikels");
     }
@@ -91,6 +99,7 @@ export default function ArticleForm({
         buttonType="defaultButton"
         title="Artikel hinzufügen"
         ariaLabel="Artikel hinzufügen"
+        isDisabled={isPending}
       />
     </form>
   );

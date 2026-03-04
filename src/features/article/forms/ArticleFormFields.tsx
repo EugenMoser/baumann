@@ -33,7 +33,7 @@ export function ArticleFormFields({
   onChange,
 }: ArticleFormFieldsProps): React.JSX.Element {
   return (
-    <div className="space-y-4">
+    <div className="mb-4 space-y-4">
       <ArticleInputField
         id="articlePrio"
         name="articlePrio"

@@ -1,6 +1,12 @@
 "use client";
 
-import { startTransition, useActionState, useEffect, useState } from "react";
+import {
+  startTransition,
+  use,
+  useActionState,
+  useEffect,
+  useState,
+} from "react";
 
 import { toast } from "sonner";
 
@@ -68,13 +74,22 @@ export function ProductWithArticleForm({
     success: false,
   };
 
-  const [state, formAction] = useActionState(
+  const [state, formAction, isPending] = useActionState(
     addProductWithArticleAction,
     initialState,
   );
 
   // Type assertion for errors to handle union type
   const errors = state.errors as ProductWithArticleFormFieldErrors | undefined;
+
+  // Show loading toast when action is pending
+  useEffect(() => {
+    if (isPending) {
+      toast.loading("Produkt mit Artikel wird hinzugefügt...", {
+        id: "add-product-article",
+      });
+    }
+  }, [isPending]);
 
   // Show toast notification when add product with article failed or success
   useEffect(() => {
@@ -250,6 +265,7 @@ export function ProductWithArticleForm({
         buttonType="defaultButton"
         title="Produkt mit Artikel hinzufügen"
         ariaLabel="Produkt mit Artikel hinzufügen"
+        isDisabled={isPending}
       />
     </form>
   );
