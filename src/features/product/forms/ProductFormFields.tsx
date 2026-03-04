@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { CategoryProps } from "@/constants/productCategories";
 import { ProductFormDataProps } from "@/features/product/types";
 
@@ -140,7 +142,7 @@ export function ProductFormFields({
         <label className="font-semibold">
           Kleine Bilder für Produktliste (bis zu 10, mindestens 1)
         </label>
-        <input
+        <Input
           id="imagesSmall"
           type="file"
           accept=".webp"
@@ -151,13 +153,13 @@ export function ProductFormFields({
             onSmallImagesChange(files);
           }}
         />
-        <button
+        <Button
           type="button"
           onClick={() => document.getElementById("imagesSmall")?.click()}
           className="w-fit rounded border bg-button-background px-4 py-2 hover:bg-button-hover hover:text-button-background"
         >
           Dateien auswählen (max. 10)
-        </button>
+        </Button>
         {formData.imagesSmall.length > 0 && (
           <ul className="text-muted-foreground space-y-1 text-sm">
             {formData.imagesSmall.map((file, i) => (

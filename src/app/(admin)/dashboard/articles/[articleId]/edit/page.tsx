@@ -20,7 +20,6 @@ export default async function EditArticlePage({
 
   const { q: productIdStr } = await searchParams;
   const productId = Number(productIdStr);
-  console.log("Received params:", { articleId, productIdStr });
   const article = await prisma.article.findUnique({
     where: { id: articleId },
   });
@@ -31,7 +30,7 @@ export default async function EditArticlePage({
         <p className="text-red-500">Artikel nicht gefunden.</p>
         <Link
           href={`/dashboard/products/${productId}`}
-          className="text-blue-600 underline"
+          className="text-accent underline"
         >
           Zurück zum Produkt
         </Link>

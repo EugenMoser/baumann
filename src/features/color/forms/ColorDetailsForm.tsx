@@ -42,7 +42,6 @@ export function ColorDetailsForm({}: ColorDetailsFormProps): React.JSX.Element {
   ) => {
     const target = event.target;
     const { name, value } = target;
-    console.log("Form data changed:", { name, value });
     setFormData((prev) => ({
       ...prev,
       [name]: value,

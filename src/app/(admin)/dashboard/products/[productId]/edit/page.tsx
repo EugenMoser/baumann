@@ -1,9 +1,10 @@
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import { DeleteArticleButton } from "@/features/article";
 import { getAllColors } from "@/features/color";
+import { ProductColorManagement } from "@/features/color/components/ProductColorManagement";
 import { EditProductForm, getProductByProductId } from "@/features/product";
-import { ProductColorManagement } from "@/features/product/components/ProductColorManagement";
 
 interface EditProductPageProps {
   params: Promise<{ productId: string }>;
@@ -62,7 +63,7 @@ export default async function EditProductPage({
       {/* Product Edit Form */}
       <div className="mb-8 rounded-lg border p-6">
         <h2 className="mb-4 text-xl font-semibold">Produktinformationen</h2>
-        <EditProductForm product={product} />
+        <EditProductForm product={product} hideSubmitButton />
       </div>
 
       {/* Color Management */}
@@ -75,6 +76,17 @@ export default async function EditProductPage({
         />
       </div>
 
+      {/* Submit button placed below colors so it's clear it applies all changes */}
+      <div className="mb-16 flex justify-start">
+        <Button
+          type="submit"
+          form="edit-product-form"
+          className="bg-surface text-primary-foreground hover:bg-surface-hover rounded px-6 py-2"
+        >
+          Produkt aktualisieren
+        </Button>
+      </div>
+
       {/* Articles Section */}
       <div className="rounded-lg border p-6">
         <div className="mb-4 flex items-center justify-between">
@@ -83,7 +95,7 @@ export default async function EditProductPage({
           </h2>
           <Link
             href={`/dashboard/articles/new?productId=${product.id}`}
-            className="rounded bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
+            className="bg-success hover:bg-success/90 rounded px-4 py-2 text-sm"
           >
             + Neuen Artikel hinzufügen
           </Link>
@@ -95,17 +107,19 @@ export default async function EditProductPage({
               <h3 className="font-semibold">
                 Artikel: {article.number} - {article.name}
               </h3>
-              <Link
-                href={`/dashboard/articles/${article.id}/edit?q=${productIdStr}`}
-                className="rounded bg-blue-600 px-3 py-1 text-sm text-white hover:bg-blue-700"
-              >
-                Bearbeiten
-              </Link>
-              <DeleteArticleButton
-                articleId={article.id}
-                articleName={article.name}
-                articleCount={product.articles.length}
-              />
+              <div className="flex gap-4">
+                <Link
+                  href={`/dashboard/articles/${article.id}/edit?q=${productIdStr}`}
+                  className="bg-accent hover:bg-accent-hover rounded px-3 py-1 text-sm"
+                >
+                  Bearbeiten
+                </Link>
+                <DeleteArticleButton
+                  articleId={article.id}
+                  articleName={article.name}
+                  articleCount={product.articles.length}
+                />
+              </div>
             </div>
           </div>
         ))}

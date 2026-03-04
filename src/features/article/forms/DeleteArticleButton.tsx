@@ -49,7 +49,7 @@ export function DeleteArticleButton({
     <button
       onClick={handleDelete}
       disabled={articleCount <= 1}
-      className="rounded bg-red-600 px-3 py-1 text-xs text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+      className="bg-destructive hover:bg-destructive/90 rounded px-3 py-1 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
       title={
         articleCount <= 1
           ? "Letzter Artikel kann nicht gelöscht werden"

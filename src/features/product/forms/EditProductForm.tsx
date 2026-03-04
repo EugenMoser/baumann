@@ -5,6 +5,8 @@ import { startTransition, useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import CustomButton from "@/components/shared/CustomButton";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { CategoryProps } from "@/constants/productCategories";
 import {
   ProductCategorySelect,
@@ -20,6 +22,8 @@ import {
 
 interface EditProductFormProps {
   product: ProductWithColorAndArticlesProps;
+  /** When true, the submit button is not rendered inside the form. */
+  hideSubmitButton?: boolean;
 }
 
 /**
@@ -27,6 +31,7 @@ interface EditProductFormProps {
  */
 export function EditProductForm({
   product,
+  hideSubmitButton = false,
 }: EditProductFormProps): React.JSX.Element {
   const [formData, setFormData] = useState<ProductFormDataProps>({
     category: product.category as ProductFormDataProps["category"],
@@ -112,7 +117,7 @@ export function EditProductForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form id="edit-product-form" onSubmit={handleSubmit} className="space-y-4">
       <ProductCategorySelect
         name="Bitte Kategorie wählen"
         title="Produkt - Kategorie"
@@ -213,16 +218,16 @@ export function EditProductForm({
                 <span>
                   a{i + 1}: {url.split("/").pop()}
                 </span>
-                <button
+                <Button
                   type="button"
                   onClick={() =>
                     setKeptSmallUrls((prev) => prev.filter((u) => u !== url))
                   }
-                  className="text-red-500 hover:text-red-700"
+                  className="text-destructive hover:text-destructive/90 bg-transparent hover:bg-transparent"
                   aria-label="Bild entfernen"
                 >
                   ✕
-                </button>
+                </Button>
               </div>
             ))}
           </div>
@@ -240,24 +245,24 @@ export function EditProductForm({
                 <span>
                   +{i + 1}: {file.name}
                 </span>
-                <button
+                <Button
                   type="button"
                   onClick={() =>
                     setNewSmallFiles((prev) =>
                       prev.filter((_, idx) => idx !== i),
                     )
                   }
-                  className="text-red-500 hover:text-red-700"
+                  className="text-destructive hover:text-destructive/90 bg-transparent hover:bg-transparent"
                   aria-label="Neues Bild entfernen"
                 >
                   ✕
-                </button>
+                </Button>
               </div>
             ))}
           </div>
         )}
 
-        <input
+        <Input
           id="editImagesSmall"
           type="file"
           accept=".webp"
@@ -270,13 +275,13 @@ export function EditProductForm({
             e.target.value = "";
           }}
         />
-        <button
+        <Button
           type="button"
           onClick={() => document.getElementById("editImagesSmall")?.click()}
-          className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
+          className="bg-surface hover:bg-surface-hover w-fit rounded border px-4 py-2"
         >
           Weitere Bilder hinzufügen
-        </button>
+        </Button>
       </div>
 
       {/* Big images section */}
@@ -292,16 +297,16 @@ export function EditProductForm({
                 <span>
                   b{i + 1}: {url.split("/").pop()}
                 </span>
-                <button
+                <Button
                   type="button"
                   onClick={() =>
                     setKeptBigUrls((prev) => prev.filter((u) => u !== url))
                   }
-                  className="text-red-500 hover:text-red-700"
+                  className="bg-transparent text-red-500 hover:text-red-700"
                   aria-label="Bild entfernen"
                 >
                   ✕
-                </button>
+                </Button>
               </div>
             ))}
           </div>
@@ -319,7 +324,7 @@ export function EditProductForm({
                 <span>
                   +{i + 1}: {file.name}
                 </span>
-                <button
+                <Button
                   type="button"
                   onClick={() =>
                     setNewBigFiles((prev) => prev.filter((_, idx) => idx !== i))
@@ -328,13 +333,13 @@ export function EditProductForm({
                   aria-label="Neues Bild entfernen"
                 >
                   ✕
-                </button>
+                </Button>
               </div>
             ))}
           </div>
         )}
 
-        <input
+        <Input
           id="editImagesBig"
           type="file"
           accept=".webp"
@@ -346,21 +351,23 @@ export function EditProductForm({
             e.target.value = "";
           }}
         />
-        <button
+        <Button
           type="button"
           onClick={() => document.getElementById("editImagesBig")?.click()}
-          className="w-fit rounded border px-4 py-2 hover:bg-gray-100"
+          className="bg-surface hover:bg-surface-hover w-fit rounded border px-4 py-2"
         >
           Weitere Bilder hinzufügen
-        </button>
+        </Button>
       </div>
 
-      <CustomButton
-        type="submit"
-        buttonType="defaultButton"
-        title="Produkt aktualisieren"
-        ariaLabel="Produkt aktualisieren"
-      />
+      {!hideSubmitButton && (
+        <CustomButton
+          type="submit"
+          buttonType="defaultButton"
+          title="Produkt aktualisieren"
+          ariaLabel="Produkt aktualisieren"
+        />
+      )}
     </form>
   );
 }

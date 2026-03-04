@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 import ArticleForm from "@/features/article/forms/ArticleForm";
-import SearchProductCombobox from "@/features/product/components/ProductSearchCombobox";
 
 function AddArticlePage(): React.JSX.Element {
   const searchParams = useSearchParams();
@@ -18,14 +18,17 @@ function AddArticlePage(): React.JSX.Element {
   const productId =
     selectedProduct?.id ?? (urlProductId ? Number(urlProductId) : null);
 
-  function handleProductSelect(product: { id: number; name: string }) {
-    setSelectedProduct(product);
-  }
-
   return (
     <>
-      <h2>----------- Artikel hinzufügen --------------</h2>
-
+      <div className="mb-6 flex items-center justify-between">
+        <h1>Artikel hinzufügen </h1>
+        <Link
+          href="/dashboard/products"
+          className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+        >
+          ← Zurück
+        </Link>
+      </div>
       {productId && (
         <ArticleForm
           productId={productId}

@@ -36,7 +36,6 @@ export default function ProductsManagementClient({
       )
     : products;
 
-  console.log("----->>>>> filtered", filtered);
   return (
     <>
       <div className="mb-4">

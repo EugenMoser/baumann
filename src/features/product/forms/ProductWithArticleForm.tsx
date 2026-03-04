@@ -22,7 +22,7 @@ import {
   ProductWithArticleFormFieldErrors,
 } from "@/features/product";
 
-import { ColorSelectorField } from "./ColorSelectorField";
+import { ColorSelectorField } from "../../color/components/ColorSelectorField";
 
 interface ProductWithArticleFormProps {
   onSuccess?: (productId: number) => void;

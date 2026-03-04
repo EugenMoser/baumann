@@ -17,7 +17,7 @@ export * from "./actions/upload/uploadImage";
 export * from "./components/ImageCarousel";
 export * from "./components/PlaceholderImage";
 export * from "./components/ProductCardByCategory";
-export * from "./components/ProductColorManagement";
+export * from "../color/components/ProductColorManagement";
 export * from "./components/ProductInfoSection";
 export * from "./components/ProductSection";
 export * from "./components/ProductSearchCombobox";
