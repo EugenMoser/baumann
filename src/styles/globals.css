@@ -185,6 +185,9 @@
 }
 
 @layer components {
+}
+
+@layer utilities {
   /*Root Page and Navbar Components */
   .navbar {
     @apply border-b border-border bg-background;
@@ -210,55 +213,55 @@
 
   /* Button Components */
   .btn {
-    @apply bg-accent inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
-    @apply hover:bg-accent-hover !important;
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
+    @apply bg-accent inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm;
+    @apply hover:bg-accent-hover;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
-    @apply hover:bg-secondary/80 !important;
-    @apply active:bg-secondary/70 !important;
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
+    @apply bg-secondary text-secondary-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm;
+    @apply hover:bg-secondary/80;
+    @apply active:bg-secondary/70;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-create {
-    @apply bg-success text-success-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
-    @apply hover:bg-success/80 !important;
-    @apply active:bg-success/70 !important;
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
+    @apply bg-success text-success-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm;
+    @apply hover:bg-success/80;
+    @apply active:bg-success/70;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
   }
   .btn-remove {
-    @apply text-destructive bg-transparent !important;
-    @apply hover:text-destructive/90 !important;
+    @apply text-destructive bg-transparent;
+    @apply hover:text-destructive/90;
     @apply max-h-[36px] max-w-[36px];
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
   }
   .btn-destructive {
-    @apply bg-destructive text-destructive-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
-    @apply hover:bg-destructive/90 !important;
-    @apply active:bg-destructive/80 !important;
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
+    @apply bg-destructive text-destructive-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm;
+    @apply hover:bg-destructive/90;
+    @apply active:bg-destructive/80;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
   }
 
   /* Link */
 
   .link {
-    @apply bg-accent inline-flex items-center justify-center rounded-md px-4 py-1 text-sm font-medium !important;
+    @apply bg-accent inline-flex items-center justify-center rounded-md px-4 py-1 text-sm font-medium;
 
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
   }
 
   .link-secondary {
-    @apply bg-secondary text-secondary-foreground inline-flex items-center justify-center rounded-md px-4 py-2 font-medium !important;
-    @apply hover:bg-secondary/80 !important;
-    @apply active:bg-secondary/70 !important;
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
+    @apply bg-secondary text-secondary-foreground inline-flex items-center justify-center rounded-md px-4 py-2 font-medium;
+    @apply hover:bg-secondary/80;
+    @apply active:bg-secondary/70;
+    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
   }
   /* Dropdown/Menu Components */
   .dropdown-menu {
@@ -345,9 +348,7 @@
     @apply fixed inset-0 z-50;
     background-color: hsla(var(--overlay), var(--overlay-opacity));
   }
-}
 
-@layer utilities {
   /* Navbar specific utilities */
   .navFirstDiv > div:first-child {
     @apply mr-8 w-[-webkit-fill-available] lg:flex;
