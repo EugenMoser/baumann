@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import CustomButton from "@/components/shared/CustomButton";
+import { Button } from "@/components/ui/button";
 import {
   ColorInputField,
   ColorNotificationFormStates,
@@ -60,12 +61,9 @@ export function EditColorForm({
 
   if (!isEditing) {
     return (
-      <button
-        onClick={() => setIsEditing(true)}
-        className="rounded bg-blue-600 px-3 py-1 text-xs text-white hover:bg-blue-700"
-      >
+      <Button onClick={() => setIsEditing(true)} className="btn">
         Bearbeiten
-      </button>
+      </Button>
     );
   }
 
@@ -116,13 +114,13 @@ export function EditColorForm({
               title="Aktualisieren"
               ariaLabel="Farbe aktualisieren"
             />
-            <button
+            <Button
               type="button"
               onClick={() => setIsEditing(false)}
-              className="rounded bg-gray-400 px-4 py-2 text-sm text-white hover:bg-gray-500"
+              className="btn-secondary"
             >
               Abbrechen
-            </button>
+            </Button>
           </div>
         </form>
       </div>

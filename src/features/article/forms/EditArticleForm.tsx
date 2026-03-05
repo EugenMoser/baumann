@@ -5,6 +5,7 @@ import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import CustomButton from "@/components/shared/CustomButton";
+import { Button } from "@/components/ui/button";
 import { updateArticleAction } from "@/features/article/actions/mutations/updateArticle";
 import { ArticleFormFields } from "@/features/article/forms/ArticleFormFields";
 import {
@@ -65,7 +66,13 @@ export function EditArticleForm({
     } else if (!state.success && Object.keys(state.errors ?? {}).length > 0) {
       toast.error(state.globalError || "Fehler beim Aktualisieren.");
     }
-  }, [state.success, state.errors, state.message, state.globalError, redirectTo]);
+  }, [
+    state.success,
+    state.errors,
+    state.message,
+    state.globalError,
+    redirectTo,
+  ]);
 
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -114,19 +121,6 @@ export function EditArticleForm({
           title="Artikel aktualisieren"
           ariaLabel="Artikel aktualisieren"
         />
-        <button
-          type="button"
-          onClick={() => {
-            if (redirectTo) {
-              window.location.href = redirectTo;
-            } else {
-              setIsEditing(false);
-            }
-          }}
-          className="rounded bg-gray-400 px-4 py-2 text-sm text-white hover:bg-gray-500"
-        >
-          Abbrechen
-        </button>
       </div>
     </form>
   );

@@ -44,7 +44,7 @@ export default async function Home() {
             <li key={productCategory.name}>
               <Link
                 href={`/products/${productCategory.category}`}
-                className="navbar-item -4 group flex items-center justify-center gap-4 transition-all duration-300"
+                className="navbar-item group flex items-center justify-center gap-4 transition-all duration-300"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-background transition-colors">
                   <IconComponent className="transition-transform duration-300 group-hover:scale-125" />

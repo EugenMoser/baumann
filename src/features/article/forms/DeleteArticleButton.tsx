@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+import { Button } from "@/components/ui/button";
 import { deleteArticle } from "@/features/article/actions/mutations/deleteArticle";
 
 interface DeleteArticleButtonProps {
@@ -46,10 +47,10 @@ export function DeleteArticleButton({
   }
 
   return (
-    <button
+    <Button
       onClick={handleDelete}
       disabled={articleCount <= 1}
-      className="bg-destructive hover:bg-destructive/90 rounded px-3 py-1 text-sm text-white disabled:cursor-not-allowed disabled:opacity-50"
+      className="btn-destructive disabled:cursor-not-allowed disabled:opacity-50"
       title={
         articleCount <= 1
           ? "Letzter Artikel kann nicht gelöscht werden"
@@ -57,6 +58,6 @@ export function DeleteArticleButton({
       }
     >
       Löschen
-    </button>
+    </Button>
   );
 }

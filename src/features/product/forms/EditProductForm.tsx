@@ -22,8 +22,6 @@ import {
 
 interface EditProductFormProps {
   product: ProductWithColorAndArticlesProps;
-  /** When true, the submit button is not rendered inside the form. */
-  hideSubmitButton?: boolean;
 }
 
 /**
@@ -31,7 +29,6 @@ interface EditProductFormProps {
  */
 export function EditProductForm({
   product,
-  hideSubmitButton = false,
 }: EditProductFormProps): React.JSX.Element {
   const [formData, setFormData] = useState<ProductFormDataProps>({
     category: product.category as ProductFormDataProps["category"],
@@ -204,7 +201,7 @@ export function EditProductForm({
       />
 
       {/* Small images section */}
-      <div className="flex flex-col gap-2">
+      <div className="mb-8 flex flex-col gap-2">
         <label className="font-semibold">
           Kleine Bilder für Produktliste (bis zu 10)
         </label>
@@ -223,7 +220,7 @@ export function EditProductForm({
                   onClick={() =>
                     setKeptSmallUrls((prev) => prev.filter((u) => u !== url))
                   }
-                  className="text-destructive hover:text-destructive/90 bg-transparent hover:bg-transparent"
+                  className="btn-remove"
                   aria-label="Bild entfernen"
                 >
                   ✕
@@ -252,7 +249,7 @@ export function EditProductForm({
                       prev.filter((_, idx) => idx !== i),
                     )
                   }
-                  className="text-destructive hover:text-destructive/90 bg-transparent hover:bg-transparent"
+                  className="btn-remove"
                   aria-label="Neues Bild entfernen"
                 >
                   ✕
@@ -278,7 +275,7 @@ export function EditProductForm({
         <Button
           type="button"
           onClick={() => document.getElementById("editImagesSmall")?.click()}
-          className="bg-surface hover:bg-surface-hover w-fit rounded border px-4 py-2"
+          className="btn w-max"
         >
           Weitere Bilder hinzufügen
         </Button>
@@ -302,7 +299,7 @@ export function EditProductForm({
                   onClick={() =>
                     setKeptBigUrls((prev) => prev.filter((u) => u !== url))
                   }
-                  className="bg-transparent text-red-500 hover:text-red-700"
+                  className="btn-remove"
                   aria-label="Bild entfernen"
                 >
                   ✕
@@ -329,7 +326,7 @@ export function EditProductForm({
                   onClick={() =>
                     setNewBigFiles((prev) => prev.filter((_, idx) => idx !== i))
                   }
-                  className="text-red-500 hover:text-red-700"
+                  className="btn-remove"
                   aria-label="Neues Bild entfernen"
                 >
                   ✕
@@ -354,20 +351,11 @@ export function EditProductForm({
         <Button
           type="button"
           onClick={() => document.getElementById("editImagesBig")?.click()}
-          className="bg-surface hover:bg-surface-hover w-fit rounded border px-4 py-2"
+          className="btn w-max"
         >
           Weitere Bilder hinzufügen
         </Button>
       </div>
-
-      {!hideSubmitButton && (
-        <CustomButton
-          type="submit"
-          buttonType="defaultButton"
-          title="Produkt aktualisieren"
-          ariaLabel="Produkt aktualisieren"
-        />
-      )}
     </form>
   );
 }

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+import { Button } from "@/components/ui/button";
 import { deleteColor } from "@/features/color/actions/mutations/deleteColor";
 
 interface DeleteColorButtonProps {
@@ -37,11 +38,8 @@ export function DeleteColorButton({
   }
 
   return (
-    <button
-      onClick={handleDelete}
-      className="rounded bg-red-600 px-3 py-1 text-xs text-white hover:bg-red-700"
-    >
+    <Button onClick={handleDelete} className="btn-destructive">
       Löschen
-    </button>
+    </Button>
   );
 }

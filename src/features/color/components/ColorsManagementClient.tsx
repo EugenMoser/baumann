@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Input } from "@/components/ui/input";
 import { DeleteColorButton, EditColorForm } from "@/features/color";
 import { Color } from "@prisma/client";
 
@@ -29,7 +30,7 @@ export default function ColorsManagementClient({
   return (
     <>
       <div className="mb-4">
-        <input
+        <Input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}

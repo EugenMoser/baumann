@@ -76,7 +76,7 @@ export function ProductColorManagement({
         setSelectedColorId("");
         setOpen(false);
       } else {
-        toast.error(result.error ?? "Fehler beim Hinzufügen.");
+        toast.error(result.error ?? "Fehler beim Hinzufügen der Farbe.");
       }
     });
   };
@@ -158,7 +158,7 @@ export function ProductColorManagement({
                   onClick={() => handleRemove(color.colorId, color.name)}
                   disabled={isPending}
                   aria-label={`Farbe ${color.name} entfernen`}
-                  className="text-destructive hover:text-destructive ml-1 h-4 w-4"
+                  className="btn-remove"
                 >
                   ✕
                 </Button>
@@ -243,6 +243,7 @@ export function ProductColorManagement({
             type="button"
             onClick={handleAdd}
             disabled={!selectedColorId || isPending}
+            className="btn"
           >
             Hinzufügen
           </Button>
@@ -299,6 +300,7 @@ export function ProductColorManagement({
             <div className="flex gap-2">
               <Button
                 type="button"
+                className="btn"
                 onClick={handleCreateAndAdd}
                 disabled={isPending}
               >
@@ -307,6 +309,7 @@ export function ProductColorManagement({
               <Button
                 type="button"
                 variant="outline"
+                className="btn-secondary"
                 onClick={() => {
                   setShowNewColorForm(false);
                   setNewColorError(null);

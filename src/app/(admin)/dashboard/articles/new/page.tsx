@@ -22,10 +22,7 @@ function AddArticlePage(): React.JSX.Element {
     <>
       <div className="mb-6 flex items-center justify-between">
         <h1>Artikel hinzufügen </h1>
-        <Link
-          href="/dashboard/products"
-          className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
-        >
+        <Link href="/dashboard/products" className="btn-secondary">
           ← Zurück
         </Link>
       </div>

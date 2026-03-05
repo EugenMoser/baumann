@@ -30,7 +30,7 @@ export default async function EditArticlePage({
         <p className="text-red-500">Artikel nicht gefunden.</p>
         <Link
           href={`/dashboard/products/${productId}`}
-          className="text-accent underline"
+          className="btn-secondary"
         >
           Zurück zum Produkt
         </Link>
@@ -41,12 +41,12 @@ export default async function EditArticlePage({
   return (
     <div className="container mx-auto max-w-3xl py-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">
+        <h1>
           Artikel bearbeiten: {article.number} – {article.name}
         </h1>
         <Link
           href={`/dashboard/products/${productId}/edit`}
-          className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+          className="btn-secondary"
         >
           ← Zurück
         </Link>

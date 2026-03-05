@@ -17,11 +17,11 @@ interface ProductInputFieldProps {
   error?: string[];
 }
 
-export  function ProductInputField(
+export function ProductInputField(
   props: ProductInputFieldProps,
 ): React.JSX.Element {
   return (
-    <div className="mb-4 grid w-full max-w-sm items-center gap-2">
+    <div className="mb-10 grid w-full max-w-sm items-center gap-2">
       <Label htmlFor={props.id}>{props.title}</Label>
       <Input
         id={props.id}

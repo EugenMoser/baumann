@@ -4,6 +4,16 @@ import { useState } from "react";
 
 import Link from "next/link";
 
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import productCategories from "@/constants/productCategories";
 import { DeleteProductButton } from "@/features/product";
 import { ProductWithArticles } from "@/features/product/actions/queries/getAllProducts";
@@ -39,7 +49,7 @@ export default function ProductsManagementClient({
   return (
     <>
       <div className="mb-4">
-        <input
+        <Input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -53,35 +63,44 @@ export default function ProductsManagementClient({
         <p className="text-muted-foreground">Keine Produkte gefunden.</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b text-left">
-                <th className="p-3 font-semibold">Produkt-ID</th>
-                <th className="p-3 font-semibold">Name</th>
-                <th className="p-3 font-semibold">Kategorie</th>
-                <th className="p-3 font-semibold">Artikelnummern</th>
-                <th className="p-3 font-semibold">Aktionen</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="w-full border-collapse text-sm">
+            <TableHeader>
+              <TableRow>
+                <TableCell className="p-3 font-semibold">Produkt-ID</TableCell>
+                <TableCell className="p-3 font-semibold">Name</TableCell>
+                <TableCell className="p-3 font-semibold">Kategorie</TableCell>
+                <TableCell className="p-3 font-semibold">
+                  Artikelnummern
+                </TableCell>
+                <TableCell className="p-3 font-semibold">Aktionen</TableCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {filtered.map((product) => (
-                <tr key={product.id} className="hover:bg-muted/50 border-b">
-                  <td className="p-3">{product.productId}</td>
-                  <td className="p-3 font-medium">{product.name}</td>
-                  <td className="p-3">{getCategoryName(product.category)}</td>
-                  <td className="p-3">
+                <TableRow
+                  key={product.id}
+                  className="hover:bg-muted/50 border-b"
+                >
+                  <TableCell className="p-3">{product.productId}</TableCell>
+                  <TableCell className="p-3 font-medium">
+                    {product.name}
+                  </TableCell>
+                  <TableCell className="p-3">
+                    {getCategoryName(product.category)}
+                  </TableCell>
+                  <TableCell className="p-3">
                     {product.articles.map((a) => a.number).join(" | ")}
-                  </td>
-                  <td className="flex gap-2 p-3">
+                  </TableCell>
+                  <TableCell className="flex gap-2 p-3">
                     <Link
                       href={`/dashboard/products/${product.productId}/edit`}
-                      className="hover:bg-accent-hover/80 bg-accent/90 flex items-center rounded-md px-3 py-1 text-xs text-white"
+                      className="btn"
                     >
                       Bearbeiten
                     </Link>
                     <Link
                       href={`/dashboard/articles/new?productId=${product.productId}`}
-                      className="bg-accent hover:bg-accent-hover flex w-min items-center rounded-md px-3 py-1 text-xs text-white"
+                      className="btn-create"
                     >
                       + Artikel hinzufügen
                     </Link>
@@ -89,11 +108,11 @@ export default function ProductsManagementClient({
                       productId={product.productId}
                       productName={product.name}
                     />
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       )}
     </>

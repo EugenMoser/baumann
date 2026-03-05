@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { getAllProducts } from "@/features/product";
 
-import ProductsManagementClient from "./ProductsManagementClient";
+import ProductsManagementClient from "../../../../features/product/components/ProductsManagementClient";
 
 /**
  * Dashboard page listing all products with search, edit and delete options.
@@ -13,18 +13,12 @@ export default async function ProductsManagementPage(): Promise<React.JSX.Elemen
   return (
     <div className="container mx-auto py-8">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Produktverwaltung</h1>
+        <h1>Produktverwaltung</h1>
         <div className="flex gap-3">
-          <Link
-            href="/dashboard"
-            className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
-          >
+          <Link href="/dashboard" className="btn-secondary">
             ← Dashboard
           </Link>
-          <Link
-            href="/dashboard/products/new"
-            className="bg-success hover:bg-success/90 rounded-md px-4 py-2"
-          >
+          <Link href="/dashboard/products/new" className="btn-create">
             + Neues Produkt
           </Link>
         </div>
