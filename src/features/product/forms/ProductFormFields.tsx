@@ -1,3 +1,5 @@
+import { X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -157,7 +159,7 @@ export function ProductFormFields({
         <Button
           type="button"
           onClick={() => document.getElementById("imagesSmall")?.click()}
-          className="btn"
+          className="btn w-fit"
         >
           Dateien auswählen (max. 10)
         </Button>
@@ -178,7 +180,7 @@ export function ProductFormFields({
                   className="btn-remove"
                   aria-label={`Bild ${i + 1} entfernen`}
                 >
-                  ✕
+                  <X className="h-4 w-4" />
                 </Button>
               </li>
             ))}
@@ -208,7 +210,7 @@ export function ProductFormFields({
         <Button
           type="button"
           onClick={() => document.getElementById("imagesBig")?.click()}
-          className="btn"
+          className="btn w-fit"
         >
           Dateien auswählen (max. 10)
         </Button>
@@ -229,7 +231,7 @@ export function ProductFormFields({
                   className="btn-remove"
                   aria-label={`Bild ${i + 1} entfernen`}
                 >
-                  ✕
+                  <X className="h-4 w-4" />
                 </Button>
               </li>
             ))}

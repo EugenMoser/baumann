@@ -227,9 +227,7 @@ export function ProductWithArticleForm({
 
       {/* Article Section */}
       <div className="rounded-lg border p-6">
-        <h2 className="mb-4 text-xl font-semibold">
-          Artikel (mindestens ein Artikel erforderlich)
-        </h2>
+        <h2 className="mb-4">Artikel (mindestens ein Artikel erforderlich)</h2>
         <ArticleFormFields
           formData={{
             articlePrio: formData.articlePrio,
@@ -251,7 +249,7 @@ export function ProductWithArticleForm({
 
       {/* Color Selection */}
       <div className="rounded-lg border p-6">
-        <h2 className="mb-4 text-xl font-semibold">Farben zuordnen</h2>
+        <h2 className="mb-4">Farben zuordnen</h2>
         <ColorSelectorField
           allColors={colors}
           selectedColorIds={selectedColorIds}
