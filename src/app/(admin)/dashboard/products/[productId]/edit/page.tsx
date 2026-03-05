@@ -1,10 +1,8 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
 import { DeleteArticleButton } from "@/features/article";
 import { getAllColors } from "@/features/color";
-import { ProductColorManagement } from "@/features/color/components/ProductColorManagement";
-import { EditProductForm, getProductByProductId } from "@/features/product";
+import { EditProductSection, getProductByProductId } from "@/features/product";
 
 interface EditProductPageProps {
   params: Promise<{ productId: string }>;
@@ -55,35 +53,15 @@ export default async function EditProductPage({
         </Link>
       </div>
 
-      {/* Product Edit Form */}
-      <div className="mb-8 rounded-lg border p-6">
-        <h2 className="mb-4">Produktinformationen</h2>
-        <EditProductForm product={product} />
-      </div>
-
-      {/* Color Management */}
-      <div className="mb-8 rounded-lg border p-6">
-        <h2>Farben</h2>
-        <ProductColorManagement
-          productId={product.productId}
-          currentColors={product.colors}
-          allColors={allColors ?? []}
-        />
-      </div>
-
-      {/* Submit button placed below colors so it's clear it applies all changes */}
-      <div className="mb-16 flex justify-start">
-        <Button type="submit" form="edit-product-form" className="btn">
-          Produkt aktualisieren
-        </Button>
-      </div>
+      {/* Product Edit Form + Colour Management + Submit */}
+      <EditProductSection product={product} allColors={allColors ?? []} />
 
       {/* Articles Section */}
       <div className="rounded-lg border p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2>Artikel ({product.articles.length})</h2>
           <Link
-            href={`/dashboard/articles/new?productId=${product.id}`}
+            href={`/dashboard/articles/new?productId=${product.productId}`}
             className="btn-create"
           >
             + Neuen Artikel hinzufügen

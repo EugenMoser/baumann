@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { login } from "@/features/auth/actions/login";
 
 import { Input } from "../../../components/ui/input";
@@ -71,15 +71,7 @@ export function LoginForm({}: LoginFormProps): React.JSX.Element {
 
         {/* <CustomButton type="submit" buttonType="login" />
          */}
-        <CustomButton
-          type="submit"
-          buttonType="redirect"
-          redirectUrl="/dashboard"
-          title="Login"
-          isDisabled={true}
-          className="rounded bg-blue-500 p-2 text-white"
-          ariaLabel="Login"
-        />
+        <SubmitButton isPending={isPending}>Login</SubmitButton>
 
         {isPending && "Wird verabeitet..."}
         {state.message && (

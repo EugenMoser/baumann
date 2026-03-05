@@ -2,7 +2,10 @@
 
 import { useActionState, useEffect, useState } from "react";
 
-import CustomButton from "@/components/shared/CustomButton";
+import Link from "next/link";
+
+import { SubmitButton } from "@/components/shared/SubmitButton";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { passwordRequest } from "@/features/auth/";
 import { FormPasswordStates } from "@/features/auth/types";
@@ -29,7 +32,6 @@ export function PasswordRequestForm(): React.JSX.Element {
     }
   }, [state.errors]);
 
-  // todo: implement isPending ui
   return (
     <form
       action={formAction}
@@ -55,28 +57,19 @@ export function PasswordRequestForm(): React.JSX.Element {
         </div>
       )}
 
-      <CustomButton
-        type="submit"
-        buttonType="defaultButton"
-        title="Link anfordern"
-        isDisabled={isDisabled}
-        ariaLabel="Link anfordern"
-      />
+      <SubmitButton isPending={isPending} disabled={isDisabled}>
+        Link anfordern
+      </SubmitButton>
 
-      {isPending && "Loading..."}
       {!isPending && state.message && (
         <div id="message" aria-live="polite" aria-atomic="true">
           <p className="mt-2 text-sm text-red-500">{state.message}</p>
         </div>
       )}
       {!isPending && state.actionSuccess && (
-        <CustomButton
-          type="button"
-          buttonType="redirect"
-          title="Zum Login"
-          redirectUrl="/login"
-          ariaLabel="Zum Login"
-        />
+        <Button type="button" asChild>
+          <Link href="/login">Zum Login</Link>
+        </Button>
       )}
     </form>
   );

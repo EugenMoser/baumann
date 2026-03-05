@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
+
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import {
-  deleteProductAction,
-} from "@/features/product/actions/mutations/deleteProduct";
+import { ConfirmDialog } from "@/components/shared/ConfirmDialog";
+import { Button } from "@/components/ui/button";
+import { deleteProductAction } from "@/features/product/actions/mutations/deleteProduct";
 
 interface DeleteProductButtonProps {
   productId: number;
@@ -13,22 +15,21 @@ interface DeleteProductButtonProps {
 }
 
 /**
- * Client component button to delete a product with confirmation dialog.
+ * Client component button to delete a product with a confirmation dialog.
  */
-export  function DeleteProductButton({
+export function DeleteProductButton({
   productId,
   productName,
 }: DeleteProductButtonProps): React.JSX.Element {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  async function handleDelete() {
-    const confirmed = window.confirm(
-      `Sind Sie sicher, dass Sie das Produkt "${productName}" (ID: ${productId}) und alle zugehörigen Artikel löschen möchten?`,
-    );
-
-    if (!confirmed) return;
-
+  async function handleConfirm() {
+    setIsDeleting(true);
     const result = await deleteProductAction(productId);
+    setIsDeleting(false);
+    setOpen(false);
 
     if (result.success) {
       toast.success(result.message);
@@ -39,11 +40,19 @@ export  function DeleteProductButton({
   }
 
   return (
-    <button
-      onClick={handleDelete}
-      className="rounded bg-red-600 px-3 py-1 text-xs text-white hover:bg-red-700"
-    >
-      Löschen
-    </button>
+    <>
+      <Button onClick={() => setOpen(true)} className="btn-destructive">
+        Löschen
+      </Button>
+      <ConfirmDialog
+        open={open}
+        title="Produkt löschen"
+        description={`Sind Sie sicher, dass Sie das Produkt "${productName}" (ID: ${productId}) und alle zugehörigen Artikel löschen möchten?`}
+        confirmLabel="Löschen"
+        isPending={isDeleting}
+        onConfirm={handleConfirm}
+        onCancel={() => setOpen(false)}
+      />
+    </>
   );
 }

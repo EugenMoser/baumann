@@ -102,7 +102,7 @@ export default function ProductsManagementClient({
                       href={`/dashboard/articles/new?productId=${product.productId}`}
                       className="btn-create"
                     >
-                      + Artikel hinzufügen
+                      + Artikel
                     </Link>
                     <DeleteProductButton
                       productId={product.productId}

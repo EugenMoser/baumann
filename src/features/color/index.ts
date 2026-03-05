@@ -5,8 +5,10 @@ export * from "./actions/mutations/deleteColor";
 export * from "./actions/queries/getAllColors";
 
 // Export all components
+export * from "./components/ColorPicker";
 export * from "./components/ColorSection";
-export * from "./components/SelectColor";
+export * from "./components/ColorSelectorField";
+export * from "./components/ProductColorManagement";
 
 // Export all forms
 export * from "./forms/ColorDetailsForm";

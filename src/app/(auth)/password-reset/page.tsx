@@ -1,4 +1,6 @@
-import CustomButton from "@/components/shared/CustomButton";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
 import { isPasswordAlreadyReset } from "@/features/auth";
 import { PasswordResetForm } from "@/features/auth/forms/PasswordResetForm";
 
@@ -19,13 +21,9 @@ export default async function PasswordResetPage({
         <>
           <p>Dieser Link ist nicht mehr gültig.</p>
 
-          <CustomButton
-            type="button"
-            buttonType="redirect"
-            redirectUrl="/login"
-            title="Zum Login "
-            ariaLabel="Zum Login"
-          />
+          <Button type="button" asChild>
+            <Link href="/login">Zum Login</Link>
+          </Button>
         </>
       )}
       {isTokenReset && <PasswordResetForm />}

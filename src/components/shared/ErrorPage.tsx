@@ -2,7 +2,9 @@
 
 import { useEffect } from "react";
 
-import CustomButton from "@/components/shared/CustomButton";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
 
 interface ErrorPageProps {
   error: Error & { digest?: string };
@@ -35,19 +37,12 @@ export function ErrorPage({ error, reset, type }: ErrorPageProps) {
       </h2>
 
       <div className="flex gap-4">
-        <CustomButton
-          type="button"
-          buttonType="redirect"
-          onClickFunction={reset}
-          ariaLabel="Seite neu laden"
-          title="Seite neu laden"
-        />
-        <CustomButton
-          type="button"
-          buttonType="redirect"
-          title="Zur Startseite"
-          ariaLabel="Zur Startseite"
-        />
+        <Button type="button" onClick={reset}>
+          Seite neu laden
+        </Button>
+        <Button type="button" asChild>
+          <Link href="/">Zur Startseite</Link>
+        </Button>
       </div>
     </div>
   );

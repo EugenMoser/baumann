@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { CategoryProps } from "@/constants/productCategories";
 import { ProductFormDataProps } from "@/features/product/types";
 
@@ -138,10 +139,10 @@ export function ProductFormFields({
       />
 
       {/* Small images upload (up to 10) */}
-      <div className="flex flex-col gap-2">
-        <label className="font-semibold">
-          Kleine Bilder für Produktliste (bis zu 10, mindestens 1)
-        </label>
+      <div className="mb-8 flex w-fit flex-col gap-2">
+        <Label className="font-semibold">
+          Kleine Bilder (bis zu 10, mindestens 1)
+        </Label>
         <Input
           id="imagesSmall"
           type="file"
@@ -156,15 +157,29 @@ export function ProductFormFields({
         <Button
           type="button"
           onClick={() => document.getElementById("imagesSmall")?.click()}
-          className="w-fit rounded border bg-button-background px-4 py-2 hover:bg-button-hover hover:text-button-background"
+          className="btn"
         >
           Dateien auswählen (max. 10)
         </Button>
         {formData.imagesSmall.length > 0 && (
           <ul className="text-muted-foreground space-y-1 text-sm">
             {formData.imagesSmall.map((file, i) => (
-              <li key={i}>
-                a{i + 1}: {file.name}
+              <li key={i} className="flex items-center justify-between">
+                <span>
+                  a{i + 1}: {file.name}
+                </span>
+                <Button
+                  type="button"
+                  onClick={() =>
+                    onSmallImagesChange(
+                      formData.imagesSmall.filter((_, idx) => idx !== i),
+                    )
+                  }
+                  className="btn-remove"
+                  aria-label={`Bild ${i + 1} entfernen`}
+                >
+                  ✕
+                </Button>
               </li>
             ))}
           </ul>
@@ -175,11 +190,11 @@ export function ProductFormFields({
       </div>
 
       {/* Big images upload (up to 10) */}
-      <div className="flex flex-col gap-2">
-        <label className="font-semibold">
+      <div className="mb-8 flex w-fit flex-col gap-2">
+        <Label className="font-semibold">
           Große Bilder (bis zu 10, optional)
-        </label>
-        <input
+        </Label>
+        <Input
           id="imagesBig"
           type="file"
           accept=".webp"
@@ -190,18 +205,32 @@ export function ProductFormFields({
             onBigImagesChange(files);
           }}
         />
-        <button
+        <Button
           type="button"
           onClick={() => document.getElementById("imagesBig")?.click()}
-          className="w-fit rounded border bg-button-background px-4 py-2 hover:bg-button-hover hover:text-button-background"
+          className="btn"
         >
           Dateien auswählen (max. 10)
-        </button>
+        </Button>
         {formData.imagesBig.length > 0 && (
           <ul className="text-muted-foreground space-y-1 text-sm">
             {formData.imagesBig.map((file, i) => (
               <li key={i}>
-                b{i + 1}: {file.name}
+                <span>
+                  b{i + 1}: {file.name}
+                </span>
+                <Button
+                  type="button"
+                  onClick={() =>
+                    onSmallImagesChange(
+                      formData.imagesSmall.filter((_, idx) => idx !== i),
+                    )
+                  }
+                  className="btn-remove"
+                  aria-label={`Bild ${i + 1} entfernen`}
+                >
+                  ✕
+                </Button>
               </li>
             ))}
           </ul>

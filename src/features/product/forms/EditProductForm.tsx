@@ -2,11 +2,13 @@
 
 import { startTransition, useActionState, useEffect, useState } from "react";
 
+import { X } from "lucide-react";
 import { toast } from "sonner";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { CategoryProps } from "@/constants/productCategories";
 import {
   ProductCategorySelect,
@@ -22,6 +24,7 @@ import {
 
 interface EditProductFormProps {
   product: ProductWithColorAndArticlesProps;
+  onPendingChange?: (isPending: boolean) => void;
 }
 
 /**
@@ -29,6 +32,7 @@ interface EditProductFormProps {
  */
 export function EditProductForm({
   product,
+  onPendingChange,
 }: EditProductFormProps): React.JSX.Element {
   const [formData, setFormData] = useState<ProductFormDataProps>({
     category: product.category as ProductFormDataProps["category"],
@@ -60,7 +64,14 @@ export function EditProductForm({
   };
 
   const updateWithId = updateProductAction.bind(null, product.productId);
-  const [state, formAction] = useActionState(updateWithId, initialState);
+  const [state, formAction, isPending] = useActionState(
+    updateWithId,
+    initialState,
+  );
+
+  useEffect(() => {
+    onPendingChange?.(isPending);
+  }, [isPending, onPendingChange]);
 
   useEffect(() => {
     if (state.success) {
@@ -73,12 +84,11 @@ export function EditProductForm({
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const target = event.target;
-    const { name, value, type } = target;
+    const { name, value, type } = event.target;
 
     let newValue: null | number | string = value;
     if (type === "number") {
-      newValue = Number(value);
+      newValue = value === "" ? "" : Number(value);
     }
 
     setFormData((prev) => ({
@@ -202,9 +212,9 @@ export function EditProductForm({
 
       {/* Small images section */}
       <div className="mb-8 flex flex-col gap-2">
-        <label className="font-semibold">
+        <Label className="font-semibold">
           Kleine Bilder für Produktliste (bis zu 10)
-        </label>
+        </Label>
 
         {/* Existing kept images with individual remove button */}
         {keptSmallUrls.length > 0 && (
@@ -223,7 +233,7 @@ export function EditProductForm({
                   className="btn-remove"
                   aria-label="Bild entfernen"
                 >
-                  ✕
+                  <X className="h-3 w-3" />
                 </Button>
               </div>
             ))}
@@ -252,7 +262,7 @@ export function EditProductForm({
                   className="btn-remove"
                   aria-label="Neues Bild entfernen"
                 >
-                  ✕
+                  <X className="h-3 w-3" />
                 </Button>
               </div>
             ))}
@@ -283,7 +293,7 @@ export function EditProductForm({
 
       {/* Big images section */}
       <div className="flex flex-col gap-2">
-        <label className="font-semibold">Große Bilder (bis zu 10)</label>
+        <Label className="font-semibold">Große Bilder (bis zu 10)</Label>
 
         {/* Existing kept images with individual remove button */}
         {keptBigUrls.length > 0 && (
@@ -302,7 +312,7 @@ export function EditProductForm({
                   className="btn-remove"
                   aria-label="Bild entfernen"
                 >
-                  ✕
+                  <X className="h-3 w-3" />
                 </Button>
               </div>
             ))}
@@ -329,7 +339,7 @@ export function EditProductForm({
                   className="btn-remove"
                   aria-label="Neues Bild entfernen"
                 >
-                  ✕
+                  <X className="h-3 w-3" />
                 </Button>
               </div>
             ))}

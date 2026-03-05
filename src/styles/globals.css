@@ -210,21 +210,14 @@
 
   /* Button Components */
   .btn {
-    @apply bg-accent inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 !important;
+    @apply bg-accent inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
     @apply hover:bg-accent-hover !important;
-    @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
-  }
-  .btn-primary {
-    @apply bg-primary text-primary-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 font-medium !important;
-    @apply hover:bg-primary/90 !important;
-    @apply active:bg-primary/80 !important;
     @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
     @apply disabled:pointer-events-none disabled:opacity-50 !important;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 font-medium !important;
+    @apply bg-secondary text-secondary-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
     @apply hover:bg-secondary/80 !important;
     @apply active:bg-secondary/70 !important;
     @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
@@ -232,7 +225,7 @@
   }
 
   .btn-create {
-    @apply bg-success text-success-foreground inline-flex items-center justify-center rounded-md px-4 py-2 !important;
+    @apply bg-success text-success-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
     @apply hover:bg-success/80 !important;
     @apply active:bg-success/70 !important;
     @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
@@ -243,27 +236,12 @@
     @apply hover:text-destructive/90 !important;
     @apply max-h-[36px] max-w-[36px];
     @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
   }
   .btn-destructive {
     @apply bg-destructive text-destructive-foreground inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm !important;
     @apply hover:bg-destructive/90 !important;
     @apply active:bg-destructive/80 !important;
     @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 !important;
-    @apply disabled:pointer-events-none disabled:opacity-50 !important;
-  }
-
-  .btn-outline {
-    @apply border-input border bg-background;
-    @apply hover:bg-accent hover:text-accent-foreground;
-  }
-
-  .btn-ghost {
-    @apply hover:bg-accent hover:text-accent-foreground;
-  }
-
-  .btn-link {
-    @apply text-primary underline-offset-4 hover:underline;
   }
 
   /* Link */

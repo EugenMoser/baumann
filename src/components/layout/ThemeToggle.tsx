@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { Button } from "@/components/ui/button";
 
 interface ThemeToggleProps {
   mobile?: boolean;
@@ -33,21 +33,18 @@ export default function ThemeToggle({ mobile }: ThemeToggleProps) {
   }
 
   return (
-    <CustomButton
+    <Button
       type="button"
-      buttonType="themeToggle"
-      onClickFunction={handleOnClick}
-      className={clsx(
-        "btn group hidden p-3 xl:flex",
-
-        {
-          "flex h-[36px] w-[36px] xl:hidden": mobile,
-        },
-      )}
-      ariaLabel="Theme wechseln"
+      variant="outline"
+      size="icon"
+      onClick={handleOnClick}
+      aria-label="Theme wechseln"
+      className={clsx("btn group hidden p-3 xl:flex", {
+        "flex h-[36px] w-[36px] xl:hidden": mobile,
+      })}
     >
       <Sun className="duration-600 rotate-0 scale-100 transform transition-transform group-active:rotate-12 dark:-rotate-90 dark:scale-0" />
       <Moon className="duration-600 absolute h-[36px] w-[36px] rotate-90 scale-0 transform transition-transform group-active:-rotate-12 dark:rotate-0 dark:scale-100" />
-    </CustomButton>
+    </Button>
   );
 }

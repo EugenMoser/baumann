@@ -10,7 +10,7 @@ import {
 
 import { toast } from "sonner";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { CategoryProps } from "@/constants/productCategories";
 import { ArticleFormDataProps, ArticleFormFields } from "@/features/article";
 import { ColorProps } from "@/features/color/types";
@@ -260,13 +260,9 @@ export function ProductWithArticleForm({
       </div>
 
       {/* Submit Button */}
-      <CustomButton
-        type="submit"
-        buttonType="defaultButton"
-        title="Produkt mit Artikel hinzufügen"
-        ariaLabel="Produkt mit Artikel hinzufügen"
-        isDisabled={isPending}
-      />
+      <SubmitButton isPending={isPending}>
+        Produkt mit Artikel hinzufügen
+      </SubmitButton>
     </form>
   );
 }

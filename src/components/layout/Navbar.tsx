@@ -1,9 +1,9 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { Button } from "@/components/ui/button";
 import { NavigationMenu } from "@/components/ui/navigation-menu";
 
 import NavbarDesktop from "./NavbarDesktop";
@@ -31,12 +31,12 @@ export default function Navbar(): React.JSX.Element | null {
       <ThemeToggle />
 
       {session && (
-        <CustomButton
+        <Button
           type="button"
-          buttonType="logout"
-          title="Logout"
-          ariaLabel="Logout"
-        />
+          onClick={() => signOut({ callbackUrl: "/login" })}
+        >
+          Logout
+        </Button>
       )}
     </NavigationMenu>
   );

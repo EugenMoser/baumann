@@ -10,10 +10,10 @@ export default function DashboardPage() {
         <div className="rounded-lg border p-6">
           <h2 className="mb-4">Verwaltung</h2>
           <div className="flex flex-col gap-3">
-            <Link href="/dashboard/products" className="btn-primary">
+            <Link href="/dashboard/products" className="btn">
               Produkte verwalten
             </Link>
-            <Link href="/dashboard/colors" className="btn-primary">
+            <Link href="/dashboard/colors" className="btn">
               Farben verwalten
             </Link>
           </div>

@@ -2,9 +2,11 @@
 
 import { useActionState, useEffect, useState } from "react";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { passwordReset } from "@/features/auth";
 import { FormPasswordStates } from "@/features/auth/types";
@@ -110,15 +112,10 @@ export function PasswordResetForm(): React.JSX.Element | null {
         </div>
       )}
 
-      <CustomButton
-        type="submit"
-        buttonType="defaultButton"
-        title="Passwort ändern"
-        isDisabled={isDisabled}
-        ariaLabel="Passwort ändern"
-      />
+      <SubmitButton isPending={isPending} disabled={isDisabled}>
+        Passwort ändern
+      </SubmitButton>
 
-      {isPending && "Loading..."}
       {!isPending && state.message && (
         <div id="message" aria-live="polite" aria-atomic="true">
           <p className="mt-2 text-sm text-red-500">{state.message}</p>
@@ -126,13 +123,9 @@ export function PasswordResetForm(): React.JSX.Element | null {
       )}
       {!isPending && !state.errors && state.actionSuccess && (
         // <CustomButton type="button" buttonType="goLogin" />
-        <CustomButton
-          type="button"
-          buttonType="redirect"
-          title="Zum Login"
-          redirectUrl="/login"
-          ariaLabel="Zum Login"
-        />
+        <Button type="button" asChild>
+          <Link href="/login">Zum Login</Link>
+        </Button>
       )}
     </form>
   );

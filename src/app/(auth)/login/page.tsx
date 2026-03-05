@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "src/auth";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { Button } from "@/components/ui/button";
 import { LoginForm } from "@/features/auth/forms/LoginForm";
 import { checkSessionAndRedirect } from "@/lib/helpers/checkSessionAndRedirect";
 
@@ -20,13 +21,9 @@ export default async function LoginPage() {
       <h2 className="mb-4 text-xl font-bold">Login</h2>
       <LoginForm />
 
-      <CustomButton
-        type="button"
-        buttonType="redirect"
-        redirectUrl="//password-request"
-        title="Passwort zurücksetzen"
-        ariaLabel="Passwort zurücksetzen"
-      />
+      <Button type="button" asChild>
+        <Link href="/password-request">Passwort zurücksetzen</Link>
+      </Button>
     </div>
   );
 }

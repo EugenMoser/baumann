@@ -5,7 +5,7 @@ import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { Button } from "@/components/ui/button";
 import {
   ColorInputField,
@@ -40,7 +40,10 @@ export function EditColorForm({
   };
 
   const updateWithId = updateColor.bind(null, color.id);
-  const [state, formAction] = useActionState(updateWithId, initialState);
+  const [state, formAction, isPending] = useActionState(
+    updateWithId,
+    initialState,
+  );
 
   useEffect(() => {
     if (state.success) {
@@ -55,8 +58,12 @@ export function EditColorForm({
   const handleOnChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = event.target;
+    let newValue: null | number | string = value;
+    if (type === "number") {
+      newValue = value === "" ? "" : Number(value);
+    }
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
   };
 
   if (!isEditing) {
@@ -108,12 +115,7 @@ export function EditColorForm({
             error={state.errors?.colorCode}
           />
           <div className="flex gap-2 pt-4">
-            <CustomButton
-              type="submit"
-              buttonType="defaultButton"
-              title="Aktualisieren"
-              ariaLabel="Farbe aktualisieren"
-            />
+            <SubmitButton isPending={isPending}>Aktualisieren</SubmitButton>
             <Button
               type="button"
               onClick={() => setIsEditing(false)}

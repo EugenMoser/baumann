@@ -20,7 +20,7 @@ export default function ImageUploadForm({}: ImageUploadFormProps): React.JSX.Ele
             */}
 
       <h2>----------- Image --------------</h2>
-      <label htmlFor="imageUpload">Kategoriebild in .webp wählen (klein)</label>
+      <Label htmlFor="imageUpload">Kategoriebild in .webp wählen (klein)</Label>
       <Input
         type="file"
         name="imageUpload"
@@ -44,7 +44,7 @@ export default function ImageUploadForm({}: ImageUploadFormProps): React.JSX.Ele
           ))}
         </ul>
       )}
-      <label htmlFor="imageUpload">Produktbild in .webp wählen (groß)</label>
+      <Label htmlFor="imageUpload">Produktbild in .webp wählen (groß)</Label>
       <Input
         type="file"
         name="imageUpload"

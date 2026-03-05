@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { updateArticleAction } from "@/features/article/actions/mutations/updateArticle";
 import { ArticleFormFields } from "@/features/article/forms/ArticleFormFields";
@@ -53,7 +53,10 @@ export function EditArticleForm({
   };
 
   const updateWithId = updateArticleAction.bind(null, article.id);
-  const [state, formAction] = useActionState(updateWithId, initialState);
+  const [state, formAction, isPending] = useActionState(
+    updateWithId,
+    initialState,
+  );
 
   useEffect(() => {
     if (state.success) {
@@ -82,7 +85,7 @@ export function EditArticleForm({
 
     let newValue: number | string = value;
     if (type === "number") {
-      newValue = Number(value);
+      newValue = value === "" ? "" : Number(value);
     }
 
     setFormData((prev) => ({
@@ -97,12 +100,9 @@ export function EditArticleForm({
         {/* <p className="text-muted-foreground text-sm">
           Prio: {article.prio} | Nummer: {article.number} | Name: {article.name}
         </p> */}
-        <button
-          onClick={() => setIsEditing(true)}
-          className="bg-accent text-accent-foreground hover:accent-hover rounded px-3 py-1 text-xs"
-        >
+        <Button onClick={() => setIsEditing(true)} className="btn">
           Bearbeiten
-        </button>
+        </Button>
       </div>
     );
   }
@@ -115,12 +115,7 @@ export function EditArticleForm({
         onChange={handleOnChange}
       />
       <div className="flex gap-2">
-        <CustomButton
-          type="submit"
-          buttonType="defaultButton"
-          title="Artikel aktualisieren"
-          ariaLabel="Artikel aktualisieren"
-        />
+        <SubmitButton isPending={isPending}>Artikel aktualisieren</SubmitButton>
       </div>
     </form>
   );

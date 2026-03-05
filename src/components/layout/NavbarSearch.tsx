@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 
 import useDebounce from "@/lib/hooks/useDebounce";
 
+import { Input } from "../ui/input";
+
 /**
  * Navbar search component with debounced navigation.
  * Navigates to /products/search?q=... on debounced input change.
@@ -27,7 +29,7 @@ export default function NavbarSearch(): React.JSX.Element {
   return (
     <div className="mr-4 flex items-center rounded-md border bg-background px-3">
       <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-      <input
+      <Input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}

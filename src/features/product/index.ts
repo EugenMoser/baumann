@@ -14,13 +14,13 @@ export * from "./actions/queries/searchProductCards";
 export * from "./actions/upload/uploadImage";
 
 // Export all components
+export * from "./components/EditProductSection";
 export * from "./components/ImageCarousel";
 export * from "./components/PlaceholderImage";
 export * from "./components/ProductCardByCategory";
 export * from "../color/components/ProductColorManagement";
 export * from "./components/ProductInfoSection";
 export * from "./components/ProductSection";
-export * from "./components/ProductSearchCombobox";
 
 // Export all forms
 export * from "./forms/DeleteProductButton";

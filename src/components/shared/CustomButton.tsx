@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 
@@ -15,6 +16,8 @@ interface _CustomButtonProps {
     | "themeToggle";
   redirectUrl?: string;
   isDisabled?: boolean;
+  /** When true disables the button and shows a loading spinner. */
+  isPending?: boolean;
   onClickFunction?: () => void;
   className?: string;
   ariaLabel: string;
@@ -37,6 +40,7 @@ export default function CustomButton({
   children,
   redirectUrl,
   isDisabled = false,
+  isPending = false,
   onClickFunction,
   className,
   ariaLabel,
@@ -76,7 +80,13 @@ export default function CustomButton({
 
     case "defaultButton":
       return (
-        <Button type={type} disabled={isDisabled} className={className}>
+        <Button
+          type={type}
+          disabled={isDisabled || isPending}
+          className={className}
+          aria-label={ariaLabel}
+        >
+          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {title}
         </Button>
       );

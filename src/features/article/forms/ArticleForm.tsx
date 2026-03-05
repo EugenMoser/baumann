@@ -4,11 +4,11 @@ import { useActionState, useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import type { ArticleFormDataProps } from "@/features/article";
 import { addArticle } from "@/features/article";
 import { ArticleNotificationFormStates } from "@/features/article/types";
 
-import CustomButton from "../../../components/shared/CustomButton";
 import { ArticleFormFields } from "./ArticleFormFields";
 
 interface ArticleFormProps {
@@ -94,13 +94,7 @@ export default function ArticleForm({
         onChange={handleOnChange}
       />
 
-      <CustomButton
-        type="submit"
-        buttonType="defaultButton"
-        title="Artikel hinzufügen"
-        ariaLabel="Artikel hinzufügen"
-        isDisabled={isPending}
-      />
+      <SubmitButton isPending={isPending}>Artikel hinzufügen</SubmitButton>
     </form>
   );
 }

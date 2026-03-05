@@ -3,7 +3,7 @@ import { useActionState, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
-import CustomButton from "@/components/shared/CustomButton";
+import { SubmitButton } from "@/components/shared/SubmitButton";
 import {
   addColor,
   ColorInputField,
@@ -26,7 +26,10 @@ const initialFormState: ColorNotificationFormStates = {
 
 export function ColorDetailsForm({}: ColorDetailsFormProps): React.JSX.Element {
   const [formData, setFormData] = useState(initialFormDataState);
-  const [state, formAction] = useActionState(addColor, initialFormState);
+  const [state, formAction, isPending] = useActionState(
+    addColor,
+    initialFormState,
+  );
 
   // Show toast notification when add article failed or success
   useEffect(() => {
@@ -83,12 +86,7 @@ export function ColorDetailsForm({}: ColorDetailsFormProps): React.JSX.Element {
         aria-describedby="color-code-error"
         error={state.errors?.colorCode}
       />
-      <CustomButton
-        type="submit"
-        buttonType="defaultButton"
-        title="Farbe hinzufügen"
-        ariaLabel="Farbe hinzufügen"
-      />
+      <SubmitButton isPending={isPending}>Farbe hinzufügen</SubmitButton>
     </form>
   );
 }
