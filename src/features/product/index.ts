@@ -30,7 +30,6 @@ export * from "./forms/ProductFormFields";
 export * from "./forms/ProductInputField";
 export * from "./forms/ProductTextField";
 export * from "./forms/ProductWithArticleForm";
-export * from "./forms/UploadImageForm";
 
 // Export all schemas
 
