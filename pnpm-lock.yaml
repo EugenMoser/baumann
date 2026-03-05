@@ -92,6 +92,9 @@ importers:
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@hookform/resolvers':
         specifier: ^4.0.0
@@ -150,9 +153,6 @@ importers:
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
-      zod:
-        specifier: ^3.24.2
-        version: 3.24.2
 
 packages:
 
