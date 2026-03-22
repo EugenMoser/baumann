@@ -1,132 +1,111 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useState, useTransition } from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { SubmitButton } from "@/components/shared/SubmitButton";
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { passwordReset } from "@/features/auth";
-import { FormPasswordStates } from "@/features/auth/types";
+import { PasswordResetFormSchema } from "@/features/auth/schemas/passwordSchema";
 
-// todo: implement shadcn ui form
+type PasswordResetValues = z.infer<typeof PasswordResetFormSchema>;
+
 export function PasswordResetForm(): React.JSX.Element | null {
-  const initialState: FormPasswordStates = {
-    message: "",
-    errors: {},
-    actionSuccess: false,
-  };
   const searchParams = useSearchParams();
-  const token: string | null = searchParams.get("token");
+  const token = searchParams.get("token");
 
-  const [state, formAction, isPending] = useActionState(
-    passwordReset,
-    initialState,
-  );
+  const [isPending, startTransition] = useTransition();
+  const [serverMessage, setServerMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const form = useForm<PasswordResetValues>({
+    resolver: zodResolver(PasswordResetFormSchema),
+    defaultValues: { token: token ?? "", password: "", confirmPassword: "" },
+  });
 
-  // Function to check if the passwords match
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
+  function onSubmit(values: PasswordResetValues) {
+    setServerMessage("");
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("token", values.token);
+      formData.append("password", values.password);
+      formData.append("confirmPassword", values.confirmPassword);
 
-  const handleConfirmPasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = event.target.value;
-    setConfirmPassword(value);
-  };
-
-  //disable button if there send a mail to the user
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (state.actionSuccess) {
-      setIsDisabled(!isDisabled);
-    }
-  }, [state.actionSuccess]);
-  // solution for hydration error -> https://nextjs.org/docs/messages/react-hydration-error
-  // useEffect(() => {
-  //   setHasHydrated(true);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (hasHydrated && state.redirect) {
-  //     router.prefetch("/login");
-  //     setTimeout(() => {
-  //       router.push("/login");
-  //     }, 3000);
-  //   }
-  // }, [state.redirect, hasHydrated]);
-
-  // if (!hasHydrated) {
-  //   return null;
-  // }
+      const result = await passwordReset(
+        { message: "", errors: {} },
+        formData,
+      );
+      if (result.actionSuccess) {
+        setIsSuccess(true);
+        setServerMessage(result.message);
+      } else if (result.message) {
+        setServerMessage(result.message);
+      }
+    });
+  }
 
   return (
-    <form
-      action={formAction}
-      noValidate
-      className="flex w-1/2 flex-col gap-4 border p-4"
-    >
-      <Input
-        type="password"
-        name="password"
-        placeholder="Passwort"
-        value={password}
-        aria-describedby="password-error"
-        className="w-50"
-        onChange={handlePasswordChange}
-      />
-      {state.errors?.password && (
-        <div id="password-error" aria-live="polite" aria-atomic="true">
-          {state.errors.password.map((error: string) => (
-            <p className="mt-2 text-sm text-red-500" key={error}>
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
-      <Input
-        type="password"
-        name="confirmPassword"
-        placeholder="Passwort wiederholen"
-        value={confirmPassword}
-        onChange={handleConfirmPasswordChange}
-        aria-describedby="confirm-password-error"
-        className="w-50"
-      />
-      <input type="hidden" name="token" value={token || undefined} />
-
-      {state.errors?.confirmPassword && (
-        <div id="password-error" aria-live="polite" aria-atomic="true">
-          {state.errors.confirmPassword.map((error: string) => (
-            <p className="mt-2 text-sm text-red-500" key={error}>
-              {error}
-            </p>
-          ))}
-        </div>
-      )}
-
-      <SubmitButton isPending={isPending} disabled={isDisabled}>
-        Passwort ändern
-      </SubmitButton>
-
-      {!isPending && state.message && (
-        <div id="message" aria-live="polite" aria-atomic="true">
-          <p className="mt-2 text-sm text-red-500">{state.message}</p>
-        </div>
-      )}
-      {!isPending && !state.errors && state.actionSuccess && (
-        // <CustomButton type="button" buttonType="goLogin" />
-        <Button type="button" asChild>
-          <Link href="/login">Zum Login</Link>
-        </Button>
-      )}
-    </form>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-1/2 flex-col gap-4 border p-4"
+      >
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Passwort</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Passwort" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Passwort wiederholen</FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="Passwort wiederholen"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <SubmitButton isPending={isPending} disabled={isSuccess}>
+          Passwort ändern
+        </SubmitButton>
+        {!isPending && serverMessage && (
+          <p className="mt-2 text-sm text-red-500">{serverMessage}</p>
+        )}
+        {!isPending && isSuccess && (
+          <Button type="button" asChild>
+            <Link href="/login">Zum Login</Link>
+          </Button>
+        )}
+      </form>
+    </Form>
   );
 }
