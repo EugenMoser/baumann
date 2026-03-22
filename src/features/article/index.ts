@@ -10,8 +10,6 @@ export * from "./components/ArticleSection";
 // Export all forms
 export * from "./forms/ArticleForm";
 export * from "./forms/ArticleFormFields";
-export * from "./forms/ArticleInputField";
-export * from "./forms/ArticleTextField";
 export * from "./forms/DeleteArticleButton";
 export * from "./forms/EditArticleForm";
 
