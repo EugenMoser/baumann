@@ -21,4 +21,7 @@ export const PasswordRequestFormSchema = PasswordFormSchema.pick({
 });
 export const PasswordResetFormSchema = PasswordFormSchema.omit({
   email: true,
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwörter stimmen nicht überein.",
+  path: ["confirmPassword"],
 });
