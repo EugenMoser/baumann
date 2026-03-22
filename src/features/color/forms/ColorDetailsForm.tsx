@@ -3,10 +3,10 @@ import { useActionState, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 
+import { FormInputField } from "@/components/shared/FormInputField";
 import { SubmitButton } from "@/components/shared/SubmitButton";
 import {
   addColor,
-  ColorInputField,
   ColorNotificationFormStates,
 } from "@/features/color";
 
@@ -53,9 +53,9 @@ export function ColorDetailsForm({}: ColorDetailsFormProps): React.JSX.Element {
 
   return (
     <form action={formAction} className="flex flex-col space-y-2">
-      <ColorInputField
+      <FormInputField
         type="string"
-        colorId="colorId"
+        id="colorId"
         name="colorId"
         title="Farben - ID"
         placeholder="Farben - ID"
@@ -64,9 +64,9 @@ export function ColorDetailsForm({}: ColorDetailsFormProps): React.JSX.Element {
         aria-describedby="color-id-error"
         error={state.errors?.colorId}
       />
-      <ColorInputField
+      <FormInputField
         type="string"
-        colorId="colorName"
+        id="colorName"
         name="name"
         title="Farben - Name"
         placeholder="Farben - Name"
@@ -75,9 +75,9 @@ export function ColorDetailsForm({}: ColorDetailsFormProps): React.JSX.Element {
         aria-describedby="color-name-error"
         error={state.errors?.colorName}
       />
-      <ColorInputField
+      <FormInputField
         type="string"
-        colorId="colorCode"
+        id="colorCode"
         name="code"
         title="Farben - Code"
         placeholder="Hexa - Code z.B. #abc123"

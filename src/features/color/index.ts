@@ -13,7 +13,6 @@ export * from "./components/ProductColorManagement";
 // Export all forms
 export * from "./forms/ColorDetailsForm";
 export * from "./forms/EditColorForm";
-export * from "./forms/ColorInputField";
 export * from "./forms/DeleteColorButton";
 
 // Export all schemas
