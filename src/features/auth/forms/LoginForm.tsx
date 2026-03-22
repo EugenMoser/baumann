@@ -1,85 +1,100 @@
 "use client";
-import { useActionState, useEffect, useState } from "react";
 
+import { useEffect, useState, useTransition } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { SubmitButton } from "@/components/shared/SubmitButton";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { login } from "@/features/auth/actions/login";
+import { LoginFormSchema } from "@/features/auth/schemas/loginFormSchema";
 
-import { Input } from "../../../components/ui/input";
+type LoginFormValues = z.infer<typeof LoginFormSchema>;
 
-interface LoginFormProps {}
-
-export function LoginForm({}: LoginFormProps): React.JSX.Element {
-  const initialState = {
-    message: "",
-    errors: {},
-    actionSuccess: false,
-  };
-
-  const [state, formAction, isPending] = useActionState(login, initialState);
+export function LoginForm(): React.JSX.Element {
   const router = useRouter();
   const { update } = useSession();
-
+  const [isPending, startTransition] = useTransition();
+  const [serverError, setServerError] = useState("");
   const [actionExecuted, setActionExecuted] = useState(false);
 
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(LoginFormSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
   useEffect(() => {
-    if (state?.actionSuccess && !actionExecuted) {
+    if (actionExecuted) {
       (async () => {
-        await update(); // reload session for displaying in navbar
+        await update();
         router.replace("/dashboard");
-        setActionExecuted(true); // prevents the loop
       })();
     }
-  }, [state?.actionSuccess, actionExecuted, router]);
+  }, [actionExecuted, router, update]);
+
+  function onSubmit(values: LoginFormValues) {
+    setServerError("");
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("password", values.password);
+
+      const result = await login({ message: "", errors: {} }, formData);
+      if (result.actionSuccess) {
+        setActionExecuted(true);
+      } else if (result.message) {
+        setServerError(result.message);
+      }
+    });
+  }
 
   return (
-    <>
-      <form action={formAction}>
-        <Input
-          type="email"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
           name="email"
-          placeholder="E-Mail"
-          aria-describedby="email-error"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-Mail</FormLabel>
+              <FormControl>
+                <Input type="email" placeholder="E-Mail" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {state.errors?.email && (
-          <div id="email-error" aria-live="polite" aria-atomic="true">
-            {state.errors.email.map((error: string) => (
-              <p className="mt-2 text-sm text-red-500" key={error}>
-                {error}
-              </p>
-            ))}
-          </div>
-        )}
-
-        <Input
-          type="password"
+        <FormField
+          control={form.control}
           name="password"
-          placeholder="Password"
-          aria-describedby="password-error"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Passwort</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Passwort" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {state.errors?.password && (
-          <div id="password-error" aria-live="polite" aria-atomic="true">
-            {state.errors.password.map((error: string) => (
-              <p className="mt-2 text-sm text-red-500" key={error}>
-                {error}
-              </p>
-            ))}
-          </div>
-        )}
-
-        {/* <CustomButton type="submit" buttonType="login" />
-         */}
         <SubmitButton isPending={isPending}>Login</SubmitButton>
-
-        {isPending && "Wird verabeitet..."}
-        {state.message && (
-          <div id="message" aria-live="polite" aria-atomic="true">
-            <p className="mt-2 text-sm text-red-500">{state.message}</p>
-          </div>
+        {isPending && <p>Wird verarbeitet...</p>}
+        {serverError && (
+          <p className="mt-2 text-sm text-red-500">{serverError}</p>
         )}
       </form>
-    </>
+    </Form>
   );
 }
