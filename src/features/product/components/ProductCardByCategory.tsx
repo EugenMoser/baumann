@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { cloudinaryImageUrl } from "@/constants/config";
 import { ProductByCategoryProps } from "@/features/product/types";
-import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface ProductByCategoryCardProps {
   product: ProductByCategoryProps;
@@ -71,7 +71,7 @@ export function ProductCardByCategory({
                         "--bg-color": color.code || "transparent",
                       } as React.CSSProperties
                     }
-                    className={`overflow-hidden rounded-full bg-[var(--bg-color)] p-4 ring-1 ring-offset-1`}
+                    className="aspect-auto h-auto w-auto overflow-hidden rounded-full bg-[var(--bg-color)] p-4 ring-1 ring-offset-1 [&>span]:hidden"
                     aria-label={color.name}
                   />
                 </div>
