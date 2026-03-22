@@ -6,9 +6,10 @@ import { Label } from "@/components/ui/label";
 import { CategoryProps } from "@/constants/productCategories";
 import { ProductFormDataProps } from "@/features/product/types";
 
+import { FormInputField } from "@/components/shared/FormInputField";
+import { FormTextField } from "@/components/shared/FormTextField";
+
 import { ProductCategorySelect } from "./ProductCategorySelect";
-import { ProductInputField } from "./ProductInputField";
-import { ProductTextField } from "./ProductTextField";
 
 interface ProductFormFieldsProps {
   formData: ProductFormDataProps & {
@@ -57,7 +58,7 @@ export function ProductFormFields({
         error={errors?.category}
       />
 
-      <ProductInputField
+      <FormInputField
         id="productPrio"
         name="productPrio"
         title="Produkt - Priorität"
@@ -72,7 +73,7 @@ export function ProductFormFields({
         error={errors?.productPrio}
       />
 
-      <ProductInputField
+      <FormInputField
         id="productName"
         name="productName"
         title="Produktname"
@@ -84,7 +85,7 @@ export function ProductFormFields({
         error={errors?.productName}
       />
 
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct1"
         name="descriptionProduct1"
         title="Beschreibung 1"
@@ -95,7 +96,7 @@ export function ProductFormFields({
         error={errors?.descriptionProduct1}
       />
 
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct2"
         name="descriptionProduct2"
         title="Beschreibung 2"
@@ -106,7 +107,7 @@ export function ProductFormFields({
         error={errors?.descriptionProduct2}
       />
 
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct3"
         name="descriptionProduct3"
         title="Beschreibung 3"
@@ -117,7 +118,7 @@ export function ProductFormFields({
         error={errors?.descriptionProduct3}
       />
 
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct4"
         name="descriptionProduct4"
         title="Beschreibung 4"
@@ -128,7 +129,7 @@ export function ProductFormFields({
         error={errors?.descriptionProduct4}
       />
 
-      <ProductInputField
+      <FormInputField
         id="material"
         name="material"
         title="Material"

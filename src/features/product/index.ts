@@ -27,8 +27,6 @@ export * from "./forms/DeleteProductButton";
 export * from "./forms/EditProductForm";
 export * from "./forms/ProductCategorySelect";
 export * from "./forms/ProductFormFields";
-export * from "./forms/ProductInputField";
-export * from "./forms/ProductTextField";
 export * from "./forms/ProductWithArticleForm";
 
 // Export all schemas

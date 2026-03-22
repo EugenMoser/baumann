@@ -10,10 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CategoryProps } from "@/constants/productCategories";
+import { FormInputField } from "@/components/shared/FormInputField";
+import { FormTextField } from "@/components/shared/FormTextField";
 import {
   ProductCategorySelect,
-  ProductInputField,
-  ProductTextField,
   updateProductAction,
 } from "@/features/product";
 import {
@@ -133,7 +133,7 @@ export function EditProductForm({
         onChange={handleOnChangeSelect}
         error={state.errors?.category}
       />
-      <ProductInputField
+      <FormInputField
         id="productPrio"
         name="productPrio"
         title="Produkt - Priorität"
@@ -147,7 +147,7 @@ export function EditProductForm({
         aria-describedby="productPrio-error"
         error={state.errors?.productPrio}
       />
-      <ProductInputField
+      <FormInputField
         id="productName"
         name="productName"
         title="Produktname"
@@ -158,7 +158,7 @@ export function EditProductForm({
         aria-describedby="productName-error"
         error={state.errors?.productName}
       />
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct1"
         name="descriptionProduct1"
         title="Beschreibung 1"
@@ -168,7 +168,7 @@ export function EditProductForm({
         aria-describedby="descriptionProduct1-error"
         error={state.errors?.descriptionProduct1}
       />
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct2"
         name="descriptionProduct2"
         title="Beschreibung 2"
@@ -178,7 +178,7 @@ export function EditProductForm({
         aria-describedby="descriptionProduct2-error"
         error={state.errors?.descriptionProduct2}
       />
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct3"
         name="descriptionProduct3"
         title="Beschreibung 3"
@@ -188,7 +188,7 @@ export function EditProductForm({
         aria-describedby="descriptionProduct3-error"
         error={state.errors?.descriptionProduct3}
       />
-      <ProductTextField
+      <FormTextField
         id="descriptionProduct4"
         name="descriptionProduct4"
         title="Beschreibung 4"
@@ -198,7 +198,7 @@ export function EditProductForm({
         aria-describedby="descriptionProduct4-error"
         error={state.errors?.descriptionProduct4}
       />
-      <ProductInputField
+      <FormInputField
         id="material"
         name="material"
         title="Material"
