@@ -1,7 +1,7 @@
 import { ArticleFormDataProps } from "@/features/article/types";
 
-import ArticleInputField from "./ArticleInputField";
-import ArticleTextField from "./ArticleTextField";
+import { FormInputField } from "@/components/shared/FormInputField";
+import { FormTextField } from "@/components/shared/FormTextField";
 
 interface ArticleFormFieldsProps {
   formData: ArticleFormDataProps;
@@ -34,7 +34,7 @@ export function ArticleFormFields({
 }: ArticleFormFieldsProps): React.JSX.Element {
   return (
     <div className="mb-4 space-y-4">
-      <ArticleInputField
+      <FormInputField
         id="articlePrio"
         name="articlePrio"
         title="Artikel - Priorität"
@@ -49,7 +49,7 @@ export function ArticleFormFields({
         error={errors?.articlePrio}
       />
 
-      <ArticleInputField
+      <FormInputField
         id="articleNumber"
         name="articleNumber"
         title="Artikelnummer"
@@ -61,7 +61,7 @@ export function ArticleFormFields({
         error={errors?.articleNumber}
       />
 
-      <ArticleInputField
+      <FormInputField
         id="articleName"
         name="articleName"
         title="Artikelname"
@@ -73,7 +73,7 @@ export function ArticleFormFields({
         error={errors?.articleName}
       />
 
-      <ArticleTextField
+      <FormTextField
         id="descriptionArticle1"
         name="descriptionArticle1"
         title="Beschreibung 1"
@@ -84,7 +84,7 @@ export function ArticleFormFields({
         error={errors?.descriptionArticle1}
       />
 
-      <ArticleTextField
+      <FormTextField
         id="descriptionArticle2"
         name="descriptionArticle2"
         title="Beschreibung 2"
@@ -95,7 +95,7 @@ export function ArticleFormFields({
         error={errors?.descriptionArticle2}
       />
 
-      <ArticleTextField
+      <FormTextField
         id="descriptionArticle3"
         name="descriptionArticle3"
         title="Beschreibung 3"
@@ -106,7 +106,7 @@ export function ArticleFormFields({
         error={errors?.descriptionArticle3}
       />
 
-      <ArticleTextField
+      <FormTextField
         id="descriptionArticle4"
         name="descriptionArticle4"
         title="Beschreibung 4"
@@ -117,7 +117,7 @@ export function ArticleFormFields({
         error={errors?.descriptionArticle4}
       />
 
-      <ArticleInputField
+      <FormInputField
         id="vpe1"
         name="vpe1"
         title="VPE 1"
@@ -130,7 +130,7 @@ export function ArticleFormFields({
         error={errors?.vpe1}
       />
 
-      <ArticleInputField
+      <FormInputField
         id="vpe2"
         name="vpe2"
         title="VPE 2"
@@ -143,7 +143,7 @@ export function ArticleFormFields({
         error={errors?.vpe2}
       />
 
-      <ArticleInputField
+      <FormInputField
         id="vpe3"
         name="vpe3"
         title="VPE 3"
@@ -156,7 +156,7 @@ export function ArticleFormFields({
         error={errors?.vpe3}
       />
 
-      <ArticleInputField
+      <FormInputField
         id="vpe4"
         name="vpe4"
         title="VPE 4"
